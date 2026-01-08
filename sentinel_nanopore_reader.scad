@@ -175,16 +175,24 @@ module FR4_Interposer_Production() {
 
 // 2. THE RIGID ACTIVE PCB (Rev 19)
 module PCB_Rigid_Active() {
-    // 0.8mm FR4 Substrate
-    pcb_w = 28; pcb_l = 38;
+    // Hexagonal PCB (Single-Sided Architecture)
+    // Replaces the Carrier + Rectangular PCB
 
     difference() {
-        // 0.8mm FR4 Substrate (Green)
+        // 0.8mm FR4 Substrate (Green) - Full Hex
         color("ForestGreen")
-        translate([-pcb_w/2, -pcb_l/2, 0]) cube([pcb_w, pcb_l, pcb_thick]);
+        linear_extrude(pcb_thick) circle(d=hex_diam, $fn=6);
 
-        // Chip Void
-        cylinder(h=10, d=10, center=true);
+        // Chip Void (Square)
+        translate([0,0,-1]) linear_extrude(10) square([6,6], center=true);
+
+        // Bolt Holes
+        translate([0,0,-1]) linear_extrude(10) BoltHoles();
+
+        // Fluid Pass-throughs (Top Fluid Only)
+        // Cis In/Out must pass through PCB to reach Top Plate/Gasket
+        rotate([0,0,angle_fluid_in_top]) translate([port_radius, 0, -1]) cylinder(h=10, d=4);
+        rotate([0,0,angle_fluid_out_top]) translate([port_radius, 0, -1]) cylinder(h=10, d=4);
     }
 
     // --- ACTIVE COMPONENTS (Top Side) ---
@@ -266,32 +274,7 @@ module O_Ring_Inner() {
     circle(d=oring_cs, $fn=g_fn);
 }
 
-// L2_Hex: Carrier Frame (Hexagonal)
-module Carrier_Frame_Hex() {
-    // Replaces Plate_2_Channel
-    // Holds PCB_Rigid_Active (28x38x0.8)
-
-    // New dimensions
-    // Thickness = 2.6mm (carrier_thick)
-    // PCB Pocket = Through hole (PCB sits on bottom gasket)
-
-    ins_w = 28;
-    ins_l = 38;
-
-    difference() {
-        circle(d=hex_diam, $fn=6); // Corner-to-corner hex
-      //  BoltHoles();
-
-        // PCB Pocket (Through Hole)
-        square([ins_w + 0.5, ins_l + 0.5], center=true);
-
-        // Fluid Pass-throughs (Outside the PCB area)
-        rotate([0,0,angle_fluid_in_top]) translate([port_radius, 0]) circle(d=4);
-        rotate([0,0,angle_fluid_out_top]) translate([port_radius, 0]) circle(d=4);
-        rotate([0,0,angle_fluid_in_bot]) translate([port_radius, 0]) circle(d=4);
-        rotate([0,0,angle_fluid_out_bot]) translate([port_radius, 0]) circle(d=4);
-    }
-}
+// Carrier_Frame_Hex DELETED (Merged into PCB_Rigid_Active)
 
 module PogoPinHoles() {
     // Pogo Pins removed for Single-Sided PCBA
@@ -324,12 +307,14 @@ module Plate_1_Base_Hex_3D() {
              rotate([0,0,angle_fluid_in_bot]) translate([port_radius, 0, plate_thick/2]) sphere(d=4);
              translate([-3, -10, plate_thick/2]) sphere(d=3);
         }
-        // Vertical Up-Via A
-        translate([-3, -10, 0]) cylinder(h=10, d=2);
+        // Vertical Up-Via A (Blind Via: Channel to Top)
+        // Starts at mid-plate (channel level) and goes up. Do not puncture bottom.
+        translate([-3, -10, plate_thick/2]) cylinder(h=plate_thick/2 + 0.1, d=2);
 
         // 2. Trans Loop Down-Via -> Center
-        // Vertical Down-Via B (Y=-10, X=3)
-        translate([3, -10, 0]) cylinder(h=10, d=2);
+        // Vertical Down-Via B (Blind Via: Top to Channel)
+        // Goes from Top down to channel depth. Do not puncture bottom.
+        translate([3, -10, plate_thick - 3]) cylinder(h=3.1, d=2);
 
         // Channel: Via B -> Center
         // Raise spheres so they cut a TRENCH (open top), not a TUNNEL.
