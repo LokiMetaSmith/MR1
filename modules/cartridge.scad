@@ -374,7 +374,7 @@ module Gasket_Low_Dead_Volume(type="bottom") {
 
     // SQUISH COMPENSATION DIMENSIONS (50A Silicone)
     channel_w_laser = 1.2; // Desired 1.0mm
-    port_d_laser = 2.0;    // Desired 1.5mm (Inlet) & Pass-throughs
+    port_d_laser = 4.0;    // Desired 4.0mm (Match Liquid Ports)
     chamber_d = 6.5;       // Chip Size + 1.5mm
     fillet_r = 0.5;        // Anti-tear fillet radius
 
@@ -390,8 +390,9 @@ module Gasket_Low_Dead_Volume(type="bottom") {
     difference() {
         circle(d=hex_diam, $fn=6);
 
-        // Cable Slot
-        Cable_Slot_2D();
+        // Cable Slot (Deeper Cut)
+        // Replaces Cable_Slot_2D() with a deeper cut to ensure cable clearance
+        translate([0, -25]) square([12, 12], center=true);
 
         // Pass-throughs (Inactive Ports)
         for(a = pass_angles) {
