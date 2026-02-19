@@ -77,7 +77,8 @@ module Housing_Pump_Case(pump_type=Pump_Type) {
              for(x_pos = [-20, 20]) {
                  translate([x_pos, 0, 0])
                  cyl(h=wall*3, d=20, anchor=CENTER) {
-                    tag("remove") threaded_rod(d=13.7, l=20, pitch=1.411, internal=true, anchor=CENTER);
+                    // Simplified: Use smooth cylinder instead of threaded_rod to fix CGAL errors
+                    tag("remove") cylinder(d=13.7, h=20, center=true);
                  }
              }
         }
@@ -85,7 +86,8 @@ module Housing_Pump_Case(pump_type=Pump_Type) {
              for(x_pos = [-20, 20]) {
                  translate([x_pos, 0, 0])
                  cyl(h=wall*3, d=20, anchor=CENTER) {
-                    tag("remove") threaded_rod(d=13.7, l=20, pitch=1.411, internal=true, anchor=CENTER);
+                    // Simplified: Use smooth cylinder instead of threaded_rod to fix CGAL errors
+                    tag("remove") cylinder(d=13.7, h=20, center=true);
                  }
              }
         }
@@ -156,6 +158,7 @@ module Housing_Pump_Case(pump_type=Pump_Type) {
 
 module Housing_Pump_Lid() {
     lid_thick = wall; // Thin lid
+    local_seal_lip_h = 5; // Increased from 2.5 to 5.0 for better engagement
 
     color("Silver")
     union() {
@@ -163,13 +166,14 @@ module Housing_Pump_Lid() {
         cuboid([base_w+2*wall, base_l+2*wall, lid_thick], rounding=wall, edges="Z", anchor=BOTTOM) {
 
             // Male Interlock Lugs (Top Surface)
-            // UPDATED: Changed to Dimples for Threaded Sensor Enclosure Feet
+            // UPDATED: Changed to Circular Recesses for Reader Feet
             attach(TOP) {
                 for(x = [-1, 1], y = [-1, 1]) {
                     translate([x * (base_w/2 - feet_inset), y * (base_l/2 - feet_inset), 0])
                     tag("remove")
-                    down(3) linear_extrude(height=3.1)
-                    trapezoid(w1=15, w2=11, h=13, anchor=CENTER);
+                    down(3)
+                    // Circular Recess for Reader Feet (d=13 + 0.5 clearance)
+                    cylinder(d=13.5, h=3.1);
                 }
             }
 
@@ -189,7 +193,8 @@ module Housing_Pump_Lid() {
              tag("remove") position(BOTTOM) {
                  path_rect = rect([base_w - 8, base_l - 8], rounding=3);
                  down(0.01) // Ensure cut
-                 path_sweep(circle(d=seal_cs+0.2), path_rect, closed=true);
+                 // Simplified to square profile to avoid CGAL/WASM crashes
+                 path_sweep(square([seal_cs+0.2, seal_cs+0.2], center=true), path_rect, closed=true);
              }
         }
 
@@ -198,9 +203,9 @@ module Housing_Pump_Lid() {
         // We need the lip to stick DOWN from z=0.
         translate([0,0,0]) {
             difference() {
-                 cuboid([base_w - 2*wall - 0.4, base_l - 2*wall - 0.4, seal_lip_h], rounding=2, edges="Z", anchor=TOP);
+                 cuboid([base_w - 2*wall - 0.4, base_l - 2*wall - 0.4, local_seal_lip_h], rounding=2, edges="Z", anchor=TOP);
                  up(0.01) // ensure manifold
-                 cuboid([base_w - 2*wall - 0.4 - 3, base_l - 2*wall - 0.4 - 3, seal_lip_h + 0.1], rounding=2, edges="Z", anchor=TOP);
+                 cuboid([base_w - 2*wall - 0.4 - 3, base_l - 2*wall - 0.4 - 3, local_seal_lip_h + 0.1], rounding=2, edges="Z", anchor=TOP);
             }
         }
     }
