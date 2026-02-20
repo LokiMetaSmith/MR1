@@ -15,7 +15,7 @@ module Torque_Cap_Inner(access_hole=true) {
 
         // Ratchet Teeth
         // Even with top, starting above retention
-        for(r=[0:(360/Torque_Teeth_Count):360]) {
+        position(BOTTOM) for(r=[0:(360/Torque_Teeth_Count):360]) {
             // Position teeth vertically at the perimeter
             zrot(r)
             translate([neck_od/2 + 2, 0, cap_retention_h])
@@ -37,8 +37,21 @@ module Torque_Cap_Inner(access_hole=true) {
     }
 }
 
+module Torque_Cap_Assembly(access_hole=true) {
+    Torque_Cap_Outer(access_hole=access_hole);
+    // Raise inner cap to sit on retention lip
+    // Lip height is effectively cap_retention_h (approx 2mm)
+    // Inner flange height is cap_retention_h (2mm)
+    // Inner starts at Z=0.
+    // Outer cavity starts at Z=cap_retention_h - 0.5 (1.5mm)
+    // To clear the lip (Z=1.5), Inner needs to be at Z >= 1.5.
+    // I will use cap_retention_h (2.0) for safety/tolerance.
+    translate([0,0, cap_retention_h])
+    Torque_Cap_Inner(access_hole=access_hole);
+}
+
 module Torque_Cap_Outer(access_hole=true) {
-    color("Orange") {
+    #color("Orange") {
         diff("remove") {
             // Main Body with Rounded Top Edge
             // d = neck_od + 20
@@ -112,7 +125,7 @@ module Cap_Ribs() {
         // Ribs at 25, 30, 35 are safe.
         if (check >= 25 && check <= 35) {
             rotate([0,0,r])
-            translate([(neck_od + 20)/2, 0, 0])
+            translate([(neck_od + 20)/2, 0, cap_retention_h])
             cyl(h=cap_h-5, d=2, anchor=BOTTOM); // Stop before the rounded top
         }
     }

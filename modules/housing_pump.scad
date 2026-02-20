@@ -171,9 +171,8 @@ module Housing_Pump_Lid() {
                 for(x = [-1, 1], y = [-1, 1]) {
                     translate([x * (base_w/2 - feet_inset), y * (base_l/2 - feet_inset), 0])
                     tag("remove")
-                    down(3)
-                    // Circular Recess for Reader Feet (d=13 + 0.5 clearance)
-                    cylinder(d=13.5, h=3.1);
+                    down(1) linear_extrude(height=3.1)
+                    trapezoid(w1=15, w2=11, h=13, anchor=CENTER);
                 }
             }
 
