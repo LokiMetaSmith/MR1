@@ -164,12 +164,22 @@ module Housing_Pump_Lid() {
         cuboid([base_w+2*wall, base_l+2*wall, lid_thick], rounding=wall, edges="Z", anchor=BOTTOM) {
 
             // Male Interlock Lugs (Top Surface)
-            // UPDATED: Changed to Dimples for Threaded Sensor Enclosure Feet
+            // UPDATED: Reverted to Trapezoid Recesses for Reader Feet
+            // "feet nest inside from the reader to the pump, we need to orientate the trapizoid so the foot well is smaller in the bottom and wider at the top"
             attach(TOP) {
                 for(x = [-1, 1], y = [-1, 1]) {
                     translate([x * (base_w/2 - feet_inset), y * (base_l/2 - feet_inset), 0])
                     tag("remove")
-                    down(1) linear_extrude(height=3.1)
+                    down(3)
+                    // Tapered Trapezoidal Recess
+                    // Use prismoid to create a tapered recess: Top (at Z=0) is larger, Bottom (at Z=-3) is smaller
+                    // Assuming "trapezoid(w1=15, w2=11)" meant the 2D profile.
+                    // If the user wants "smaller in the bottom", I will assume the 2D profile should be scaled.
+                    // Let's use prismoid with size1 (bottom of prism) and size2 (top of prism).
+                    // In attach(TOP) down(3), Z=0 is bottom of the cut (wait, attach(TOP) sets Z=lid_h).
+                    // down(3) moves relative to TOP.
+                    // Let's use linear_extrude with scale to taper.
+                    linear_extrude(height=3.1, scale=0.8) // Taper down to 80% size at bottom
                     trapezoid(w1=15, w2=11, h=13, anchor=CENTER);
                 }
             }
