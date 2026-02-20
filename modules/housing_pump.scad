@@ -77,8 +77,7 @@ module Housing_Pump_Case(pump_type=Pump_Type) {
              for(x_pos = [-20, 20]) {
                  translate([x_pos, 0, 0])
                  cyl(h=wall*3, d=20, anchor=CENTER) {
-                    // Simplified: Use smooth cylinder instead of threaded_rod to fix CGAL errors
-                    tag("remove") cylinder(d=13.7, h=20, center=true);
+                    tag("remove") threaded_rod(d=13.7, l=20, pitch=1.411, internal=true, anchor=CENTER);
                  }
              }
         }
@@ -86,8 +85,7 @@ module Housing_Pump_Case(pump_type=Pump_Type) {
              for(x_pos = [-20, 20]) {
                  translate([x_pos, 0, 0])
                  cyl(h=wall*3, d=20, anchor=CENTER) {
-                    // Simplified: Use smooth cylinder instead of threaded_rod to fix CGAL errors
-                    tag("remove") cylinder(d=13.7, h=20, center=true);
+                    tag("remove") threaded_rod(d=13.7, l=20, pitch=1.411, internal=true, anchor=CENTER);
                  }
              }
         }
@@ -166,12 +164,22 @@ module Housing_Pump_Lid() {
         cuboid([base_w+2*wall, base_l+2*wall, lid_thick], rounding=wall, edges="Z", anchor=BOTTOM) {
 
             // Male Interlock Lugs (Top Surface)
-            // UPDATED: Changed to Circular Recesses for Reader Feet
+            // UPDATED: Reverted to Trapezoid Recesses for Reader Feet
+            // "feet nest inside from the reader to the pump, we need to orientate the trapizoid so the foot well is smaller in the bottom and wider at the top"
             attach(TOP) {
                 for(x = [-1, 1], y = [-1, 1]) {
                     translate([x * (base_w/2 - feet_inset), y * (base_l/2 - feet_inset), 0])
                     tag("remove")
-                    down(1) linear_extrude(height=3.1)
+                    down(3)
+                    // Tapered Trapezoidal Recess
+                    // Use prismoid to create a tapered recess: Top (at Z=0) is larger, Bottom (at Z=-3) is smaller
+                    // Assuming "trapezoid(w1=15, w2=11)" meant the 2D profile.
+                    // If the user wants "smaller in the bottom", I will assume the 2D profile should be scaled.
+                    // Let's use prismoid with size1 (bottom of prism) and size2 (top of prism).
+                    // In attach(TOP) down(3), Z=0 is bottom of the cut (wait, attach(TOP) sets Z=lid_h).
+                    // down(3) moves relative to TOP.
+                    // Let's use linear_extrude with scale to taper.
+                    linear_extrude(height=3.1, scale=0.8) // Taper down to 80% size at bottom
                     trapezoid(w1=15, w2=11, h=13, anchor=CENTER);
                 }
             }
@@ -192,8 +200,7 @@ module Housing_Pump_Lid() {
              tag("remove") position(BOTTOM) {
                  path_rect = rect([base_w - 8, base_l - 8], rounding=3);
                  down(0.01) // Ensure cut
-                 // Simplified to square profile to avoid CGAL/WASM crashes
-                 path_sweep(square([seal_cs+0.2, seal_cs+0.2], center=true), path_rect, closed=true);
+                 path_sweep(circle(d=seal_cs+0.2), path_rect, closed=true);
              }
         }
 

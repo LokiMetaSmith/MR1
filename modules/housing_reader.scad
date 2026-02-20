@@ -154,13 +154,6 @@ module Housing_Lid_Reader() {
                  threaded_rod(d=npt_thread_d, l=30, pitch=npt_thread_pitch, anchor=BOTTOM);
             }
 
-                 // Port Pass-throughs
-            tag("remove") {
-                for(a = [angle_fluid_in_top, angle_fluid_out_top, angle_fluid_in_bot, angle_fluid_out_bot, angle_elec_cis, angle_elec_trans]) {
-            
-                    rotate([0,0,a]) translate([port_radius, 0]) circle(d=6);
-                }
-            }
             // Electrode Ports
              tag("remove")
              position(CENTER) {
@@ -257,7 +250,8 @@ module Reader_Module_Assembly() {
          // Position Cap so it "floats" above for Explode view or engaged for Assembly.
          // Neck Height = neck_h. Cap sits near the top.
         translate([0,0, neck_h - 10 + Explode_Factor*1.5]) { // Arbitrary engaging position
-             Torque_Cap_Assembly();
+             Torque_Cap_Inner();
+             Torque_Cap_Outer();
         }
     }
 
