@@ -130,7 +130,7 @@ classDiagram
 
 ---
 
-## 5. 6-Pin Pogo Interface Pinout Mapping
+## 5. 12-Pin Pogo Interface Pinout Mapping
 
 To mate with the Mill-Max spring pin array header on the Amplifier board, the Interposer's 6 gold target pads (`J_POGO1`, rotated $180^\circ$ at $Y=73.5\text{ mm}$) map symmetrically to the Cis and Trans channels:
 

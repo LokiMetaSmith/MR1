@@ -132,14 +132,15 @@ class TestInterposerKiCad(unittest.TestCase):
 
     @unittest.skip("skip failing")
     def test_interposer_schematic_feature_symbols(self):
+
         """Ensure Interposer schematic defines and associates dedicated symbols for each feature."""
         sch_path = REPO_ROOT / "Interposer" / "Interposer.kicad_sch"
         self.assertTrue(sch_path.exists(), "Interposer.kicad_sch must exist")
 
         sch_txt = sch_path.read_text(encoding="utf-8")
-        self.assertIn('lib_id "Connector_Generic:Conn_01x12"', sch_txt)
-        self.assertIn('lib_id "Mechanical:MountingHole"', sch_txt)
-        self.assertIn('lib_id "Connector_Generic:Conn_01x02"', sch_txt)
+        self.assertIn('lib_id "Interposer:PogoPin_Target_12Pin_Distributed"', sch_txt)
+        self.assertIn('lib_id "Interposer:Nanopore_Wafer_Aperture"', sch_txt)
+        self.assertIn('lib_id "Interposer:Electrode_Guard_Shield"', sch_txt)
         self.assertIn('lib_id "Interposer:Weep_Moat_Sensor"', sch_txt)
         self.assertIn('lib_id "Interposer:Fluidic_Port_PassThrough"', sch_txt)
 
@@ -220,6 +221,7 @@ class TestInterposerKiCad(unittest.TestCase):
 
     @unittest.skip("skip failing")
     def test_amplifier_schematic_digitized_pogo_and_adc(self):
+
         """Ensure Amplifier schematic has 6-pin Pogo header, digitized ADC stage, damping, and interlock."""
         amp_sch_path = REPO_ROOT / "Amplifier" / "Amplifier.kicad_sch"
         self.assertTrue(amp_sch_path.exists(), "Amplifier.kicad_sch must exist")

@@ -92,4 +92,7 @@ else
 fi
 
 echo -e "\n${GREEN}Environment verification completed successfully.${NC}"
+
+echo "Running python3 scripts/build_interposer_kicad.py"
+${PYTHON_CMD} scripts/build_interposer_kicad.py
 echo "You can now run: ./scripts/export_all.sh --all"
