@@ -570,7 +570,10 @@ def generate_single_pin_footprint(
 ) -> str:
     """Emits one of the 4 discrete single-pin modular footprint variations."""
     silk_layer = "F.SilkS" if layer.startswith("F") else "B.SilkS"
-    desc = f"MR1 Single Pin: {pin_type.upper()} ({'Guarded' if guarded else 'Standard'})"
+    desc = (
+        f"MR1 Single Pin: {pin_type.upper()} ({'Guarded' if guarded else 'Standard'}) "
+        f"[Compatible with Mill-Max & LCSC C5221285 / YTC1P-6030-01 9.0mm Pogo Pin for 1/4 inch Spacer Stackup]"
+    )
     lines = [generate_header(name, desc)]
 
     if pin_type == "target":
@@ -581,7 +584,7 @@ def generate_single_pin_footprint(
             f'(clearance {TARGET_PAD_CLEARANCE}) (uuid "{deterministic_uuid(f"{name}_pad1")}"))\n'
         )
     else:
-        # SMT Mill-Max Pin Pad (Pad 1) on Amplifier (F.Cu + F.Paste + F.Mask)
+        # SMT Pogo Pin Base Pad (Pad 1) on Amplifier (F.Cu + F.Paste + F.Mask) for 2.0mm SMD base
         sx, sy = MILLMAX_SMT_PAD_SIZE
         lines.append(
             f'  (pad "1" smd roundrect (at 0 0) (size {sx} {sy}) (layers "{layer}" "{layer.replace("Cu", "Paste")}" "{layer.replace("Cu", "Mask")}") '
@@ -1129,7 +1132,7 @@ def generate_6pin_target_array_sexpr(
             px = r4(cad_x)
             py = 0.0
         lines.append(
-            f'  (fp_text user "{pin_num}:{net_name}" (at {fmt4(px)} -2.5 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"{footprint_name}_lbl_{pin_num}")}") (effects (font (size 0.55 0.55) (thickness 0.1))))'
+            f'  (fp_text user "{pin_num}:{net_name}" (at {fmt4(px)} {fmt4(py - 2.5)} 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"{footprint_name}_lbl_{pin_num}")}") (effects (font (size 0.55 0.55) (thickness 0.1))))'
         )
         # Bare, unmasked ENIG / Hard Gold landing pads: F.Cu + F.Mask only (NO F.Paste)
         lines.append(
@@ -1225,7 +1228,7 @@ def generate_6pin_spring_header_sexpr(
             px = r4(cad_x)
             py = 0.0
         lines.append(
-            f'  (fp_text user "{pin_num}:{net_name}" (at {fmt4(px)} -2.5 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"{footprint_name}_lbl_{pin_num}")}") (effects (font (size 0.55 0.55) (thickness 0.1))))'
+            f'  (fp_text user "{pin_num}:{net_name}" (at {fmt4(px)} {fmt4(py - 2.5)} 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"{footprint_name}_lbl_{pin_num}")}") (effects (font (size 0.55 0.55) (thickness 0.1))))'
         )
         # Mill-Max 09xx SMT base pad (1.5 x 2.0 mm solder pad on Amplifier PCB)
         lines.append(

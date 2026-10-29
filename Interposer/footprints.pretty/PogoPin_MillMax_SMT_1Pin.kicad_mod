@@ -2,7 +2,7 @@
   (version 20240108)
   (generator "generate_footprint.py")
   (layer "F.Cu")
-  (descr "MR1 Single Pin: SMT_POGO (Standard)")
+  (descr "MR1 Single Pin: SMT_POGO (Standard) [Compatible with Mill-Max & LCSC C5221285 / YTC1P-6030-01 9.0mm Pogo Pin for 1/4 inch Spacer Stackup]")
   (attr smd)
   (property "Reference" "REF**" (at 0 -2.5 0) (layer "F.SilkS") (uuid "a41f9297-6933-509c-a962-a5e15b205821")
     (effects (font (size 1 1) (thickness 0.15)))
