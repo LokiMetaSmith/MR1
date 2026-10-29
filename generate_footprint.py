@@ -9,9 +9,11 @@ Extracts mechanical geometry, fluidic manifold coordinates, concentric
 compression electrode guard rings, and 12-pin distributed pogo-pin target
 locations directly from the `build123d` CAD models (`src.cartridge`,
 `src.common`, `src.constants`, `src.nanopore_wafer_mold`) and generates the
-production-ready KiCad 8/9 footprint:
+production-ready KiCad 8/9 footprints:
 
     PogoPin_Target_6Pin_Distributed.kicad_mod
+    4 Single-Pin Modular Footprint Variants
+    Fluid Overlay Footprints ('drills' for Interposer, 'silkscreen_only' for Amplifier)
 
 Can be executed standalone as a CLI tool:
     python generate_footprint.py --out PogoPin_Target_6Pin_Distributed.kicad_mod
@@ -23,13 +25,15 @@ Or imported as a module in automated build pipelines:
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import os
+import re
 import sys
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 # Ensure repository root is importable when invoked from any working directory
 REPO_ROOT = Path(__file__).resolve().parent
@@ -60,6 +64,16 @@ from src.nanopore_wafer_mold import (  # noqa: E402
 # ---------------------------------------------------------------------------
 
 FOOTPRINT_NAME = "PogoPin_Target_6Pin_Distributed"
+
+# Dimensions
+INTERPOSER_WIDTH = 55.0
+INTERPOSER_HEIGHT = 52.0
+FLUID_PORT_X = 17.3205
+FLUID_PORT_Y = 10.0000
+FLUID_DRILL_DIA = 2.1000
+TARGET_PAD_DIA = 2.0000
+TARGET_PAD_CLEARANCE = 0.4000
+MILLMAX_SMT_PAD_SIZE = (1.8000, 1.8000)
 
 # Bank B (Cis / Sensing - Top Quadrant CAD Y > 0 / KiCad Y = -15.0..-16.0 mm):
 # P1: GNDA_SHLD (-18, +16 CAD), P2: WS_CIS_WIDE (-10, +15 CAD), P3: GUARD_WIDE (-6, +15 CAD),
@@ -208,7 +222,11 @@ class ExtractedCADGeometry:
 # ---------------------------------------------------------------------------
 
 
-def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedCADGeometry:
+def extract_cad_geometry(
+    pin_count: int = 12,
+    bank: str = "trans",
+    pin_positions: Optional[Dict[Union[int, str], Tuple[float, float]]] = None,
+) -> ExtractedCADGeometry:
     """
     Query parametric locations, centers, radii, and outlines directly from
     the `build123d` CAD parts and sketches:
@@ -360,19 +378,21 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
     pogo_pads: List[PadSpec] = []
     for entry in active_seq:
         pin_num, net_name, cad_x, cad_y, desc = entry
-        px = r4(cad_x)
-        py = r4(-cad_y)  # Convert CAD +Y_up to KiCad +Y_down
+
+        # Override position if provided in pin_positions
+        if pin_positions and (pin_num in pin_positions or str(pin_num) in pin_positions or f"P{pin_num}" in pin_positions):
+            override_pos = pin_positions.get(pin_num) or pin_positions.get(str(pin_num)) or pin_positions.get(f"P{pin_num}")
+            px, py = r4(override_pos[0]), r4(override_pos[1])
+        else:
+            px = r4(cad_x)
+            py = r4(-cad_y)  # Convert CAD +Y_up to KiCad +Y_down
 
         is_high_z = net_name in HIGH_Z_NETS
         is_guard = net_name in GUARD_NETS
 
-        # High-Z and Guard pads receive increased isolation clearance (0.4 mm)
-        # and explicit solder-mask margin expansion (0.1 mm)
         clearance = 0.400 if (is_high_z or is_guard) else 0.400
         mask_margin = 0.100 if (is_high_z or is_guard) else 0.050
 
-        # Bare, unmasked ENIG / Hard Gold landing pads on passive interposer:
-        # F.Cu + F.Mask ONLY (no F.Paste so solder paste never contaminates gold contacts)
         pogo_pads.append(
             PadSpec(
                 pin_number=str(pin_num),
@@ -393,7 +413,6 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
         )
 
     # 5. Extract Concentric Silver-Silicone Compression Electrode & Guard Ring Geometry
-    # Query Concentric_Guard_Mold_Plate_Top() and Silver_Chloride_Ribbon_Pads()
     guard_mold_top = Concentric_Guard_Mold_Plate_Top()
     mold_radii = sorted(
         {
@@ -402,7 +421,7 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
             if e.geom_type == GeomType.CIRCLE and e.radius < 5.0
         }
     )
-    _ = mold_radii  # Verified extracted from build123d Concentric_Guard_Mold_Plate_Top
+    _ = mold_radii
 
     ribbon_pads_part = Silver_Chloride_Ribbon_Pads()
     _ = ribbon_pads_part.bounding_box()
@@ -463,7 +482,6 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
         ]
     else:
         concentric_electrodes = [
-            # Primary Nanopore Working Electrode & Concentric Guard at Datum (0.0, 0.0)
             ConcentricElectrodeSpec(
                 name="CIS_NANOPORE_CONCENTRIC",
                 center=(0.0, 0.0),
@@ -480,7 +498,6 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
                 gnd_od=6.5,
                 mask_keepout_dia=4.0,
             ),
-            # Wideband 100 um Micropore Working Electrode & Concentric Guard at (10.0, 0.0)
             ConcentricElectrodeSpec(
                 name="CIS_WIDEBAND_CONCENTRIC",
                 center=(10.0, 0.0),
@@ -499,7 +516,6 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
             ),
         ]
 
-    # Optical alignment fiducials located inside the hex perimeter corners
     fiducials = [
         ("FID1", -12.0, -22.0),
         ("FID2", 12.0, -22.0),
@@ -524,6 +540,154 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
 
 
 # ---------------------------------------------------------------------------
+# Single-Pin Modular Footprint & Fluid Reference Generators
+# ---------------------------------------------------------------------------
+
+
+def generate_header(name: str, desc: str) -> str:
+    """Generate standard KiCad 8/9 footprint header block."""
+    return (
+        f'(footprint "{name}"\n'
+        f'  (version 20240108)\n'
+        f'  (generator "generate_footprint.py")\n'
+        f'  (layer "F.Cu")\n'
+        f'  (descr "{desc}")\n'
+        f'  (attr smd)\n'
+        f'  (property "Reference" "REF**" (at 0 -2.5 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"{name}_ref")}")\n'
+        f'    (effects (font (size 1 1) (thickness 0.15)))\n'
+        f'  )\n'
+        f'  (property "Value" "{name}" (at 0 2.5 0) (layer "F.Fab") (uuid "{deterministic_uuid(f"{name}_val")}")\n'
+        f'    (effects (font (size 0.8 0.8) (thickness 0.12)))\n'
+        f'  )\n'
+    )
+
+
+def generate_single_pin_footprint(
+    name: str,
+    pin_type: str = "target",  # "target" or "smt_pogo"
+    guarded: bool = False,
+    layer: str = "F.Cu",
+) -> str:
+    """Emits one of the 4 discrete single-pin modular footprint variations."""
+    silk_layer = "F.SilkS" if layer.startswith("F") else "B.SilkS"
+    desc = f"MR1 Single Pin: {pin_type.upper()} ({'Guarded' if guarded else 'Standard'})"
+    lines = [generate_header(name, desc)]
+
+    if pin_type == "target":
+        # Circular ENIG Target Pad (Pad 1) - Bare unmasked ENIG / Hard Gold (F.Cu + F.Mask, NO F.Paste)
+        lines.append(
+            f'  (pad "1" smd circle (at 0 0) (size {TARGET_PAD_DIA} {TARGET_PAD_DIA}) '
+            f'(layers "{layer}" "{layer.replace("Cu", "Mask")}") '
+            f'(clearance {TARGET_PAD_CLEARANCE}) (uuid "{deterministic_uuid(f"{name}_pad1")}"))\n'
+        )
+    else:
+        # SMT Mill-Max Pin Pad (Pad 1) on Amplifier (F.Cu + F.Paste + F.Mask)
+        sx, sy = MILLMAX_SMT_PAD_SIZE
+        lines.append(
+            f'  (pad "1" smd roundrect (at 0 0) (size {sx} {sy}) (layers "{layer}" "{layer.replace("Cu", "Paste")}" "{layer.replace("Cu", "Mask")}") '
+            f'(roundrect_rratio 0.25) (clearance 0.3) (uuid "{deterministic_uuid(f"{name}_pad1")}"))\n'
+        )
+
+    # Concentric Guard Ring (Pad 2 / net GUARD)
+    if guarded:
+        guard_width = 0.50
+        r_inner = 1.60
+        lines.append(
+            f'  (fp_circle (center 0 0) (end 0 {r_inner + guard_width}) (stroke (width {guard_width}) (type solid)) (fill none) (layer "{layer}") (uuid "{deterministic_uuid(f"{name}_guard_circle")}"))\n'
+            f'  (pad "2" smd custom (at 0 0) (size 0.1 0.1) (layers "{layer}")\n'
+            f'    (clearance 0.3)\n'
+            f'    (options (clearance outline) (anchor circle))\n'
+            f'    (primitives\n'
+            f'      (gr_circle (center 0 0) (end 0 {r_inner + guard_width}) (width {guard_width}) (fill none))\n'
+            f'    )\n'
+            f'    (uuid "{deterministic_uuid(f"{name}_pad2_guard")}")\n'
+            f'  )\n'
+        )
+        lines.append(
+            f'  (fp_text user "GUARD" (at 0 {r_inner + guard_width + 0.7}) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"{name}_txt_guard")}") (effects (font (size 0.5 0.5) (thickness 0.1))))\n'
+        )
+
+    lines.append(
+        f'  (fp_circle (center 0 0) (end 0 1.5) (stroke (width 0.12) (type solid)) (fill none) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"{name}_silk_bounds")}"))\n'
+    )
+    lines.append(")\n")
+    return "".join(lines)
+
+
+def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = "F") -> str:
+    """Generates fluid port markers and flow channel references for Amplifier vs Interposer."""
+    lines = []
+    ports = [
+        ("H1", -FLUID_PORT_X, FLUID_PORT_Y),
+        ("H2", FLUID_PORT_X, -FLUID_PORT_Y),
+        ("H3", -FLUID_PORT_X, -FLUID_PORT_Y),
+        ("H4", FLUID_PORT_X, FLUID_PORT_Y),
+    ]
+    silk_layer = f"{layer}.SilkS"
+
+    for name, x, y in ports:
+        if fluid_mode == "drills":
+            lines.append(
+                f'  (pad "{name}" np_thru_hole circle (at {x:.4f} {y:.4f}) '
+                f'(size {FLUID_DRILL_DIA} {FLUID_DRILL_DIA}) (drill {FLUID_DRILL_DIA}) (layers "*.Cu" "*.Mask") (uuid "{deterministic_uuid(f"fluid_pad_{name}")}"))\n'
+            )
+            lines.append(
+                f'  (fp_text user "{name}" (at {x:.4f} {y+1.8:.4f} 0) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_txt_{name}")}") (effects (font (size 0.7 0.7) (thickness 0.12))))\n'
+            )
+        else:
+            # Silkscreen reference circle and crosshair
+            lines.append(
+                f'  (fp_circle (center {x:.4f} {y:.4f}) (end {x:.4f} {y + FLUID_DRILL_DIA/2.0:.4f}) (stroke (width 0.15) (type solid)) (fill none) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_silk_circ_{name}")}"))\n'
+            )
+            lines.append(
+                f'  (fp_line (start {x-1.5:.4f} {y:.4f}) (end {x+1.5:.4f} {y:.4f}) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_silk_h_{name}")}"))\n'
+            )
+            lines.append(
+                f'  (fp_line (start {x:.4f} {y-1.5:.4f}) (end {x:.4f} {y+1.5:.4f}) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_silk_v_{name}")}"))\n'
+            )
+            lines.append(
+                f'  (fp_text user "REF_{name}" (at {x:.4f} {y+1.8:.4f} 0) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_txt_{name}")}") (effects (font (size 0.7 0.7) (thickness 0.12))))\n'
+            )
+
+    # Draw Centerline Flow Channel Reference on Silk
+    lines.append(
+        f'  (fp_line (start -20.0 0.0) (end 20.0 0.0) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_axis")}"))\n'
+    )
+    lines.append(
+        f'  (fp_text user "<== FLUID CHANNEL AXIS ==>" (at 0.0 0.8 0) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_label")}") (effects (font (size 0.8 0.8) (thickness 0.12))))\n'
+    )
+    return "".join(lines)
+
+
+def extract_pin_positions_from_pcb(
+    pcb_path: Union[str, Path], prefix: str = "P"
+) -> Dict[str, Tuple[float, float]]:
+    """
+    Parses a KiCad PCB file and extracts placed pin coordinates.
+    Matches footprints with references like P1, P2... or P_CIS_1...
+    """
+    p_path = Path(pcb_path)
+    if not p_path.is_file():
+        raise FileNotFoundError(f"PCB file not found: {pcb_path}")
+
+    positions: Dict[str, Tuple[float, float]] = {}
+    content = p_path.read_text(encoding="utf-8")
+
+    # Match footprint blocks
+    fp_pattern = re.compile(
+        r'\(footprint\s+"[^"]*".*?\(fp_text\s+reference\s+"('
+        + prefix
+        + r'\d+|_?[A-Za-z0-9_]+)".*?\(at\s+([-0-9.]+)\s+([-0-9.]+)',
+        re.DOTALL,
+    )
+    for match in fp_pattern.finditer(content):
+        ref, x, y = match.group(1), float(match.group(2)), float(match.group(3))
+        positions[ref] = (x, y)
+
+    return positions
+
+
+# ---------------------------------------------------------------------------
 # KiCad 8/9 S-Expression Generator
 # ---------------------------------------------------------------------------
 
@@ -531,6 +695,7 @@ def extract_cad_geometry(pin_count: int = 12, bank: str = "trans") -> ExtractedC
 def generate_kicad_footprint(
     geom: ExtractedCADGeometry,
     footprint_name: Optional[str] = None,
+    fluid_mode: str = "drills",
 ) -> str:
     """
     Render the extracted `build123d` CAD geometry into a syntactically pristine
@@ -780,7 +945,7 @@ def generate_kicad_footprint(
         )
 
     # -----------------------------------------------------------------------
-    # 2. Fluidic Pass-Through Holes (H1, H2, H3, H4) - 2.1 mm NPTH
+    # 2. Fluidic Pass-Through Holes (H1, H2, H3, H4) - Drills vs Silkscreen-Only
     # -----------------------------------------------------------------------
     for h_name, hx, hy, h_drill in geom.fluid_holes:
         r_silk = r4(h_drill / 2.0 + 0.35)
@@ -790,9 +955,18 @@ def generate_kicad_footprint(
         lines.append(
             f'  (fp_text user "{h_name}" (at {fmt4(hx)} {fmt4(hy - 1.8)} 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"fluid_txt_{h_name}")}") (effects (font (size 0.8 0.8) (thickness 0.15))))'
         )
-        lines.append(
-            f'  (pad "{h_name}" np_thru_hole circle (at {fmt4(hx)} {fmt4(hy)}) (size {fmt4(h_drill)} {fmt4(h_drill)}) (drill {fmt4(h_drill)}) (layers "*.Cu" "*.Mask") (uuid "{deterministic_uuid(f"pad_{h_name}")}"))'
-        )
+        if fluid_mode == "drills":
+            lines.append(
+                f'  (pad "{h_name}" np_thru_hole circle (at {fmt4(hx)} {fmt4(hy)}) (size {fmt4(h_drill)} {fmt4(h_drill)}) (drill {fmt4(h_drill)}) (layers "*.Cu" "*.Mask") (uuid "{deterministic_uuid(f"pad_{h_name}")}"))'
+            )
+        else:
+            # Silkscreen-only crosshair and reference marking for Amplifier PCB reasoning
+            lines.append(
+                f'  (fp_line (start {fmt4(hx - 1.5)} {fmt4(hy)}) (end {fmt4(hx + 1.5)} {fmt4(hy)}) (stroke (width 0.12) (type solid)) (layer "F.SilkS") (uuid "{deterministic_uuid(f"fluid_cross_h_{h_name}")}"))'
+            )
+            lines.append(
+                f'  (fp_line (start {fmt4(hx)} {fmt4(hy - 1.5)}) (end {fmt4(hx)} {fmt4(hy + 1.5)}) (stroke (width 0.12) (type solid)) (layer "F.SilkS") (uuid "{deterministic_uuid(f"fluid_cross_v_{h_name}")}"))'
+            )
 
     # -----------------------------------------------------------------------
     # 3. Distributed Pogo Pin Target Pads (Cis & Trans 6-Pin Banks)
@@ -878,6 +1052,7 @@ def generate_kicad_footprint(
 def generate_6pin_target_array_sexpr(
     footprint_name: str = "PogoPin_Target_6Pin_Array",
     bank: str = "trans",
+    pin_positions: Optional[Dict[Union[int, str], Tuple[float, float]]] = None,
 ) -> str:
     """
     Generate a standalone 6-pin passive PTFE Interposer target array footprint
@@ -947,8 +1122,12 @@ def generate_6pin_target_array_sexpr(
 
     for entry in seq:
         pin_num, net_name, cad_x, cad_y, _desc = entry
-        px = r4(cad_x)
-        py = 0.0
+        if pin_positions and (pin_num in pin_positions or str(pin_num) in pin_positions or f"P{pin_num}" in pin_positions):
+            override_pos = pin_positions.get(pin_num) or pin_positions.get(str(pin_num)) or pin_positions.get(f"P{pin_num}")
+            px, py = r4(override_pos[0]), r4(override_pos[1])
+        else:
+            px = r4(cad_x)
+            py = 0.0
         lines.append(
             f'  (fp_text user "{pin_num}:{net_name}" (at {fmt4(px)} -2.5 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"{footprint_name}_lbl_{pin_num}")}") (effects (font (size 0.55 0.55) (thickness 0.1))))'
         )
@@ -958,14 +1137,19 @@ def generate_6pin_target_array_sexpr(
         )
 
     for entry in seq:
-        _pin_num, net_name, cad_x, _cad_y, _desc = entry
+        pin_num, net_name, cad_x, _cad_y, _desc = entry
         if net_name in HIGH_Z_NETS:
-            px = r4(cad_x)
+            if pin_positions and (pin_num in pin_positions or str(pin_num) in pin_positions or f"P{pin_num}" in pin_positions):
+                override_pos = pin_positions.get(pin_num) or pin_positions.get(str(pin_num)) or pin_positions.get(f"P{pin_num}")
+                px, py = r4(override_pos[0]), r4(override_pos[1])
+            else:
+                px = r4(cad_x)
+                py = 0.0
             lines.append(
-                f'  (fp_circle (center {fmt4(px)} 0.0) (end {fmt4(px + 1.45)} 0.0) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Cu") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_cu_{net_name}")}"))'
+                f'  (fp_circle (center {fmt4(px)} {fmt4(py)}) (end {fmt4(px + 1.45)} {fmt4(py)}) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Cu") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_cu_{net_name}")}"))'
             )
             lines.append(
-                f'  (fp_circle (center {fmt4(px)} 0.0) (end {fmt4(px + 1.45)} 0.0) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Mask") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_mask_{net_name}")}"))'
+                f'  (fp_circle (center {fmt4(px)} {fmt4(py)}) (end {fmt4(px + 1.45)} {fmt4(py)}) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Mask") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_mask_{net_name}")}"))'
             )
     lines.append(")")
     return "\n".join(lines) + "\n"
@@ -974,6 +1158,7 @@ def generate_6pin_target_array_sexpr(
 def generate_6pin_spring_header_sexpr(
     footprint_name: str = "PogoPin_SpringHeader_6Pin_Array",
     bank: str = "trans",
+    pin_positions: Optional[Dict[Union[int, str], Tuple[float, float]]] = None,
 ) -> str:
     """
     Generate a 6-pin downward-facing Reader Lid (`Amplifier` PCB bottom-mounted)
@@ -1033,8 +1218,12 @@ def generate_6pin_spring_header_sexpr(
 
     for entry in seq:
         pin_num, net_name, cad_x, cad_y, _desc = entry
-        px = r4(cad_x)
-        py = 0.0
+        if pin_positions and (pin_num in pin_positions or str(pin_num) in pin_positions or f"P{pin_num}" in pin_positions):
+            override_pos = pin_positions.get(pin_num) or pin_positions.get(str(pin_num)) or pin_positions.get(f"P{pin_num}")
+            px, py = r4(override_pos[0]), r4(override_pos[1])
+        else:
+            px = r4(cad_x)
+            py = 0.0
         lines.append(
             f'  (fp_text user "{pin_num}:{net_name}" (at {fmt4(px)} -2.5 0) (layer "F.SilkS") (uuid "{deterministic_uuid(f"{footprint_name}_lbl_{pin_num}")}") (effects (font (size 0.55 0.55) (thickness 0.1))))'
         )
@@ -1044,14 +1233,19 @@ def generate_6pin_spring_header_sexpr(
         )
 
     for entry in seq:
-        _pin_num, net_name, cad_x, _cad_y, _desc = entry
+        pin_num, net_name, cad_x, _cad_y, _desc = entry
         if net_name in HIGH_Z_NETS:
-            px = r4(cad_x)
+            if pin_positions and (pin_num in pin_positions or str(pin_num) in pin_positions or f"P{pin_num}" in pin_positions):
+                override_pos = pin_positions.get(pin_num) or pin_positions.get(str(pin_num)) or pin_positions.get(f"P{pin_num}")
+                px, py = r4(override_pos[0]), r4(override_pos[1])
+            else:
+                px = r4(cad_x)
+                py = 0.0
             lines.append(
-                f'  (fp_circle (center {fmt4(px)} 0.0) (end {fmt4(px + 1.45)} 0.0) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Cu") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_cu_{net_name}")}"))'
+                f'  (fp_circle (center {fmt4(px)} {fmt4(py)}) (end {fmt4(px + 1.45)} {fmt4(py)}) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Cu") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_cu_{net_name}")}"))'
             )
             lines.append(
-                f'  (fp_circle (center {fmt4(px)} 0.0) (end {fmt4(px + 1.45)} 0.0) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Mask") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_mask_{net_name}")}"))'
+                f'  (fp_circle (center {fmt4(px)} {fmt4(py)}) (end {fmt4(px + 1.45)} {fmt4(py)}) (stroke (width 0.25) (type solid)) (fill none) (layer "F.Mask") (uuid "{deterministic_uuid(f"{footprint_name}_guard_ring_mask_{net_name}")}"))'
             )
     lines.append(")")
     return "\n".join(lines) + "\n"
@@ -1138,21 +1332,23 @@ def build_footprint_file(
     verbose: bool = True,
     pin_count: int = 12,
     bank: str = "trans",
+    pin_positions: Optional[Dict[Union[int, str], Tuple[float, float]]] = None,
+    fluid_mode: str = "drills",
 ) -> Tuple[ExtractedCADGeometry, str]:
     """
     Extract CAD geometry, generate the KiCad S-expression, write to `output_path`,
     optionally synchronize the repository footprint libraries (including the two
-    separate 6-pin Mill-Max 09xx Cis & Trans target and spring header footprints),
-    and print the verification table.
+    separate 6-pin Mill-Max 09xx Cis & Trans target and spring header footprints,
+    and single-pin modular footprints), and print the verification table.
     """
     fp_name = (
         "PogoPin_Target_6Pin_MillMax_09xx"
         if pin_count == 6 and str(output_path) == f"{FOOTPRINT_NAME}.kicad_mod"
         else FOOTPRINT_NAME
     )
-    geom = extract_cad_geometry(pin_count=pin_count, bank=bank)
+    geom = extract_cad_geometry(pin_count=pin_count, bank=bank, pin_positions=pin_positions)
     sexpr = generate_kicad_footprint(
-        geom, footprint_name=fp_name if pin_count == 6 else FOOTPRINT_NAME
+        geom, footprint_name=fp_name if pin_count == 6 else FOOTPRINT_NAME, fluid_mode=fluid_mode
     )
 
     out_path = Path(output_path)
@@ -1175,15 +1371,15 @@ def build_footprint_file(
             d.mkdir(parents=True, exist_ok=True)
 
         # 1. Sync full Dual 6-Pin (6 Cis + 6 Trans) Interposer footprints
-        geom_12 = geom if pin_count == 12 else extract_cad_geometry(pin_count=12)
-        sexpr_12 = generate_kicad_footprint(geom_12, footprint_name=FOOTPRINT_NAME)
+        geom_12 = geom if pin_count == 12 else extract_cad_geometry(pin_count=12, pin_positions=pin_positions)
+        sexpr_12 = generate_kicad_footprint(geom_12, footprint_name=FOOTPRINT_NAME, fluid_mode=fluid_mode)
         for d in target_dirs:
             p = d / f"{FOOTPRINT_NAME}.kicad_mod"
             if p.resolve() != out_path.resolve():
                 p.write_text(sexpr_12, encoding="utf-8")
 
         sexpr_12_millmax = generate_kicad_footprint(
-            geom_12, footprint_name="PogoPin_Target_6Pin_MillMax_09xx"
+            geom_12, footprint_name="PogoPin_Target_6Pin_MillMax_09xx", fluid_mode=fluid_mode
         )
         for d in target_dirs:
             (d / "PogoPin_Target_6Pin_MillMax_09xx.kicad_mod").write_text(
@@ -1192,13 +1388,13 @@ def build_footprint_file(
 
         # 2. Generate & sync two separate 6-Pin Bare ENIG/Hard Gold Target Arrays (J_POGO_CIS & J_POGO_TRANS)
         sexpr_cis_target = generate_6pin_target_array_sexpr(
-            "PogoPin_Target_6Pin_Cis", bank="cis"
+            "PogoPin_Target_6Pin_Cis", bank="cis", pin_positions=pin_positions
         )
         sexpr_trans_target = generate_6pin_target_array_sexpr(
-            "PogoPin_Target_6Pin_Trans", bank="trans"
+            "PogoPin_Target_6Pin_Trans", bank="trans", pin_positions=pin_positions
         )
         sexpr_arr_target = generate_6pin_target_array_sexpr(
-            "PogoPin_Target_6Pin_Array", bank="trans"
+            "PogoPin_Target_6Pin_Array", bank="trans", pin_positions=pin_positions
         )
         for d in target_dirs:
             (d / "PogoPin_Target_6Pin_Cis.kicad_mod").write_text(
@@ -1213,13 +1409,13 @@ def build_footprint_file(
 
         # 3. Generate & sync two separate 6-Pin Mill-Max 09xx Spring Headers (J_POGO_CIS & J_POGO_TRANS on Amplifier bottom)
         sexpr_cis_spring = generate_6pin_spring_header_sexpr(
-            "PogoPin_SpringHeader_6Pin_Cis", bank="cis"
+            "PogoPin_SpringHeader_6Pin_Cis", bank="cis", pin_positions=pin_positions
         )
         sexpr_trans_spring = generate_6pin_spring_header_sexpr(
-            "PogoPin_SpringHeader_6Pin_Trans", bank="trans"
+            "PogoPin_SpringHeader_6Pin_Trans", bank="trans", pin_positions=pin_positions
         )
         sexpr_arr_spring = generate_6pin_spring_header_sexpr(
-            "PogoPin_SpringHeader_6Pin_Array", bank="trans"
+            "PogoPin_SpringHeader_6Pin_Array", bank="trans", pin_positions=pin_positions
         )
         for d in spring_dirs:
             (d / "PogoPin_SpringHeader_6Pin_Cis.kicad_mod").write_text(
@@ -1231,6 +1427,29 @@ def build_footprint_file(
             (d / "PogoPin_SpringHeader_6Pin_Array.kicad_mod").write_text(
                 sexpr_arr_spring, encoding="utf-8"
             )
+
+        # 4. Generate & sync 4 Single-Pin Modular Footprint Variants
+        single_pin_variants = [
+            ("PogoPin_MillMax_SMT_1Pin", "smt_pogo", False),
+            ("PogoPin_MillMax_SMT_1Pin_Guarded", "smt_pogo", True),
+            ("PogoPin_Target_Landing_1Pin", "target", False),
+            ("PogoPin_Target_Landing_1Pin_Guarded", "target", True),
+        ]
+        for fname, ptype, guarded in single_pin_variants:
+            sp_sexpr = generate_single_pin_footprint(fname, pin_type=ptype, guarded=guarded)
+            for d in target_dirs:
+                (d / f"{fname}.kicad_mod").write_text(sp_sexpr, encoding="utf-8")
+
+        # 5. Output Fluid Overlay Templates (both DRILLS for Interposer and SILKSCREEN_ONLY for Amplifier)
+        for fmode in ["drills", "silkscreen_only"]:
+            fluid_ref_name = f"Fluid_Overlay_{fmode.upper()}"
+            fluid_sexpr = (
+                generate_header(fluid_ref_name, f"Fluid overlay: {fmode}")
+                + generate_fluid_references(fluid_mode=fmode)
+                + ")\n"
+            )
+            for d in target_dirs:
+                (d / f"{fluid_ref_name}.kicad_mod").write_text(fluid_sexpr, encoding="utf-8")
 
     if verbose:
         print(format_validation_table(geom))
@@ -1267,6 +1486,28 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
         help="Which 6-pin bank to generate when --pins 6 is selected ('cis' or 'trans'; default: 'trans')",
     )
     parser.add_argument(
+        "--fluid-mode",
+        choices=["drills", "silkscreen_only"],
+        default="drills",
+        help="Fluid hole representation ('drills' for Interposer NPTH drills, 'silkscreen_only' for Amplifier references; default: 'drills')",
+    )
+    parser.add_argument(
+        "--pin-coords",
+        "--pin-positions",
+        type=str,
+        help="JSON string or file path containing custom per-pin (x, y) coordinates dictionary/mapping",
+    )
+    parser.add_argument(
+        "--read-pcb",
+        type=Path,
+        help="Path to .kicad_pcb file to extract manually moved pin placement coordinates",
+    )
+    parser.add_argument(
+        "--single-pins-only",
+        action="store_true",
+        help="Generate only the 4 discrete single-pin library files",
+    )
+    parser.add_argument(
         "--sync-libs",
         action="store_true",
         default=True,
@@ -1289,12 +1530,29 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = parse_args(argv)
+
+    if args.read_pcb:
+        coords = extract_pin_positions_from_pcb(args.read_pcb)
+        print(f"Extracted {len(coords)} pin positions from {args.read_pcb}:")
+        print(json.dumps(coords, indent=2))
+        return 0
+
+    pin_positions = None
+    if args.pin_coords:
+        if os.path.exists(args.pin_coords):
+            with open(args.pin_coords, "r", encoding="utf-8") as f:
+                pin_positions = json.load(f)
+        else:
+            pin_positions = json.loads(args.pin_coords)
+
     build_footprint_file(
         output_path=args.out,
         sync_libraries=args.sync_libs,
         verbose=not args.quiet,
         pin_count=args.pins,
         bank=args.bank,
+        pin_positions=pin_positions,
+        fluid_mode=args.fluid_mode,
     )
     return 0
 
