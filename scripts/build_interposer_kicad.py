@@ -23,14 +23,14 @@ from pathlib import Path
 def new_uuid():
     return str(uuid.uuid4())
 
-def get_pogo_12pin_fp_str():
+def get_pogo_12pin_fp_str(fluid_mode: str = "drills"):
     import sys
     repo_root = Path(__file__).resolve().parent.parent
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))
     from generate_footprint import extract_cad_geometry, generate_kicad_footprint
     geom = extract_cad_geometry(pin_count=12)
-    fp_txt = generate_kicad_footprint(geom, footprint_name="PogoPin_Target_12Pin_Distributed")
+    fp_txt = generate_kicad_footprint(geom, footprint_name="PogoPin_Target_12Pin_Distributed", fluid_mode=fluid_mode)
     # Indent block to match PCB footprint section
     indented_lines = ["\t" + l if l.strip() else "" for l in fp_txt.splitlines()]
     return "\n".join(indented_lines)
