@@ -120,9 +120,9 @@ Ideal for web-based oscilloscopes, Electron apps, and Python/JavaScript frontend
      "packets_dropped": 0
    }
    ```
-2. **Binary Frame Chunk (Sent @ 100 Hz, 1000 samples per message):**
-   - Header: 8-byte microsecond timestamp.
-   - Body: Array of float32 current values in picoamperes ($1000 \times 4\text{ bytes} = 4000\text{ bytes}$).
+2. **Binary Frame Chunk (Sent @ ~97.66 Hz, 1024 samples per message = 16 USB frames):**
+   - Header: 8-byte microsecond timestamp of the first sample/frame in the batch (`<Q`).
+   - Body: Array of float32 current values in picoamperes ($1024 \times 4\text{ bytes} = 4096\text{ bytes}$, total chunk size = 4104 bytes).
 
 3. **External Command Message (Bidirectional):**
    ```json

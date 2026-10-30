@@ -96,12 +96,56 @@ class TestWebSocketBridgeIntegration(unittest.TestCase):
 
             self.assertGreater(len(received_chunks), 0)
 
-            # Verify structure of first received binary frame chunk
+            # Verify structure of first received binary frame chunk (default batching = 16 frames = 1024 samples)
             first_chunk = received_chunks[0]
-            self.assertEqual(len(first_chunk), 8 + 64 * 4)  # 8 bytes timestamp + 64 * float32
-            timestamp_us, *samples = struct.unpack("<Q64f", first_chunk)
+            self.assertEqual(len(first_chunk), 8 + 1024 * 4)  # 8 bytes timestamp + 1024 * float32
+            timestamp_us, *samples = struct.unpack("<Q1024f", first_chunk)
             self.assertGreaterEqual(timestamp_us, 0)
-            self.assertEqual(len(samples), 64)
+            self.assertEqual(len(samples), 1024)
+
+        finally:
+            server.shutdown()
+            server_thread.join(timeout=1.0)
+
+    def test_mock_websocket_custom_batching(self):
+        host = "127.0.0.1"
+        ws_port = 8786
+
+        # Start WebSocket server
+        server = websocket_bridge.run_websocket_server(host, ws_port)
+        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+        server_thread.start()
+
+        ws_url = f"ws://{host}:{ws_port}"
+        received_chunks = []
+
+        def client_reader(ws):
+            try:
+                for _ in range(5):
+                    data = ws.recv(timeout=1.0)
+                    if isinstance(data, bytes):
+                        received_chunks.append(data)
+            except Exception:
+                pass
+
+        try:
+            with connect(ws_url) as ws:
+                reader_thread = threading.Thread(target=client_reader, args=(ws,), daemon=True)
+                reader_thread.start()
+
+                # Run mock listen_to_mr1 for 0.5s with batch_frames=4 (256 samples)
+                mock_client = daq_client.DaqClient(port="MOCK", is_mock=True)
+                websocket_bridge.listen_to_mr1(mock_client, duration_sec=0.5, batch_frames=4)
+
+                reader_thread.join(timeout=1.0)
+
+            self.assertGreater(len(received_chunks), 0)
+
+            first_chunk = received_chunks[0]
+            self.assertEqual(len(first_chunk), 8 + 256 * 4)  # 8 bytes timestamp + 256 * float32
+            timestamp_us, *samples = struct.unpack("<Q256f", first_chunk)
+            self.assertGreaterEqual(timestamp_us, 0)
+            self.assertEqual(len(samples), 256)
 
         finally:
             server.shutdown()

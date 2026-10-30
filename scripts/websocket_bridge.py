@@ -98,22 +98,30 @@ def run_websocket_server(host: str, port: int) -> serve:
 
 def listen_to_mr1(
     client: daq_client.DaqClient,
-    duration_sec: Optional[float] = None
+    duration_sec: Optional[float] = None,
+    batch_frames: int = 16
 ):
     """
     Ingests live telemetry frames from `DaqClient`, converts samples to pA,
-    and broadcasts binary chunks to active WebSocket clients.
+    batches multiple USB frames (default 16 frames = 1024 samples), and broadcasts
+    binary chunks to active WebSocket clients.
     """
     client.connect()
     client.start_streaming()
 
+    target_samples = max(1, batch_frames) * daq_client.SAMPLES_PER_FRAME
+
     print("\n" + "=" * 70)
     print("  MR1 Nanopore WebSocket Bridge (Active)")
     print(f"  Streaming DAQ frames over WebSocket to connected clients...")
+    print(f"  Batching {batch_frames} USB frames ({target_samples} samples) per WebSocket message.")
     print("  Press Ctrl+C to stop acquisition.")
     print("=" * 70)
 
     start = time.time()
+    accumulated_currents_pa = []
+    batch_timestamp_us = None
+
     try:
         while client.is_running:
             if duration_sec and (time.time() - start) >= duration_sec:
@@ -125,16 +133,31 @@ def listen_to_mr1(
                 continue
 
             if latest_frame:
+                if batch_timestamp_us is None:
+                    batch_timestamp_us = latest_frame.timestamp_us
+
                 currents_pa = [
                     daq_client.raw_to_current(s, client.vref, client.gain_ohms) * 1e12
                     for s in latest_frame.samples
                 ]
-                bfc = get_binary_frame_chunk(latest_frame.timestamp_us, currents_pa)
-                broadcast_binary_chunk(bfc)
+                accumulated_currents_pa.extend(currents_pa)
+
+                if len(accumulated_currents_pa) >= target_samples:
+                    bfc = get_binary_frame_chunk(batch_timestamp_us, accumulated_currents_pa)
+                    broadcast_binary_chunk(bfc)
+                    accumulated_currents_pa = []
+                    batch_timestamp_us = None
 
     except KeyboardInterrupt:
         print("\n\nUser interrupted acquisition.")
     finally:
+        # Flush any remaining accumulated samples
+        if accumulated_currents_pa and batch_timestamp_us is not None:
+            bfc = get_binary_frame_chunk(batch_timestamp_us, accumulated_currents_pa)
+            broadcast_binary_chunk(bfc)
+            accumulated_currents_pa = []
+            batch_timestamp_us = None
+
         client.stop_streaming()
         client.disconnect()
         print("\n" + "=" * 70)
@@ -173,6 +196,12 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=None,
         help="Acquisition duration in seconds (default: run until Ctrl+C)."
+    )
+    parser.add_argument(
+        "--batch-frames",
+        type=int,
+        default=16,
+        help="Number of 64-sample USB frames to batch per WebSocket message (default: 16 -> 1024 samples)."
     )
     parser.add_argument(
         "--route", "-r",
@@ -215,7 +244,7 @@ def main():
         client.set_route(args.route)
 
     try:
-        listen_to_mr1(client, duration_sec=args.duration)
+        listen_to_mr1(client, duration_sec=args.duration, batch_frames=args.batch_frames)
     finally:
         ws_server.shutdown()
         ws_thread.join(timeout=1.0)
