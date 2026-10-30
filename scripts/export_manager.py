@@ -118,7 +118,7 @@ def export_footprints(verbose=True):
     if str(REPO_ROOT) not in sys.path:
         sys.path.insert(0, str(REPO_ROOT))
     try:
-        from generate_footprint import FOOTPRINT_NAME, build_footprint_file
+        from scripts.generate_footprint import FOOTPRINT_NAME, build_footprint_file
 
         footprints_export_dir = EXPORTS_DIR / "footprints"
         footprints_export_dir.mkdir(parents=True, exist_ok=True)

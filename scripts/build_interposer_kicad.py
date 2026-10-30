@@ -28,7 +28,7 @@ def get_pogo_12pin_fp_str(fluid_mode: str = "drills"):
     repo_root = Path(__file__).resolve().parent.parent
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))
-    from generate_footprint import extract_cad_geometry, generate_kicad_footprint
+    from scripts.generate_footprint import extract_cad_geometry, generate_kicad_footprint
     geom = extract_cad_geometry(pin_count=12)
     fp_txt = generate_kicad_footprint(geom, footprint_name="PogoPin_Target_12Pin_Distributed", fluid_mode=fluid_mode)
     # Indent block to match PCB footprint section
@@ -46,7 +46,7 @@ def get_single_pin_pogo_landings_fp_str():
     repo_root = Path(__file__).resolve().parent.parent
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))
-    from generate_footprint import (
+    from scripts.generate_footprint import (
         PIN_NET_SEQUENCE,
         HIGH_Z_NETS,
         GUARD_NETS,
