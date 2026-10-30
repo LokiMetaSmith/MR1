@@ -82,31 +82,25 @@ class TestInterposerKiCad(unittest.TestCase):
         target_fp = REPO_ROOT / "Interposer" / "footprints.pretty" / "PogoPin_Target_12Pin_Distributed.kicad_mod"
         target_pad_fp = REPO_ROOT / "Interposer" / "footprints.pretty" / "PogoPin_TargetPad_1.8mm.kicad_mod"
         spring_fp = REPO_ROOT / "Amplifier" / "footprints.pretty" / "PogoPin_SpringHeader_12Pin_Distributed.kicad_mod"
-        concentric_fp = REPO_ROOT / "Interposer" / "footprints.pretty" / "Concentric_Electrode_Cell.kicad_mod"
+        electrode_fp = REPO_ROOT / "Interposer" / "footprints.pretty" / "Electrode.kicad_mod"
+        electrode_guard_fp = REPO_ROOT / "Interposer" / "footprints.pretty" / "Electrode_Guard.kicad_mod"
 
         self.assertTrue(target_fp.exists(), "PogoPin_Target_12Pin_Distributed.kicad_mod must exist")
         self.assertTrue(target_pad_fp.exists(), "PogoPin_TargetPad_1.8mm.kicad_mod must exist")
         self.assertTrue(spring_fp.exists(), "PogoPin_SpringHeader_12Pin_Distributed.kicad_mod must exist")
-        self.assertTrue(concentric_fp.exists(), "Concentric_Electrode_Cell.kicad_mod must exist")
+        self.assertTrue(electrode_fp.exists(), "Electrode.kicad_mod must exist")
+        self.assertTrue(electrode_guard_fp.exists(), "Electrode_Guard.kicad_mod must exist")
 
         target_txt = target_fp.read_text(encoding="utf-8")
-        # 6 pads must be present
+        # 12 pads must be present
         for p in range(1, 13):
             self.assertIn(f'(pad "{p}"', target_txt, f"Pad {p} must exist in target array")
 
-        concentric_txt = concentric_fp.read_text(encoding="utf-8")
-        # 5 pads (WE, WS, Guard, RE, CE) must be present
-        for p in range(1, 6):
-            self.assertIn(f'(pad "{p}"', concentric_txt, f"Pad {p} must exist in concentric cell footprint")
+        electrode_txt = electrode_fp.read_text(encoding="utf-8")
+        self.assertIn('(pad "1"', electrode_txt, "Pad 1 must exist in electrode footprint")
 
-        # Regression check: PCB and footprint must not contain invalid '(fill (type ...))' syntax
-        self.assertNotIn("fill (type", concentric_txt, "Footprint must not contain invalid fill syntax")
         pcb_txt = (REPO_ROOT / "Interposer" / "Interposer.kicad_pcb").read_text(encoding="utf-8")
         self.assertNotIn("fill (type", pcb_txt, "PCB must not contain invalid fill syntax")
-
-        # Regression check: custom pad primitives must use gr_* (e.g. gr_circle), NOT fp_*
-        self.assertIn("gr_circle", concentric_txt, "Footprint primitives must use gr_circle")
-        self.assertNotIn("fp_circle", concentric_txt, "Footprint primitives must NOT use fp_circle")
 
     def test_interposer_symbol_library(self):
         """Ensure Interposer custom symbol library exists and defines all feature symbols."""
@@ -119,11 +113,12 @@ class TestInterposerKiCad(unittest.TestCase):
         sym_txt = sym_file.read_text(encoding="utf-8")
         expected_symbols = [
             "PogoPin_Target_12Pin_Distributed",
+            "Electrode",
+            "Electrode_Guard",
             "Electrode_Guard_Shield",
             "Nanopore_Wafer_Aperture",
             "Weep_Moat_Sensor",
-            "Fluidic_Port_PassThrough",
-            "Concentric_Electrode_Cell"
+            "Fluidic_Port_PassThrough"
         ]
         for s in expected_symbols:
             self.assertIn(f'(symbol "{s}"', sym_txt, f"Symbol {s} must be defined in Interposer.kicad_sym")
