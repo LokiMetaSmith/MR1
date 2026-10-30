@@ -36,7 +36,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
 # Ensure repository root is importable when invoked from any working directory
-REPO_ROOT = Path(__file__).resolve().parent
+REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -1393,8 +1393,8 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
         "--out",
         "-o",
         type=Path,
-        default=Path(f"{FOOTPRINT_NAME}.kicad_mod"),
-        help="Output path for the generated .kicad_mod file (default: PogoPin_Target_6Pin_Distributed.kicad_mod)",
+        default=REPO_ROOT / "Interposer" / "footprints.pretty" / f"{FOOTPRINT_NAME}.kicad_mod",
+        help="Output path for the generated .kicad_mod file (default: Interposer/footprints.pretty/PogoPin_Target_6Pin_Distributed.kicad_mod)",
     )
     parser.add_argument(
         "--pins",

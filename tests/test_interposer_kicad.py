@@ -511,7 +511,9 @@ class TestInterposerKiCad(unittest.TestCase):
         self.assertIn('"J_PAD1"', sch_txt)
 
         # 4. Independent guard architecture (verified via exported KiCad netlist):
-        import subprocess, re
+        import subprocess, re, shutil
+        if shutil.which("kicad-cli") is None:
+            self.skipTest("kicad-cli toolchain not found on system")
         net_path = REPO_ROOT / "build" / "test_amp_guard_netlist.net"
         net_path.parent.mkdir(parents=True, exist_ok=True)
         res = subprocess.run(
@@ -645,7 +647,7 @@ class TestInterposerKiCad(unittest.TestCase):
         import sys
         if str(REPO_ROOT) not in sys.path:
             sys.path.insert(0, str(REPO_ROOT))
-        from generate_footprint import (
+        from scripts.generate_footprint import (
             PIN_NET_SEQUENCE,
             extract_cad_geometry,
             format_validation_table,
@@ -682,7 +684,7 @@ class TestInterposerKiCad(unittest.TestCase):
 
     def test_6pin_millmax_09xx_bias_tail_footprints_and_guarding(self):
         """Dual 6-pin banks: Cis (Y=-15) and Trans (Y=+15) Mill-Max 09xx footprints."""
-        from generate_footprint import (
+        from scripts.generate_footprint import (
             PIN_NET_SEQUENCE_6PIN_CIS,
             PIN_NET_SEQUENCE_6PIN_TRANS,
             extract_cad_geometry,
