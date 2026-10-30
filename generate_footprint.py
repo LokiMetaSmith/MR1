@@ -426,95 +426,7 @@ def extract_cad_geometry(
     ribbon_pads_part = Silver_Chloride_Ribbon_Pads()
     _ = ribbon_pads_part.bounding_box()
 
-    if pin_count == 6 and bank_norm == "cis":
-        concentric_electrodes = [
-            ConcentricElectrodeSpec(
-                name="CIS_NANOPORE_CONCENTRIC",
-                center=(0.0, 0.0),
-                signal_pin="2",
-                signal_net=">PORE_AMP",
-                guard_pin="4",
-                guard_net="GUARD",
-                gnd_pin="1",
-                gnd_net="GNDA",
-                inner_dot_dia=0.7,
-                guard_id=2.1,
-                guard_od=3.0,
-                gnd_id=5.2,
-                gnd_od=6.5,
-                mask_keepout_dia=4.0,
-            ),
-        ]
-    elif pin_count == 6:
-        concentric_electrodes = [
-            ConcentricElectrodeSpec(
-                name="CIS_NANOPORE_CONCENTRIC",
-                center=(0.0, 0.0),
-                signal_pin="6",
-                signal_net="WS_CIS",
-                guard_pin="5",
-                guard_net="GUARD",
-                gnd_pin="1",
-                gnd_net="CE_GNDA",
-                inner_dot_dia=0.7,
-                guard_id=2.1,
-                guard_od=3.0,
-                gnd_id=5.2,
-                gnd_od=6.5,
-                mask_keepout_dia=4.0,
-            ),
-            ConcentricElectrodeSpec(
-                name="CIS_WIDEBAND_CONCENTRIC",
-                center=(10.0, 0.0),
-                signal_pin="4",
-                signal_net="WS_CIS_WIDE",
-                guard_pin="3",
-                guard_net="GUARD_WIDE",
-                gnd_pin="1",
-                gnd_net="CE_GNDA",
-                inner_dot_dia=0.7,
-                guard_id=2.1,
-                guard_od=3.0,
-                gnd_id=5.2,
-                gnd_od=6.5,
-                mask_keepout_dia=4.0,
-            ),
-        ]
-    else:
-        concentric_electrodes = [
-            ConcentricElectrodeSpec(
-                name="CIS_NANOPORE_CONCENTRIC",
-                center=(0.0, 0.0),
-                signal_pin="12",
-                signal_net="WS_CIS",
-                guard_pin="11",
-                guard_net="GUARD",
-                gnd_pin="1",
-                gnd_net="GNDA",
-                inner_dot_dia=0.7,
-                guard_id=2.1,
-                guard_od=3.0,
-                gnd_id=5.2,
-                gnd_od=6.5,
-                mask_keepout_dia=4.0,
-            ),
-            ConcentricElectrodeSpec(
-                name="CIS_WIDEBAND_CONCENTRIC",
-                center=(10.0, 0.0),
-                signal_pin="10",
-                signal_net="WS_CIS_WIDE",
-                guard_pin="9",
-                guard_net="GUARD_WIDE",
-                gnd_pin="3",
-                gnd_net="GNDA",
-                inner_dot_dia=0.7,
-                guard_id=2.1,
-                guard_od=3.0,
-                gnd_id=5.2,
-                gnd_od=6.5,
-                mask_keepout_dia=4.0,
-            ),
-        ]
+    concentric_electrodes: List[ConcentricElectrodeSpec] = []
 
     fiducials = [
         ("FID1", -12.0, -22.0),
@@ -652,12 +564,21 @@ def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = 
                 f'  (fp_text user "REF_{name}" (at {x:.4f} {y+1.8:.4f} 0) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_txt_{name}")}") (effects (font (size 0.7 0.7) (thickness 0.12))))\n'
             )
 
-    # Draw Centerline Flow Channel Reference on Silk
+    # Draw Flow Channel Paths on Silk:
+    # Cis channel: H1 (-17.3205, 10.0) -> H2 (17.3205, -10.0)
     lines.append(
-        f'  (fp_line (start -20.0 0.0) (end 20.0 0.0) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_axis")}"))\n'
+        f'  (fp_line (start -17.3205 10.0) (end 17.3205 -10.0) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_cis")}"))\n'
     )
     lines.append(
-        f'  (fp_text user "<== FLUID CHANNEL AXIS ==>" (at 0.0 0.8 0) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_label")}") (effects (font (size 0.8 0.8) (thickness 0.12))))\n'
+        f'  (fp_text user "CIS FLOW (H1 -> H2)" (at -5.0 4.0 330) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_cis_label")}") (effects (font (size 0.7 0.7) (thickness 0.11))))\n'
+    )
+
+    # Trans channel: H3 (-17.3205, -10.0) -> H4 (17.3205, 10.0)
+    lines.append(
+        f'  (fp_line (start -17.3205 -10.0) (end 17.3205 10.0) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_trans")}"))\n'
+    )
+    lines.append(
+        f'  (fp_text user "TRANS FLOW (H3 -> H4)" (at -5.0 -4.0 30) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_trans_label")}") (effects (font (size 0.7 0.7) (thickness 0.11))))\n'
     )
     return "".join(lines)
 

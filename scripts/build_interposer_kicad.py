@@ -35,7 +35,72 @@ def get_pogo_12pin_fp_str(fluid_mode: str = "drills"):
     indented_lines = ["\t" + l if l.strip() else "" for l in fp_txt.splitlines()]
     return "\n".join(indented_lines)
 
+def get_single_pin_pogo_landings_fp_str():
+    """
+    Generates placement string for discrete single-pin pogo landing footprints:
+    Uses 'PogoPin_Target_Landing_1Pin' as standard default for pogo landings,
+    and 'PogoPin_Target_Landing_1Pin_Guarded' for High-Z/driven-guard nets
+    (WS_CIS, >PORE_AMP, WS_CIS_WIDE, WEEP_SENSE, GUARD, GUARD_WIDE).
+    """
+    import sys
+    repo_root = Path(__file__).resolve().parent.parent
+    if str(repo_root) not in sys.path:
+        sys.path.insert(0, str(repo_root))
+    from generate_footprint import (
+        PIN_NET_SEQUENCE,
+        HIGH_Z_NETS,
+        GUARD_NETS,
+        generate_single_pin_footprint,
+    )
+
+    blocks = []
+    center_x = 164.5
+    center_y = 58.494
+
+    guarded_nets = HIGH_Z_NETS.union(GUARD_NETS)
+
+    for entry in PIN_NET_SEQUENCE:
+        pin_num, net_name, cad_x, cad_y, desc = entry
+        is_guarded = net_name in guarded_nets
+        fp_name = (
+            "PogoPin_Target_Landing_1Pin_Guarded"
+            if is_guarded
+            else "PogoPin_Target_Landing_1Pin"
+        )
+        fp_txt = generate_single_pin_footprint(
+            fp_name, pin_type="target", guarded=is_guarded, layer="F.Cu"
+        )
+
+        px = center_x + cad_x
+        py = center_y - cad_y
+
+        # Insert top-level (at X Y) position into footprint definition header
+        fp_txt = re.sub(
+            r'^\(footprint\s+"([^"]+)"',
+            rf'(footprint "\1" (at {px:.4f} {py:.4f})',
+            fp_txt,
+            count=1,
+            flags=re.MULTILINE
+        )
+
+        fp_txt = re.sub(
+            r'\(property\s+"Reference"\s+"[^"]*"',
+            f'(property "Reference" "P_LAND_{pin_num}"',
+            fp_txt,
+        )
+        fp_txt = re.sub(
+            r'\(property\s+"Value"\s+"[^"]*"',
+            f'(property "Value" "{net_name}"',
+            fp_txt,
+        )
+
+        indented_lines = ["\t" + l if l.strip() else "" for l in fp_txt.splitlines()]
+        blocks.append("\n".join(indented_lines))
+
+    return "\n".join(blocks)
+
 POGO_12PIN_PCB_FP = get_pogo_12pin_fp_str()
+SINGLE_PIN_POGO_LANDINGS_FP = get_single_pin_pogo_landings_fp_str()
 
 def build_interposer_pcb(out_dir: Path = Path("Interposer")):
     out_dir = Path(out_dir)
@@ -86,12 +151,13 @@ def build_interposer_pcb(out_dir: Path = Path("Interposer")):
         ref_m = re.search(r'\(property\s+"Reference"\s+"([^"]+)"', fp_txt)
         ref = ref_m.group(1) if ref_m else ""
 
-        if ref.startswith("J_POGO") or "PogoPin_Target" in fp_txt or "PogoPin_SpringHeader" in fp_txt:
+        if ref.startswith("J_POGO") or "PogoPin_Target" in fp_txt or "PogoPin_SpringHeader" in fp_txt or ref.startswith("P_LAND_"):
             if not pogo_added:
                 # Assign reference J_POGO1 and location to match interposer center (164.5, 58.494)
                 pogo_fp_positioned = re.sub(r'\(property\s+"Reference"\s+"[^"]*"', '(property "Reference" "J_POGO1"', POGO_12PIN_PCB_FP)
                 pogo_fp_positioned = re.sub(r'\(at\s+[0-9\.\-]+\s+[0-9\.\-]+\)', '(at 164.5 58.494)', pogo_fp_positioned, count=1)
                 retained_fp_blocks.append(pogo_fp_positioned)
+                retained_fp_blocks.append(SINGLE_PIN_POGO_LANDINGS_FP)
                 pogo_added = True
             continue
 
@@ -111,6 +177,7 @@ def build_interposer_pcb(out_dir: Path = Path("Interposer")):
 
     if not pogo_added:
         retained_fp_blocks.append(POGO_12PIN_PCB_FP)
+        retained_fp_blocks.append(SINGLE_PIN_POGO_LANDINGS_FP)
 
     for fp in retained_fp_blocks:
         out_lines.append(fp)
