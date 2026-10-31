@@ -5826,6 +5826,422 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "MR1:PogoPin_MillMax_SMT_1Pin"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "P"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PogoPin_MillMax_SMT_1Pin"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.mill-max.com"
+				(at 0 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Mill-Max Precision SMT Single Pogo Pin Header"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "pogo pin smt mill-max"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PogoPin_MillMax_SMT_1Pin_0_1"
+				(rectangle
+					(start -2.54 2.54)
+					(end 2.54 -2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 0.762)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "PogoPin_MillMax_SMT_1Pin_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "PIN"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "MR1:PogoPin_MillMax_SMT_1Pin_Guarded"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "P"
+				(at 0 6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PogoPin_MillMax_SMT_1Pin_Guarded"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin_Guarded"
+				(at 0 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.mill-max.com"
+				(at 0 -8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Mill-Max Precision SMT Single Pogo Pin with Driven Guard"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "pogo pin smt guard mill-max"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PogoPin_MillMax_SMT_1Pin_Guarded_0_1"
+				(rectangle
+					(start -2.54 3.81)
+					(end 2.54 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(circle
+					(center 0 1.27)
+					(radius 0.762)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 1.27)
+					(radius 1.524)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "PogoPin_MillMax_SMT_1Pin_Guarded_1_1"
+				(pin passive line
+					(at -5.08 1.27 0)
+					(length 2.54)
+					(name "SIG"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -1.27 0)
+					(length 2.54)
+					(name "GUARD"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "MR1:PogoPin_Target_Landing_1Pin_Guarded"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J_PAD"
+				(at 0 6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PogoPin_Target_Landing_1Pin_Guarded"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "footprints:PogoPin_Target_Landing_1Pin_Guarded"
+				(at 0 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.mill-max.com"
+				(at 0 -8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Single Pogo Pin Target Landing Pad with Driven Guard Ring"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "pogo target landing guard"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PogoPin_Target_Landing_1Pin_Guarded_0_1"
+				(rectangle
+					(start -2.54 3.81)
+					(end 2.54 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(circle
+					(center 0 1.27)
+					(radius 0.762)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 1.27)
+					(radius 1.524)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "PogoPin_Target_Landing_1Pin_Guarded_1_1"
+				(pin passive line
+					(at -5.08 1.27 0)
+					(length 2.54)
+					(name "SIG"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -1.27 0)
+					(length 2.54)
+					(name "GUARD"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.0 1.0)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+
 	)
 	(rectangle
 		(start -181.61 55.88)
@@ -9842,16 +10258,6 @@
 		)
 		(uuid "5dac7e7f-58f5-4007-9762-294b26721001")
 	)
-	(label "GNDA"
-		(at -73.66 201.93 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "5e25c0ba-62c5-4132-8c3e-200ea40f0cb7")
-	)
 	(label ">PORE_AMP"
 		(at -203.2 162.56 0)
 		(effects
@@ -9871,16 +10277,6 @@
 			(justify right bottom)
 		)
 		(uuid "671b492f-f421-42fc-8cb9-84a32a20db69")
-	)
-	(label "GUARD"
-		(at -73.66 166.37 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "6bece1e1-6b9f-4544-9e97-52d676d8bb57")
 	)
 	(label "Signal_Return"
 		(at -100.33 39.37 180)
@@ -9912,16 +10308,6 @@
 		)
 		(uuid "6cc97625-6381-488f-be8e-98640e586dd1")
 	)
-	(label "RE_TRANS"
-		(at -73.66 194.31 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "71795cf0-7d2b-4759-b0c5-49d981c3b85d")
-	)
 	(label "GDAC_CLK"
 		(at -196.85 134.62 180)
 		(effects
@@ -9941,26 +10327,6 @@
 			(justify right bottom)
 		)
 		(uuid "801179ba-a644-4f68-825d-7fbc8a62d8a3")
-	)
-	(label ">PORE_AMP"
-		(at -73.66 196.85 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8d22ecc0-3e3d-4ba8-9037-71c1dc34abf0")
-	)
-	(label "WS_CIS_WIDE"
-		(at -73.66 176.53 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8da63ae0-6d26-44a7-aa56-652a03f4dc90")
 	)
 	(label "GUARD_WIDE"
 		(at -203.2 289.56 90)
@@ -9991,16 +10357,6 @@
 			(justify right bottom)
 		)
 		(uuid "991cddac-87db-43a1-8276-295939f165be")
-	)
-	(label "GUARD_WIDE"
-		(at -73.66 179.07 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "99ee1797-1bf5-4fb5-8c01-472834b5de55")
 	)
 	(label "Route1_OUT"
 		(at -135.89 82.55 0)
@@ -10112,16 +10468,6 @@
 		)
 		(uuid "b1094c5c-1a6b-4f02-9b9f-2c94cbba9d9b")
 	)
-	(label "WEEP_SENSE"
-		(at -73.66 204.47 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b8289d5c-639e-44e9-a097-0eed00648fe4")
-	)
 	(label "GDAC_EN"
 		(at -177.8 274.32 180)
 		(effects
@@ -10161,16 +10507,6 @@
 			(justify left bottom)
 		)
 		(uuid "c0171234-5206-4ddd-bb64-cb2382445be4")
-	)
-	(label "WS_CIS"
-		(at -73.66 168.91 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c4a3b273-1c4b-4389-98e2-ccf2fd79f768")
 	)
 	(label "+3V3"
 		(at -176.53 129.54 180)
@@ -10252,36 +10588,6 @@
 		)
 		(uuid "e75c7598-73e6-4243-95e3-095b8a9da92b")
 	)
-	(label "GNDA"
-		(at -73.66 173.99 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "eaf04769-e930-4fcf-8fd3-a2adc700b808")
-	)
-	(label "GNDA"
-		(at -73.66 199.39 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "edea64c8-8479-44f6-8623-aeb98c12ce4d")
-	)
-	(label "GUARD"
-		(at -73.66 171.45 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "eea381fe-756e-424d-af15-f9a3246a82f7")
-	)
 	(label "SHIELD_AMP"
 		(at -205.74 306.07 0)
 		(effects
@@ -10291,16 +10597,6 @@
 			(justify left bottom)
 		)
 		(uuid "efb691e6-d9aa-4075-b672-2ec36dbf63eb")
-	)
-	(label "CE_GNDA"
-		(at -73.66 191.77 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f473db27-cf24-46e0-ab13-001d0378823b")
 	)
 	(label "SHIELD_AMP"
 		(at 146.05 284.48 0)
@@ -13237,98 +13533,6 @@
 			(project "Amplifier"
 				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
 					(reference "#PWR069")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MR1:PogoPin_SpringHeader_6Pin_Cis")
-		(at -58.42 172.72 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "268ca0e3-2300-4a5e-a439-7171cca1ecca")
-		(property "Reference" "J_POGO1"
-			(at -46.99 171.45 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "PogoPin_SpringHeader_6Pin_Cis"
-			(at -46.99 173.99 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "footprints:PogoPin_SpringHeader_6Pin_Cis"
-			(at -58.42 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mill-max.com"
-			(at -58.42 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Mill-Max 09xx Series (0906/0985) Gold-Plated Bias-Tail/Ball-Contact 6-Pin Cis Spring Header Soldered to Bottom of Amplifier PCB"
-			(at -56.388 185.166 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "83648501-31be-48c0-8a17-516c0aba7f93")
-		)
-		(pin "2"
-			(uuid "6b5a2a8c-2e88-48de-8173-4cc49c1af4fe")
-		)
-		(pin "3"
-			(uuid "7375231b-881f-4245-aa44-1cb66ef3e482")
-		)
-		(pin "4"
-			(uuid "4e524b2e-7ef9-4ad1-b71b-0cd46548e322")
-		)
-		(pin "5"
-			(uuid "a98d078b-533b-4c8c-8be0-c6b0a4a95f12")
-		)
-		(pin "6"
-			(uuid "06223944-da45-4298-abd8-1230998cf072")
-		)
-		(instances
-			(project "Amplifier"
-				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
-					(reference "J_POGO1")
 					(unit 1)
 				)
 			)
@@ -18942,98 +19146,6 @@
 			(project "Amplifier"
 				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
 					(reference "D82")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MR1:PogoPin_SpringHeader_6Pin_Trans")
-		(at -58.42 198.12 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "8b434888-d697-480c-816b-d0c50af943be")
-		(property "Reference" "J_POGO2"
-			(at -46.99 196.85 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "PogoPin_SpringHeader_6Pin_Trans"
-			(at -46.99 199.39 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "footprints:PogoPin_SpringHeader_6Pin_Trans"
-			(at -58.42 198.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mill-max.com"
-			(at -58.42 198.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Mill-Max 09xx Series (0906/0985) Gold-Plated Bias-Tail/Ball-Contact 6-Pin Trans Spring Header Soldered to Bottom of Amplifier PCB"
-			(at -57.912 211.074 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a4ad2a47-b4b3-4288-83ab-56b96941d910")
-		)
-		(pin "2"
-			(uuid "7fe70bdf-6565-495c-a0a6-27e3c4d7cb41")
-		)
-		(pin "3"
-			(uuid "ded9a05c-53ef-444e-93b8-912cf94a83d2")
-		)
-		(pin "4"
-			(uuid "468c4424-fb8f-493a-8ab6-6731b23e6476")
-		)
-		(pin "5"
-			(uuid "deacd045-dbcc-4e40-ada8-8ca52784c1eb")
-		)
-		(pin "6"
-			(uuid "889b9283-c635-4ed7-aa0d-9af4f5eddf45")
-		)
-		(instances
-			(project "Amplifier"
-				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
-					(reference "J_POGO2")
 					(unit 1)
 				)
 			)
@@ -25385,6 +25497,1155 @@
 				)
 			)
 		)
+	)
+	(label "GNDA_SHLD"
+		(at -63.50 150.00 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e578e377-1368-42bd-a09c-59621c4f7400")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 150.00 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "880fa9d7-b869-475f-b555-e5b1a7ccc8f1")
+		(property "Reference" "P1"
+			(at -53.34 147.46 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 150.00 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 150.00 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 150.00 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P1)"
+			(at -58.42 150.00 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "4b52fcb9-3258-4bdf-be2d-cdc892cbc65c"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "WS_CIS_WIDE"
+		(at -63.50 161.43 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a57710de-137f-4e4b-a8a7-07075a436514")
+	)
+	(label "GUARD_WIDE"
+		(at -63.50 158.89 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "51649e54-5f93-41ac-8d08-7addc196ddec")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin_Guarded")
+		(at -58.42 160.16 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c4c1809a-73cb-4497-a1a4-8b2ea7c182f1")
+		(property "Reference" "P2"
+			(at -53.34 157.62 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin_Guarded"
+			(at -53.34 160.16 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin_Guarded"
+			(at -58.42 160.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 160.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P2)"
+			(at -58.42 160.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "2281d795-75ae-4e40-a577-e906f2965657"))
+		(pin "2" (uuid "909d56d6-44d9-4b73-b48d-108bf3b61b60"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GUARD_WIDE"
+		(at -63.50 170.32 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c1f09f9b-6604-4c3c-9510-b851c636c53b")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 170.32 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "55a7a053-37cf-4260-9418-73bd2515b37a")
+		(property "Reference" "P3"
+			(at -53.34 167.78 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 170.32 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 170.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 170.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P3)"
+			(at -58.42 170.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "e13d4a42-20bf-444a-9d1e-28720949129d"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GUARD"
+		(at -63.50 180.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "7b58b913-7724-45bc-9f12-ff972141fcd2")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 180.48 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "dea46dfb-346b-4a06-a1a5-36470fa2855d")
+		(property "Reference" "P4"
+			(at -53.34 177.94 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 180.48 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 180.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 180.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P4)"
+			(at -58.42 180.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "97f27512-387b-45b5-a27e-16f41e2e851a"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "WS_CIS"
+		(at -63.50 191.91 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e3c4fe2f-0fed-4250-810f-43d57adc25c3")
+	)
+	(label "GUARD"
+		(at -63.50 189.37 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f97852e9-071e-47d7-b694-3cb04ef2258b")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin_Guarded")
+		(at -58.42 190.64 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "003a25f4-0674-47eb-9f41-4559ce85f548")
+		(property "Reference" "P5"
+			(at -53.34 188.10 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin_Guarded"
+			(at -53.34 190.64 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin_Guarded"
+			(at -58.42 190.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 190.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P5)"
+			(at -58.42 190.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "9cec7f19-d082-400d-8150-79b93b26c958"))
+		(pin "2" (uuid "4b859bf4-f945-4acf-9972-7859077b6c40"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GUARD"
+		(at -63.50 200.80 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "6479d155-eb85-4461-8a1f-cc20171d80b4")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 200.80 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "31945178-78f9-4921-92b5-50139f24768d")
+		(property "Reference" "P6"
+			(at -53.34 198.26 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 200.80 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 200.80 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 200.80 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P6)"
+			(at -58.42 200.80 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "2fe019be-9df2-48fd-9fbd-15a33dcbf284"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "CE_GNDA"
+		(at -63.50 210.96 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "42fe5a35-11f3-477d-8344-432f691ff54c")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 210.96 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7cd113ea-9d14-4978-94f4-801888336fd0")
+		(property "Reference" "P7"
+			(at -53.34 208.42 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 210.96 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 210.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 210.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P7)"
+			(at -58.42 210.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "6d55b885-73e8-4f84-8063-69a4846aeb69"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "RE_TRANS"
+		(at -63.50 221.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "460d68d1-705f-4bbf-9a2e-57ab836be155")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 221.12 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "823b5067-6475-4398-9ad8-389a081857a4")
+		(property "Reference" "P8"
+			(at -53.34 218.58 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 221.12 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 221.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 221.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P8)"
+			(at -58.42 221.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "f707e58b-71f5-469a-8486-c092d09411be"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label ">PORE_AMP"
+		(at -63.50 231.28 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "5e1d112e-def0-492e-9c5a-52e6e581a9e4")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 231.28 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "207e5729-8568-4b34-99c4-58ae0b013e4d")
+		(property "Reference" "P9"
+			(at -53.34 228.74 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 231.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 231.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 231.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P9)"
+			(at -58.42 231.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "88947ed1-b487-4790-b36a-475f1256e3cb"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GNDA"
+		(at -63.50 241.44 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a3920470-955c-49a8-841c-53a0fbb4761b")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 241.44 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0ad5c002-f31a-4a54-bfc5-c42d01e23091")
+		(property "Reference" "P10"
+			(at -53.34 238.90 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 241.44 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 241.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 241.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P10)"
+			(at -58.42 241.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "c8eead3b-08e4-413b-992d-049633a2de98"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "WEEP_SENSE"
+		(at -63.50 251.60 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1136df01-bfa4-44fe-8dc5-334241865916")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 251.60 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5c4c597f-a0d6-468d-bf52-8fed3899c600")
+		(property "Reference" "P11"
+			(at -53.34 249.06 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 251.60 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 251.60 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 251.60 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P11)"
+			(at -58.42 251.60 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "53eabc87-5a05-4e70-bc5f-512315a239b2"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GNDA_WEEP"
+		(at -63.50 261.76 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "bb342273-a2b8-4f9f-89f3-539b415046f7")
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_MillMax_SMT_1Pin")
+		(at -58.42 261.76 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0ddd6e87-c620-4846-b1c5-bbfc785e6d70")
+		(property "Reference" "P12"
+			(at -53.34 259.22 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PogoPin_MillMax_SMT_1Pin"
+			(at -53.34 261.76 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_MillMax_SMT_1Pin"
+			(at -58.42 261.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -58.42 261.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mill-Max Single Pogo Pin SMT (P12)"
+			(at -58.42 261.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "a196d4fc-0e4f-4d2b-9b69-e97c3db593ed"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "P12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MR1:PogoPin_Target_Landing_1Pin_Guarded")
+		(at -228.60 158.75 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6f2324b5-0f65-4b18-ac79-4536908a78f6")
+		(property "Reference" "J_PAD1"
+			(at -228.60 152.40 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PogoPin_Target_Landing_1Pin_Guarded"
+			(at -228.60 165.10 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "footprints:PogoPin_Target_Landing_1Pin_Guarded"
+			(at -228.60 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mill-max.com"
+			(at -228.60 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Interposer Mating Pad: PogoPin_Target_Landing_1Pin_Guarded"
+			(at -228.60 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1" (uuid "6a6f040a-4315-44b2-af13-2493118886ee"))
+		(pin "2" (uuid "03033a09-9ef2-4823-a63d-371e1d1bcfad"))
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "J_PAD1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label ">PORE_AMP"
+		(at -233.68 160.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3e33c2de-2e64-4f95-95fa-f925a0093dd3")
+	)
+	(label "GUARD"
+		(at -233.68 157.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "951d9b6c-33fa-4984-8628-a800402da193")
 	)
 	(sheet_instances
 		(path "/"

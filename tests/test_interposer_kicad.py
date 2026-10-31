@@ -507,7 +507,7 @@ class TestInterposerKiCad(unittest.TestCase):
         # 3. Schematic instantiation in Amplifier.kicad_sch
         sch_file = REPO_ROOT / "Amplifier" / "Amplifier.kicad_sch"
         sch_txt = sch_file.read_text(encoding="utf-8")
-        self.assertIn('"MR1:Concentric_Interposer_Mating_Pad"', sch_txt)
+        self.assertIn('"MR1:PogoPin_Target_Landing_1Pin_Guarded"', sch_txt)
         self.assertIn('"J_PAD1"', sch_txt)
 
         # 4. Independent guard architecture (verified via exported KiCad netlist):
@@ -621,7 +621,7 @@ class TestInterposerKiCad(unittest.TestCase):
         self.assertIn(('U5', '2'), wide_net, "U5 pin 2 (-IN) must connect to WS_CIS_WIDE")
         self.assertIn(('R10', '2'), wide_net, "R10 pin 2 must connect to WS_CIS_WIDE")
         self.assertIn(('C3', '2'), wide_net, "C3 pin 2 must connect to WS_CIS_WIDE")
-        self.assertIn(('J_POGO2', '4'), wide_net, "J_POGO2 pin 4 must connect to WS_CIS_WIDE")
+        self.assertIn(('P2', '1'), wide_net, "P2 Pin 1 (WS_CIS_WIDE SMT pin) must connect to WS_CIS_WIDE")
 
         # Verify control line ROUTE_SEL
         route_net = nets.get("/ROUTE_SEL", [])
