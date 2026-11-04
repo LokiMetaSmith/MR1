@@ -26,7 +26,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends graphviz libgl1-mesa-glx
+          sudo apt-get install -y --no-install-recommends graphviz libgl1 libglx-mesa0
 
       - name: Install Python Dependencies
         run: |
