@@ -26,6 +26,11 @@ if str(REPO_ROOT) not in sys.path:
 
 from src import stack_spec as spec
 
+DEFAULT_INTERPOSER_DIR = REPO_ROOT / "Interposer"
+DEFAULT_PCB_PATH = DEFAULT_INTERPOSER_DIR / "Interposer.kicad_pcb"
+DEFAULT_SCH_PATH = DEFAULT_INTERPOSER_DIR / "Interposer.kicad_sch"
+DEFAULT_AMPLIFIER_PCB_PATH = REPO_ROOT / "Amplifier" / "Amplifier.kicad_pcb"
+
 def new_uuid():
     return str(uuid.uuid4())
 
@@ -199,10 +204,10 @@ def generate_fluid_hole_footprint(ref: str, x: float, y: float) -> str:
         f'\t)'
     )
 
-def build_interposer_pcb(out_dir: Path = Path("Interposer")):
+def build_interposer_pcb(out_dir: Path = DEFAULT_INTERPOSER_DIR):
     out_dir = Path(out_dir)
     out_path = out_dir / "Interposer.kicad_pcb"
-    src_pcb_path = Path("Amplifier/Amplifier.kicad_pcb")
+    src_pcb_path = DEFAULT_AMPLIFIER_PCB_PATH
     src_pcb = src_pcb_path.read_text(encoding="utf-8")
     lines = src_pcb.splitlines()
 
@@ -414,17 +419,17 @@ def build_interposer_pcb(out_dir: Path = Path("Interposer")):
     out_path.write_text("\n".join(final_lines) + "\n", encoding="utf-8")
     print(f"Successfully built {out_path}!")
 
-def build_interposer_sch(out_dir: Path = Path("Interposer")):
+def build_interposer_sch(out_dir: Path = DEFAULT_INTERPOSER_DIR):
     out_dir = Path(out_dir)
     out_path = out_dir / "Interposer.kicad_sch"
-    int_sch_src = Path("Interposer/Interposer.kicad_sch")
+    int_sch_src = DEFAULT_SCH_PATH
 
     if int_sch_src.exists():
         out_path.write_text(int_sch_src.read_text(encoding="utf-8"), encoding="utf-8")
         print(f"Successfully synchronized {out_path}!")
         return
 
-def verify_interposer_pcb(pcb_path: Path = Path("Interposer/Interposer.kicad_pcb")) -> list[str]:
+def verify_interposer_pcb(pcb_path: Path = DEFAULT_PCB_PATH) -> list[str]:
     """Verifies that the Interposer KiCad PCB adheres to the passive interface specification."""
     if not pcb_path.exists():
         return [f"Interposer PCB file not found: {pcb_path}"]
@@ -485,7 +490,7 @@ def main(argv=None):
     args = parse_args(argv)
 
     if args.check:
-        pcb_path = Path("Interposer/Interposer.kicad_pcb") if args.out_dir is None else args.out_dir / "Interposer.kicad_pcb"
+        pcb_path = DEFAULT_PCB_PATH if args.out_dir is None else args.out_dir / "Interposer.kicad_pcb"
         issues = verify_interposer_pcb(pcb_path)
         if issues:
             print(f"[!] Interposer PCB verification failed ({len(issues)} issues):")
@@ -499,7 +504,7 @@ def main(argv=None):
         print("Dry-run mode: Interposer design assets protected. No files written.")
         return 0
 
-    out_dir = args.out_dir if args.out_dir is not None else Path("Interposer")
+    out_dir = args.out_dir if args.out_dir is not None else DEFAULT_INTERPOSER_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
     build_interposer_pcb(out_dir)
     return 0

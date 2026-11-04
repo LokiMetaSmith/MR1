@@ -20,14 +20,18 @@ of the PTFE Microfluidic Interposer Board:
 """
 
 import re
+import sys
 import uuid
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_INTERPOSER_DIR = REPO_ROOT / "Interposer"
 
 def new_uuid():
     return str(uuid.uuid4())
 
 def generate_symbol_library():
-    symbols_dir = Path("Interposer/symbols")
+    symbols_dir = DEFAULT_INTERPOSER_DIR / "symbols"
     symbols_dir.mkdir(parents=True, exist_ok=True)
     sym_file = symbols_dir / "Interposer.kicad_sym"
 
@@ -395,7 +399,7 @@ def generate_symbol_library():
     print(f"Generated symbol library: {sym_file}")
 
 def update_sym_lib_table():
-    table_path = Path("Interposer/sym-lib-table")
+    table_path = DEFAULT_INTERPOSER_DIR / "sym-lib-table"
     content = """(sym_lib_table
   (version 7)
   (lib (name "Interposer")(type "KiCad")(uri "${KIPRJMOD}/symbols/Interposer.kicad_sym")(options "")(descr "MR1 Interposer Symbols"))
@@ -406,10 +410,10 @@ def update_sym_lib_table():
     print(f"Updated sym-lib-table: {table_path}")
 
 def build_schematic():
-    sch_path = Path("Interposer/Interposer.kicad_sch")
+    sch_path = DEFAULT_INTERPOSER_DIR / "Interposer.kicad_sch"
     
     # Read the generated symbol library to embed lib_symbols
-    sym_content = Path("Interposer/symbols/Interposer.kicad_sym").read_text(encoding="utf-8")
+    sym_content = (DEFAULT_INTERPOSER_DIR / "symbols" / "Interposer.kicad_sym").read_text(encoding="utf-8")
     
     # Only prefix TOP-LEVEL symbol names in lib_symbols with "Interposer:" (lines starting with \t(symbol ")
     sym_embedded = re.sub(r'^\t\(symbol\s+"([^"]+)"', r'\t(symbol "Interposer:\1"', sym_content, flags=re.MULTILINE)
