@@ -17,7 +17,7 @@ endif
 
 VERSION ?= v1.0.0
 
-.PHONY: all rebuild rebuild-check back-propagate-pcb export export-cad export-kicad export-wiring export-firmware release-gerbers manifest check test test-e2e clean help
+.PHONY: all rebuild rebuild-check back-propagate-pcb em-sim sim export export-cad export-kicad export-wiring export-firmware release-gerbers manifest check test test-e2e clean help
 
 all: export
 
@@ -29,6 +29,16 @@ rebuild-check:
 
 back-propagate-pcb:
 	bash scripts/back_propagate_pcb.sh
+
+em-sim:
+	$(PYTHON) simulations/em_board_analysis.py
+
+sim:
+	$(PYTHON) simulations/em_board_analysis.py
+	$(PYTHON) simulations/guard_ring_electrostatics.py
+	$(PYTHON) simulations/fluidic_dynamics_nanopore.py
+	$(PYTHON) simulations/nanopore_electrokinetics.py
+	$(PYTHON) simulations/pore_dac_dynamics.py
 
 export:
 	$(PYTHON) scripts/export_manager.py --all
@@ -66,6 +76,8 @@ clean:
 help:
 	@echo "MR1 Nanopore Reader — Build & Export Commands:"
 	@echo "  make back-propagate-pcb Sync manual PCB changes to stack spec, regen interposer & footprints"
+	@echo "  make em-sim          Run 2D substrate electrostatics and 3D BEM pogo pin EM simulation"
+	@echo "  make sim             Run full physics and electromagnetic simulation suite"
 	@echo "  make rebuild         One-shot rebuild: validate spec, sync footprints, check CAD, run tests"
 	@echo "  make rebuild-check   CI check mode: verify no drift between spec, CAD, and footprint libraries"
 	@echo "  make export          Export all deliverables (CAD, KiCad, Wiring, Firmware)"

@@ -6987,7 +6987,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 284.48) (xy 153.67 284.48)
+			(xy 139.7 284.48) (xy 162.56 284.48)
 		)
 		(stroke
 			(width 0)
@@ -8324,6 +8324,16 @@
 			(type default)
 		)
 		(uuid "f007e002-5c68-4226-a816-af22066d6c91")
+	)
+	(wire
+		(pts
+			(xy 167.64 284.48) (xy 181.61 284.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f083b469-8ad5-4127-b05a-970f9eab8de7")
 	)
 	(wire
 		(pts
@@ -10161,6 +10171,16 @@
 			(justify left bottom)
 		)
 		(uuid "1a2e6502-a1ce-4ad5-8461-e93064cafc15")
+	)
+	(label "GNDA_SHLD"
+		(at 181.61 284.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "27ec4751-2eed-4bc3-b7c3-d46ade37ef2b")
 	)
 	(label "R_WEEP_GATE"
 		(at 173.99 127 180)
@@ -13667,7 +13687,7 @@
 	)
 	(symbol
 		(lib_id "Device:NetTie_2")
-		(at 137.16 313.69 0)
+		(at 137.16 322.58 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -13678,7 +13698,7 @@
 		(fields_autoplaced yes)
 		(uuid "1ac5b58c-91d0-4576-a4d3-bf3942b877be")
 		(property "Reference" "NT5"
-			(at 137.16 308.61 0)
+			(at 137.16 317.5 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -13688,7 +13708,7 @@
 			)
 		)
 		(property "Value" "NetTie_2"
-			(at 137.16 311.15 0)
+			(at 137.16 320.04 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -13698,7 +13718,7 @@
 			)
 		)
 		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13709,7 +13729,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13720,7 +13740,7 @@
 			)
 		)
 		(property "Description" "Net tie, 2 pins"
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13731,7 +13751,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13742,7 +13762,7 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13753,7 +13773,7 @@
 			)
 		)
 		(property "Distributor 2" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13764,7 +13784,7 @@
 			)
 		)
 		(property "Quantity" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13775,7 +13795,7 @@
 			)
 		)
 		(property "PARTREV" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13786,7 +13806,7 @@
 			)
 		)
 		(property "ALT_Part_Number" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13797,7 +13817,7 @@
 			)
 		)
 		(property "Cost" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13808,7 +13828,7 @@
 			)
 		)
 		(property "Alternate Part Number 1" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13819,7 +13839,7 @@
 			)
 		)
 		(property "AssemblyType" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13830,7 +13850,7 @@
 			)
 		)
 		(property "Configuration" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13841,7 +13861,7 @@
 			)
 		)
 		(property "Distributor 2 PN" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13852,7 +13872,7 @@
 			)
 		)
 		(property "MPN" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13863,7 +13883,7 @@
 			)
 		)
 		(property "Manufacturer" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13874,7 +13894,7 @@
 			)
 		)
 		(property "Manufacturer_Name" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13885,7 +13905,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13896,7 +13916,7 @@
 			)
 		)
 		(property "Mouser Part Number" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13907,7 +13927,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13918,7 +13938,7 @@
 			)
 		)
 		(property "price" ""
-			(at 137.16 313.69 0)
+			(at 137.16 322.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19270,6 +19290,284 @@
 			(project "Amplifier"
 				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
 					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 165.1 284.48 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7a617457-4cb6-4add-82bb-8ec0fc029565")
+		(property "Reference" "NT9"
+			(at 165.1 279.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NetTie_2"
+			(at 165.1 281.94 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Net tie, 2 pins"
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Pins" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Distributor 2" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Quantity" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PARTREV" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ALT_Part_Number" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Cost" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Alternate Part Number 1" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "AssemblyType" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Configuration" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Distributor 2 PN" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer_Name" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer_Part_Number" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Price/Stock" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "price" ""
+			(at 165.1 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "6b956d4c-0fdd-4fa8-a39b-bf8ab4b62689")
+		)
+		(pin "1"
+			(uuid "280632ec-3ee9-43b1-83ea-cae14d657228")
+		)
+		(instances
+			(project "Amplifier"
+				(path "/0fac162c-ca5e-4358-934a-30718aa12176"
+					(reference "NT9")
 					(unit 1)
 				)
 			)
@@ -26955,7 +27253,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_FFC-FPC:Amphenol_F32R-1A7x1-11014_1x14-1MP_P0.5mm_Horizontal"
+		(property "Footprint" "footprints:XUNPU_FPC-05F-14PH15_1x14_P0.5mm_Horizontal"
 			(at -171.45 144.78 0)
 			(hide yes)
 			(show_name no)

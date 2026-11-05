@@ -28,6 +28,7 @@ DEFAULT_PCB="${REPO_ROOT}/Amplifier/Amplifier.kicad_pcb"
 PCB_PATH="${DEFAULT_PCB}"
 CHECK_ONLY=false
 SKIP_TESTS=false
+RUN_EM_SIM=false
 
 print_usage() {
     cat << 'EOF'
@@ -40,10 +41,12 @@ Back-propagates manual PCB layout changes into procedural generation scripts:
   4. Regenerates Interposer PCB landing pads and dynamic escape routes
   5. Validates build123d CAD alignment and collision checks
   6. Executes rebuild verification pipeline (rebuild_all.py)
+  7. Optionally runs EM & electrostatics simulation suite
 
 Options:
   --check          Dry-run check only; verify consistency without writing files
   --skip-tests     Skip running the full test suite at the end of rebuild
+  --em-sim         Execute 2D planar electrostatics and 3D BEM pogo pin EM analysis
   --pcb <path>     Path to source Amplifier.kicad_pcb (default: Amplifier/Amplifier.kicad_pcb)
   -h, --help       Show this help message and exit
 EOF
@@ -57,6 +60,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --skip-tests)
             SKIP_TESTS=true
+            shift
+            ;;
+        --em-sim)
+            RUN_EM_SIM=true
             shift
             ;;
         --pcb)
@@ -131,6 +138,12 @@ if [ "${SKIP_TESTS}" = true ]; then
     REBUILD_ARGS+=(--skip-tests)
 fi
 "${RUN_PY}" "${SCRIPT_DIR}/rebuild_all.py" "${REBUILD_ARGS[@]}"
+
+# Step 6 (Optional): Run electromagnetic and electrostatic analysis
+if [ "${RUN_EM_SIM}" = true ]; then
+    echo -e "\n[STEP 6] Executing electromagnetic (EM) analysis..."
+    "${RUN_PY}" "${REPO_ROOT}/simulations/em_board_analysis.py"
+fi
 
 echo -e "\n========================================================================"
 echo "[SUCCESS] PCB changes back-propagated and verified across all pipelines!"

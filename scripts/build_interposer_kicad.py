@@ -239,7 +239,12 @@ def build_interposer_pcb(out_dir: Path = Path("Interposer")):
                 ref_m = re.search(r'\(property\s+"Reference"\s+"([^"]+)"', block_txt)
                 ref = ref_m.group(1) if ref_m else ""
 
-                if ref.startswith("J_POGO") or "PogoPin_Target" in block_txt or "PogoPin_SpringHeader" in block_txt or ref.startswith("P_LAND_"):
+                if (
+                    ref.startswith("J_POGO")
+                    or "PogoPin" in block_txt
+                    or ref.startswith("P_LAND_")
+                    or (ref.startswith("P") and ref[1:].isdigit())
+                ):
                     if not pogo_added:
                         pogo_fp_positioned = re.sub(r'\(property\s+"Reference"\s+"[^"]*"', '(property "Reference" "J_POGO1"', POGO_12PIN_PCB_FP)
                         pogo_fp_positioned = re.sub(r'\(at\s+[0-9\.\-]+\s+[0-9\.\-]+\)', '(at 164.5 58.494)', pogo_fp_positioned, count=1)

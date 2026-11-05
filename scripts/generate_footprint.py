@@ -525,6 +525,14 @@ def generate_coax_footprint(
             f'  (fp_circle (center 0 0) (end {fmt4(size / 2 + 0.5)} 0) (stroke (width 0.05) (type solid)) (fill none) '
             f'(layer "F.CrtYd") (uuid "{u("crtyd")}"))'
         )
+    if style == "smt":
+        out.append(
+            '  (model "${KIPRJMOD}/3dmodels/PogoPin_YTC1P-6030-01.step"\n'
+            '    (offset (xyz 0 0 0))\n'
+            '    (scale (xyz 1 1 1))\n'
+            '    (rotate (xyz 0 0 0))\n'
+            '  )'
+        )
     out.append(")")
     return "\n".join(out) + "\n"
 

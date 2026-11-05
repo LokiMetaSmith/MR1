@@ -419,6 +419,45 @@ class TestPhysicsAndSimulations(unittest.TestCase):
         self.assertTrue(cfd["is_shear_safe"])
         self.assertLess(cfd["wall_shear_stress_pa"], 0.01)         # Shear < 10 mPa on membrane
 
+    def test_board_em_planar_leakage_and_guarding(self):
+        """Verify 2D substrate electrostatics on Amplifier.kicad_pcb copper geometry."""
+        from simulations.em_board_analysis import BoardGeometryParser, PlanarElectrostaticsSolver
+        parser = BoardGeometryParser()
+        solver = PlanarElectrostaticsSolver(grid_step_mm=0.2)
+        res_guarded = solver.solve(parser, guard_enabled=True)
+        res_unguarded = solver.solve(parser, guard_enabled=False)
+
+        # Route 1 (LMP7721, sub-5 nm node) leakage must be < 5 fA with driven guard
+        self.assertLess(res_guarded["route1_leakage_fA"], 5.0)
+        # Guarded leakage must be lower than unshielded baseline
+        self.assertLess(res_guarded["route1_leakage_fA"], res_unguarded["route1_leakage_fA"])
+        import math
+        suppression_db = 20.0 * math.log10(res_unguarded["route1_leakage_fA"] / max(1e-6, res_guarded["route1_leakage_fA"]))
+        self.assertGreater(suppression_db, 20.0)  # > 20 dB suppression
+
+    def test_board_em_3d_pogo_pin_capacitance_matrix(self):
+        """Verify 3D Boundary Element Method (BEM) capacitance extraction for 12 pogo pins."""
+        from simulations.em_board_analysis import PogoPin3DBEMSolver
+        bem = PogoPin3DBEMSolver(segments_per_pin=10)
+        res = bem.compute_capacitance_matrix()
+
+        # Total input capacitance on P5 (WS_CIS) must be < 2.0 pF
+        self.assertLess(res["P5_total_input_capacitance_pF"], 2.0)
+        self.assertGreater(res["P5_self_pF"], 0.2)  # Monopole self-capacitance > 0.2 pF
+        # Flanking guard pins P4 and P6 must shield P5 against distant excitation aggressor P9
+        self.assertGreater(res["shielding_ratio_db"], 20.0)  # > 20 dB shielding
+
+    def test_board_em_digital_spi_crosstalk(self):
+        """Verify ADC U13 digital SPI clock crosstalk into analog TIA nodes."""
+        from simulations.em_board_analysis import DigitalCrosstalkAnalyzer
+        xtalk = DigitalCrosstalkAnalyzer.evaluate_crosstalk()
+        self.assertLess(xtalk["coupling_capacitance_fF"], 5.0)  # < 5 fF coupling
+        self.assertGreater(xtalk["separation_mm"], 3.0)         # > 3 mm separation
+        # Raw unshielded step is ~32.8 mV (demonstrates why shielding and filtering are mandatory)
+        self.assertLess(xtalk["raw_unfiltered_cf_step_mV"], 50.0)
+        # Filtered disturbance must be below 1 LSB of the 18-bit ADC (19.1 uV)
+        self.assertLess(xtalk["filtered_output_glitch_uV"], 20.0)
+
 
 if __name__ == "__main__":
     unittest.main()

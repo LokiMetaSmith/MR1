@@ -165,8 +165,9 @@ def sync_spec_from_pcb(pcb_path: Path = DEFAULT_PCB_PATH, spec_path: Path = REPO
         actual = placements[ref]
         cad_x = round(actual["x"] - center_x, 4)
         cad_y = round(center_y - actual["y"], 4)
-        is_guarded = "Guarded" in actual["footprint"]
-        ring_net = pin_def.ring if is_guarded else None
+        fp_name = str(actual.get("footprint", ""))
+        is_guarded = any(k in fp_name for k in ("Guard", "Guarded", "GNDA"))
+        ring_net = pin_def.ring if (is_guarded or pin_def.ring) else None
         side = pin_def.side
 
         ring_str = f', ring={ring_net}' if ring_net else ""

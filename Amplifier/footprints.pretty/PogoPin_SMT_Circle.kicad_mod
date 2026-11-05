@@ -13,4 +13,9 @@
   (attr smd)
   (pad "1" smd circle (at 0 0) (size 2.0 2.0) (layers "F.Cu" "F.Paste" "F.Mask") (clearance 0.4) (uuid "7060c584-514f-5432-8522-c15edc8c42d3"))
   (fp_circle (center 0 0) (end 1.5 0) (stroke (width 0.05) (type solid)) (fill none) (layer "F.CrtYd") (uuid "0fe22430-b4fe-546e-a451-c0f69fc5dc9d"))
+  (model "${KIPRJMOD}/3dmodels/PogoPin_YTC1P-6030-01.step"
+    (offset (xyz 0 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
 )

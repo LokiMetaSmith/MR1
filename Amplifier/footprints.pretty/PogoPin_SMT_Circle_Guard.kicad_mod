@@ -22,4 +22,9 @@
   )
   (fp_text user "GUARD" (at 0 2.8) (layer "F.SilkS") (uuid "d919eaa0-a2fd-5bda-896f-f14460abec27") (effects (font (size 0.5 0.5) (thickness 0.1))))
   (fp_circle (center 0 0) (end 2.4 0) (stroke (width 0.05) (type solid)) (fill none) (layer "F.CrtYd") (uuid "176a6139-9164-5ec4-a92f-211d5d5a44d5"))
+  (model "${KIPRJMOD}/3dmodels/PogoPin_YTC1P-6030-01.step"
+    (offset (xyz 0 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
 )

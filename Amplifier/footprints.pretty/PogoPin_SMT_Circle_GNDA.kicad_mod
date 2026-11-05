@@ -22,4 +22,9 @@
   )
   (fp_text user "GNDA" (at 0 2.8) (layer "F.SilkS") (uuid "97cdf30b-eced-5d90-b224-3dc94e26eb98") (effects (font (size 0.5 0.5) (thickness 0.1))))
   (fp_circle (center 0 0) (end 2.4 0) (stroke (width 0.05) (type solid)) (fill none) (layer "F.CrtYd") (uuid "1abe53c9-7c92-5bc8-98ad-b35a5f7497b0"))
+  (model "${KIPRJMOD}/3dmodels/PogoPin_YTC1P-6030-01.step"
+    (offset (xyz 0 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
 )
