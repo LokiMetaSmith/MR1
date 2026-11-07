@@ -10251,53 +10251,57 @@
 		(embedded_fonts no)
 	)
 	(footprint "footprints:Fluid_Overlay_SILKSCREEN_ONLY"
-		(layer "F.Cu")
+		(layer "B.Cu")
 		(uuid "8e9d5aed-73a3-4622-aa51-22307d4a96dd")
 		(at 43.7042 42.0206)
 		(descr "Fluid overlay: silkscreen_only")
 		(property "Reference" "SYM1"
 			(at 0 -2.5 0)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(hide yes)
 			(uuid "135864aa-5d95-41eb-b799-b40e02f99a65")
 			(effects
 				(font
 					(size 0.6 0.6)
-					(thickness 0.15)
+					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(property "Value" "SYM_Arrow45_Large"
 			(at 0 2.5 0)
-			(layer "F.Fab")
+			(layer "B.Fab")
 			(uuid "ab8da21f-1e15-4112-8df4-64466994f2e6")
 			(effects
 				(font
 					(size 0.8 0.8)
 					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(property "Datasheet" ""
 			(at 0 0 0)
-			(layer "F.Fab")
+			(layer "B.Fab")
 			(hide yes)
 			(uuid "31817951-ff22-4551-a746-d46f4c88dd0d")
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+							(justify mirror)
 			)
 		)
 		(property "Description" "Filled 45° arrow, 300mil"
 			(at 0 0 0)
-			(layer "F.Fab")
+			(layer "B.Fab")
 			(hide yes)
 			(uuid "d1534829-4992-4e29-9b93-ae3e578a9348")
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+							(justify mirror)
 			)
 		)
 		(path "/3bc30a6e-9dc1-4212-97b4-6a988a77aff7")
@@ -10318,7 +10322,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "14a5dce3-b548-51ca-8d91-84eb82044380")
 		)
 		(fp_line
@@ -10328,7 +10332,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "9f01d04d-206e-52dd-b37e-ff427b394163")
 		)
 		(fp_line
@@ -10338,7 +10342,7 @@
 				(width 0.12)
 				(type dash)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "6d912a64-ff22-5989-83a5-7205d3551593")
 		)
 		(fp_line
@@ -10348,7 +10352,7 @@
 				(width 0.12)
 				(type dash)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "96db3e4e-b872-5e46-905d-8beeafa9e90d")
 		)
 		(fp_line
@@ -10358,7 +10362,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "993f4374-5524-5fd6-a012-cdd89c537e24")
 		)
 		(fp_line
@@ -10368,7 +10372,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "96ca2729-b743-5f08-92e6-0372b9b61b82")
 		)
 		(fp_line
@@ -10378,7 +10382,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "c112a236-a18e-5100-ba32-54e98d2b2fa5")
 		)
 		(fp_line
@@ -10388,7 +10392,7 @@
 				(width 0.15)
 				(type dash)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "f3455877-5b15-501b-acb3-f16d607f2cfd")
 		)
 		(fp_line
@@ -10398,7 +10402,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "cd93e155-b480-5646-ba0f-fb87453c8edf")
 		)
 		(fp_line
@@ -10408,7 +10412,7 @@
 				(width 0.15)
 				(type dash)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "ea118060-d0fd-558e-85ae-a90f5adc16e5")
 		)
 		(fp_line
@@ -10418,7 +10422,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "3966eb48-8885-5807-8159-3232bd2a0cf0")
 		)
 		(fp_line
@@ -10428,7 +10432,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "54c9bd0c-6473-5ade-bfb4-1681d4a54373")
 		)
 		(fp_line
@@ -10438,7 +10442,7 @@
 				(width 0.12)
 				(type dash)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "4de1cde4-4328-5666-8d5c-d4c509be8535")
 		)
 		(fp_line
@@ -10448,7 +10452,7 @@
 				(width 0.12)
 				(type dash)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "82e605eb-e2a5-5b67-8e00-8e1b6b350744")
 		)
 		(fp_line
@@ -10458,7 +10462,7 @@
 				(width 0.15)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "a87333e7-9dcc-5d43-8484-f5518368086e")
 		)
 		(fp_line
@@ -10468,7 +10472,7 @@
 				(width 0.15)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "a66aa228-2e1d-503f-8599-bced6ee807d4")
 		)
 		(fp_line
@@ -10478,7 +10482,7 @@
 				(width 0.15)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "bbc5ee2a-90d5-5625-9f38-7cc25747f249")
 		)
 		(fp_line
@@ -10488,7 +10492,7 @@
 				(width 0.15)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "facd00e0-94ae-5159-a3fb-c5a6d5064c0a")
 		)
 		(fp_line
@@ -10498,7 +10502,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "1276c7dc-c859-5313-879a-068009fa6565")
 		)
 		(fp_line
@@ -10508,7 +10512,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "b5ab71f5-89a6-5faa-be95-12e6462751a3")
 		)
 		(fp_line
@@ -10518,7 +10522,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "8604419c-9c91-5b8d-8bc9-fd22a4f89381")
 		)
 		(fp_line
@@ -10528,7 +10532,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "36b54fb4-b0a5-57ae-ae73-5d2b222adb72")
 		)
 		(fp_circle
@@ -10539,7 +10543,7 @@
 				(type solid)
 			)
 			(fill no)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "597cbeef-665b-5b12-b4c8-b4dd0b6743b6")
 		)
 		(fp_circle
@@ -10550,7 +10554,7 @@
 				(type solid)
 			)
 			(fill no)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "3c9acd93-f2e4-57b6-880b-e9449a9c6a78")
 		)
 		(fp_circle
@@ -10561,7 +10565,7 @@
 				(type solid)
 			)
 			(fill no)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "f95c8e6f-4782-5eac-8dd7-ff0aadc7c915")
 		)
 		(fp_circle
@@ -10572,7 +10576,7 @@
 				(type solid)
 			)
 			(fill no)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "ee1eb834-647e-5137-a9ab-6f77283a0525")
 		)
 		(fp_line
@@ -10701,79 +10705,86 @@
 		)
 		(fp_text user "REF_H1"
 			(at -17.3205 -11.8 0)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "73b3a324-660e-5586-b8b3-7199bd1300eb")
 			(effects
 				(font
 					(size 0.7 0.7)
 					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "REF_H3"
 			(at -17.3205 11.8 0)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "92711a89-28f7-5614-9a92-c39412a5ee29")
 			(effects
 				(font
 					(size 0.7 0.7)
 					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "CIS FLOW (H1 -> H2)"
 			(at -5 -3.5 30)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "197dd6ba-ae3e-50db-9eab-047cc2b83177")
 			(effects
 				(font
 					(size 0.7 0.7)
-					(thickness 0.11)
+					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "TRANS FLOW (H3 -> H4)"
 			(at -5 3.5 330)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "61edc9c5-ef80-581d-a587-381fb9fe502a")
 			(effects
 				(font
 					(size 0.7 0.7)
-					(thickness 0.11)
+					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "WAFER 4x4mm"
 			(at 0 -0.6 0)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "aeb49b42-ec2a-55ac-9df4-aa067885a907")
 			(effects
 				(font
 					(size 0.6 0.6)
-					(thickness 0.1)
+					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "REF_H4"
 			(at 17.3205 -11.8 0)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "d9382c2d-fd8d-5c1e-9d0b-6d4d7ded666c")
 			(effects
 				(font
 					(size 0.7 0.7)
 					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "REF_H2"
 			(at 17.3205 11.8 0)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "7b5a9c81-1a3c-5926-b177-5e740e960299")
 			(effects
 				(font
 					(size 0.7 0.7)
 					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "PORT KEEPOUT DIA 5.0mm"
@@ -10783,8 +10794,9 @@
 			(effects
 				(font
 					(size 0.6 0.6)
-					(thickness 0.1)
+					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "FLUID KEEPOUT (CLEARANCE >= 0.5mm)"
@@ -10796,6 +10808,7 @@
 					(size 0.7 0.7)
 					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(fp_text user "GASKET SEAL 6.2x6.2mm"
@@ -10805,8 +10818,9 @@
 			(effects
 				(font
 					(size 0.6 0.6)
-					(thickness 0.1)
+					(thickness 0.12)
 				)
+							(justify mirror)
 			)
 		)
 		(embedded_fonts no)
