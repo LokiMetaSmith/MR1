@@ -16,6 +16,9 @@ Generates exact, layout-aligned zones derived directly from routed copper:
    - Solid bottom-copper plane directly beneath Route 1 electrometer traces for 3D shielding.
 3. Solder Mask Openings (F.Mask & B.Mask):
    - Strips moisture-absorbing solder mask polymers over the guarded area.
+4. Silkscreen Keepout Zones (F.SilkS & B.SilkS):
+   - Prevents silkscreen ink contamination over bare copper and high-Z guard nodes.
+   - Enforces mask clearance on front and back.
 
 Usage:
     ./scripts/run_python.sh scripts/generate_board_zones.py [--write] [--check]
@@ -164,6 +167,39 @@ def build_guard_zone_sexpr(bbox: BBox, uuid_str: str) -> str:
     )
 
 
+def build_silk_keepout_zone_sexpr(bbox: BBox, layer: str, uuid_str: str, name: str) -> str:
+    """Generates silkscreen keepout zone S-expression forbidding silkscreen markings over bare copper."""
+    pts = format_pts(bbox)
+    return (
+        f'\t(zone\n'
+        f'\t\t(name "{name}")\n'
+        f'\t\t(layer "{layer}")\n'
+        f'\t\t(uuid "{uuid_str}")\n'
+        f'\t\t(hatch edge 0.5)\n'
+        f'\t\t(connect_pads\n'
+        f'\t\t\t(clearance 0)\n'
+        f'\t\t)\n'
+        f'\t\t(min_thickness 0.25)\n'
+        f'\t\t(keepout\n'
+        f'\t\t\t(tracks allowed)\n'
+        f'\t\t\t(vias allowed)\n'
+        f'\t\t\t(pads allowed)\n'
+        f'\t\t\t(copperpour not_allowed)\n'
+        f'\t\t\t(footprints allowed)\n'
+        f'\t\t)\n'
+        f'\t\t(placement\n'
+        f'\t\t\t(enabled no)\n'
+        f'\t\t\t(sheetname "")\n'
+        f'\t\t)\n'
+        f'\t\t(polygon\n'
+        f'\t\t\t(pts\n'
+        f'\t\t\t\t{pts}\n'
+        f'\t\t\t)\n'
+        f'\t\t)\n'
+        f'\t)'
+    )
+
+
 def replace_sexpr_block(text: str, uuid_str: str, new_block: str, tag: str) -> str:
     """Replace an S-expression block identified by tag and uuid without affecting other blocks."""
     uuid_idx = text.find(uuid_str)
@@ -215,16 +251,26 @@ def update_pcb_zones(pcb_path: Path = DEFAULT_PCB, write: bool = False) -> bool:
     uuid_bmask = "d4e5f6a7-b8c9-0123-def1-234567890123"
     uuid_keepout = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
     uuid_guard = "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+    uuid_silk_f = "e5f6a7b8-c9d0-1234-abcd-345678901234"
+    uuid_silk_b = "f6a7b8c9-d0e1-2345-bcde-456789012345"
 
     new_fmask_poly = build_mask_polygon_sexpr(mask_box, "F.Mask", uuid_fmask)
     new_bmask_poly = build_mask_polygon_sexpr(mask_box, "B.Mask", uuid_bmask)
     new_keepout = build_keepout_zone_sexpr(keepout_box, uuid_keepout)
     new_guard = build_guard_zone_sexpr(guard_box, uuid_guard)
+    new_silk_f = build_silk_keepout_zone_sexpr(mask_box, "F.SilkS", uuid_silk_f, "Silk_Keepout_Front")
+    new_silk_b = build_silk_keepout_zone_sexpr(mask_box, "B.SilkS", uuid_silk_b, "Silk_Keepout_Back")
 
     pcb_text = replace_sexpr_block(pcb_text, uuid_fmask, new_fmask_poly, "gr_poly")
     pcb_text = replace_sexpr_block(pcb_text, uuid_bmask, new_bmask_poly, "gr_poly")
     pcb_text = replace_sexpr_block(pcb_text, uuid_keepout, new_keepout, "zone")
     pcb_text = replace_sexpr_block(pcb_text, uuid_guard, new_guard, "zone")
+    pcb_text = replace_sexpr_block(pcb_text, uuid_silk_f, new_silk_f, "zone")
+    pcb_text = replace_sexpr_block(pcb_text, uuid_silk_b, new_silk_b, "zone")
+
+    # Enforce subtractmaskfromsilk yes so 3D viewer and plotters suppress silk over bare copper
+    if "(subtractmaskfromsilk no)" in pcb_text:
+        pcb_text = pcb_text.replace("(subtractmaskfromsilk no)", "(subtractmaskfromsilk yes)")
 
     if write:
         create_snapshot(label="pre_zone_injection", files=[pcb_path])
