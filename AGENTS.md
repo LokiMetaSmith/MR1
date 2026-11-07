@@ -121,6 +121,7 @@ cd MR1_firmware && pio run   # same for Pump_firmware; upload with `--target upl
 
 ## 6. Workflow tips
 
+0. **CRITICAL REPO SAFETY**: BEFORE making ANY changes or running modifying scripts/pipelines, ALWAYS verify or capture a git commit or branch of the current repository state (and/or snapshot hardware files via `scripts/backup_hardware.py`). The user pushes changes before requesting updates; securing a git commit/branch upfront guarantees zero lost work and allows instant rollback of any error in scripts or layout edits.
 1. Read `.jules/memory.md`, plus the relevant file in `docs/`, before changing a subsystem.
 2. After changes, run `python run_tests.py`. For CAD changes also check the collision tests. For KiCad script changes run `tests/test_interposer_kicad.py` and `test_kicad_library_validation.py`.
 3. Don't commit generated output (`exports/`, `renders/`, `build/`, `.venv`, `node_modules`).
