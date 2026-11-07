@@ -85,17 +85,17 @@ class PinSpec:
 
 PINS: Tuple[PinSpec, ...] = (
     PinSpec(1, "GNDA_SHLD", CIS, -7.2542, -20.5794, "gnd_feed", description="Shield anchor on inlet/outlet manifold ground boundary"),
-    PinSpec(2, "WS_CIS_WIDE", CIS, 3.0458, -5.1294, "signal", ring=GUARD_WIDE, description="Path 2 (200 nm) working sense"),
-    PinSpec(3, "GUARD_WIDE", CIS, 6.4458, -6.9294, "guard_feed", description="Feeds the GUARD_WIDE ring around P2"),
+    PinSpec(2, "WS_CIS_WIDE", CIS, 2.3958, -5.7794, "signal", ring=GUARD_WIDE, description="Path 2 (200 nm) working sense"),
+    PinSpec(3, "GUARD_WIDE", CIS, 0.4958, -8.8544, "guard_feed", description="Feeds the GUARD_WIDE ring around P2"),
     PinSpec(4, "GUARD_CIS_A", CIS, -0.5542, 3.6206, "guard_feed", description="Flanking guard A, feeds the GUARD ring around P5"),
     PinSpec(5, "WS_CIS", CIS, 5.6958, 0.0456, "signal", ring=GUARD, description="Path 1 (sub-5 nm) high-Z electrometer node"),
-    PinSpec(6, "GUARD_CIS_B", CIS, 10.1958, -0.5794, "guard_feed", description="Flanking guard B, feeds the GUARD ring around P5"),
+    PinSpec(6, "GUARD_CIS_B", CIS, 9.2458, -0.5794, "guard_feed", description="Flanking guard B, feeds the GUARD ring around P5"),
     PinSpec(7, "CE_GNDA", TRANS, -14.3542, -11.4794, "signal", description="Counter electrode return"),
     PinSpec(8, "RE_TRANS", TRANS, -7.7042, -1.2794, "signal", description="Trans reference sense"),
-    PinSpec(9, ">PORE_AMP", TRANS, 17.0958, -6.6294, "signal", description="Bias excitation drive"),
-    PinSpec(10, "GNDA", TRANS, 8.1958, 21.1706, "gnd_feed", description="Analog ground fence, feeds GNDA rings"),
-    PinSpec(11, "WEEP_SENSE", TRANS, 13.6958, -11.2294, "signal", description="Weep moat detector"),
-    PinSpec(12, "GNDA_WEEP", TRANS, 4.1958, -8.8794, "gnd_feed", description="Perimeter weep drain / chassis tie"),
+    PinSpec(9, ">PORE_AMP", TRANS, 16.2958, -6.1794, "signal", description="Bias excitation drive"),
+    PinSpec(10, "GNDA", TRANS, -0.9042, 9.7706, "gnd_feed", description="Analog ground fence, feeds GNDA rings"),
+    PinSpec(11, "WEEP_SENSE", TRANS, 13.3458, -10.8794, "signal", description="Weep moat detector"),
+    PinSpec(12, "GNDA_WEEP", TRANS, 4.1958, -9.7294, "gnd_feed", description="Perimeter weep drain / chassis tie"),
 )
 
 # Which pogo pins carry each ring net across the air gap (pin numbers).

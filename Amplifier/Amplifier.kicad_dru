@@ -1,0 +1,10 @@
+(version 1)
+(rule "Fine pitch MSOP U13 pad clearance"
+   (constraint clearance (min 0.14mm))
+   (condition "A.insideCourtyard('U13') && B.insideCourtyard('U13')")
+)
+
+(rule "FPC connector J7 fine pitch pad clearance"
+   (constraint clearance (min 0.15mm))
+   (condition "A.insideCourtyard('J7') && B.insideCourtyard('J7')")
+)

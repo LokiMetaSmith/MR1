@@ -37,6 +37,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from src import stack_spec as spec
 from scripts.generate_footprint import extract_pin_placements_from_pcb
+from scripts.backup_hardware import create_snapshot
 
 DEFAULT_PCB_PATH = REPO_ROOT / "Amplifier" / "Amplifier.kicad_pcb"
 CENTER_X = 43.7042
@@ -142,6 +143,7 @@ def update_amplifier_pcb(pcb_path: Path = DEFAULT_PCB_PATH, dry_run: bool = Fals
                 modified = True
 
     if modified and not dry_run:
+        create_snapshot(label="pre_amplifier_pin_update", files=[pcb_path])
         pcb_path.write_text(text, encoding="utf-8")
 
     return modified

@@ -100,6 +100,12 @@ echo "Check-only : ${CHECK_ONLY}"
 echo "Skip-tests : ${SKIP_TESTS}"
 echo "========================================================================"
 
+# Safety Step 0: Snapshot hardware schematics and PCB designs
+if [ "${CHECK_ONLY}" = false ]; then
+    echo -e "\n[SAFETY STEP] Creating timestamped backup of schematic and PCB layouts..."
+    "${RUN_PY}" "${SCRIPT_DIR}/backup_hardware.py" --label "pre_backprop"
+fi
+
 # Step 1: Ingest PCB pin placements into stack_spec.py
 echo -e "\n[STEP 1/5] Back-propagating PCB pin placements into src/stack_spec.py..."
 if [ "${CHECK_ONLY}" = true ]; then
@@ -116,6 +122,14 @@ if [ "${CHECK_ONLY}" = true ]; then
 else
     "${RUN_PY}" "${SCRIPT_DIR}/generate_footprint.py"
     "${RUN_PY}" "${SCRIPT_DIR}/generate_footprint.py" --check
+fi
+
+# Step 2b: Update layout-aligned keepouts, guard islands, and mask exclusions
+echo -e "\n[STEP 2b/5] Synchronizing high-Z guard and keepout zones..."
+if [ "${CHECK_ONLY}" = true ]; then
+    "${RUN_PY}" "${SCRIPT_DIR}/generate_board_zones.py" --check --pcb "${PCB_PATH}"
+else
+    "${RUN_PY}" "${SCRIPT_DIR}/generate_board_zones.py" --write --pcb "${PCB_PATH}"
 fi
 
 # Step 3: Regenerate Interposer PCB mating pads and routes

@@ -16,6 +16,7 @@ fp-info-cache
 # Backups & Editor History
 *-backups
 _autosave-*
+.hardware_backups/
 \#*#
 .#*
 *.bak

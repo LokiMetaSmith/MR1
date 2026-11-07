@@ -189,10 +189,18 @@ class PlanarElectrostaticsSolver:
         guard_enabled: bool = True,
         wet_region: Optional[Tuple[float, float, float, float]] = None,
         net_voltages: Optional[Dict[str, float]] = None,
+        route_sel_high: bool = False,
     ) -> Dict[str, Any]:
         """
         Maps board copper onto the 2D grid, builds the sparse Laplacian,
         and solves for V(x, y) and surface leakage currents for both Route 1 and Route 2.
+
+        Parameters:
+            guard_enabled: Whether driven guards (/GUARD, /GUARD_WIDE) are actively bootstrapped to 0V.
+            wet_region: Optional bounding box (x1, y1, x2, y2) of conductive electrolyte contamination.
+            net_voltages: Optional override dictionary of net DC voltages.
+            route_sel_high: State of the U17 multiplexer select line /ROUTE_SEL (default False = 0.0V
+                            for Route 1 active; True = +3.3V CMOS high for Route 2 active).
         """
         if net_voltages is None:
             net_voltages = {
@@ -216,7 +224,7 @@ class PlanarElectrostaticsSolver:
                 "VDDA": 2.5,
                 "VSSA": -2.5,
                 "+1V8": 1.8,
-                "/ROUTE_SEL": 3.3,
+                "/ROUTE_SEL": 3.3 if route_sel_high else 0.0,
                 "/WEEP_SENSE": 3.3,
             }
 
@@ -853,8 +861,11 @@ def run_full_em_analysis() -> Dict[str, Any]:
     print("\n[PHASE 2] Solving 2D Substrate Electrostatic Laplace Equation (Rogers RO3003)...")
     solver = PlanarElectrostaticsSolver(grid_step_mm=0.1)
 
-    res_guarded = solver.solve(parser, guard_enabled=True)
-    res_unguarded = solver.solve(parser, guard_enabled=False)
+    # Route 1 active operational state (/ROUTE_SEL = 0.0V low)
+    res_guarded = solver.solve(parser, guard_enabled=True, route_sel_high=False)
+    res_unguarded = solver.solve(parser, guard_enabled=False, route_sel_high=False)
+    # Route 2 active state (/ROUTE_SEL = +3.3V CMOS high)
+    res_route2 = solver.solve(parser, guard_enabled=True, route_sel_high=True)
 
     route1_guarded = res_guarded["route1_leakage_fA"]
     route1_unguarded = res_unguarded["route1_leakage_fA"]
@@ -866,7 +877,7 @@ def run_full_em_analysis() -> Dict[str, Any]:
     print(f"  Route 1 (/WS_CIS, 10 Gohm TIA) Guarded Leakage : {route1_guarded:.4f} fA")
     print(f"  Route 1 (/WS_CIS) Unshielded Leakage          : {route1_unguarded:.4f} fA")
     print(f"  Route 1 Driven Guard Suppression              : {route1_suppression_ratio:.1f}x ({route1_suppression_db:.1f} dB)")
-    print(f"  Route 2 (/WS_CIS_WIDE, 100 kohm) Leakage      : {res_guarded['route2_leakage_fA']:.4f} fA (Guard gap near U17)")
+    print(f"  Route 2 (/WS_CIS_WIDE, 100 kohm) Leakage      : {res_route2['route2_leakage_fA']:.4f} fA (Unguarded perimeter near U5.2 / R10-C3 feedback)")
 
     # Render heatmap image to artifact directory
     heatmap_path = REPO_ROOT / "exports" / "renders" / "amplifier_em_potential_map.png"
