@@ -566,9 +566,62 @@ def pin_footprint_name(p: "spec.PinSpec", style: str) -> str:
     """Library footprint a given spec pin should use on the Amplifier (smt) or Interposer (target)."""
     return coax_footprint_name(style, p.shape, p.ring)
 
-def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = "F") -> str:
+def clip_segment_outside_box(
+    x1: float, y1: float, x2: float, y2: float,
+    xmin: float, xmax: float, ymin: float, ymax: float,
+) -> List[Tuple[Tuple[float, float], Tuple[float, float]]]:
+    """Return sub-segments of (x1, y1)-(x2, y2) that lie outside [xmin, xmax] x [ymin, ymax]."""
+    dx = x2 - x1
+    dy = y2 - y1
+    t_enter = 0.0
+    t_exit = 1.0
+
+    if dx == 0:
+        if x1 < xmin or x1 > xmax:
+            return [((x1, y1), (x2, y2))]
+    else:
+        t1 = (xmin - x1) / dx
+        t2 = (xmax - x1) / dx
+        t_enter = max(t_enter, min(t1, t2))
+        t_exit = min(t_exit, max(t1, t2))
+
+    if dy == 0:
+        if y1 < ymin or y1 > ymax:
+            return [((x1, y1), (x2, y2))]
+    else:
+        t1 = (ymin - y1) / dy
+        t2 = (ymax - y1) / dy
+        t_enter = max(t_enter, min(t1, t2))
+        t_exit = min(t_exit, max(t1, t2))
+
+    if t_enter >= t_exit or t_exit <= 0.0 or t_enter >= 1.0:
+        return [((x1, y1), (x2, y2))]
+
+    tin = max(0.0, t_enter)
+    tout = min(1.0, t_exit)
+
+    res = []
+    if tin > 1e-4:
+        res.append(((x1, y1), (x1 + tin * dx, y1 + tin * dy)))
+    if tout < 1.0 - 1e-4:
+        res.append(((x1 + tout * dx, y1 + tout * dy), (x2, y2)))
+    return res
+
+
+# Guard/solder-mask keepout box in Fluid_Overlay local coordinates.
+# Mask cutout is [37.5, 55.3] x [35.81, 45.725] on PCB.
+# Fluid_Overlay is placed at (43.7042, 42.0206).
+# Relative bounds with 0.3mm clearance margin: [-6.5, 11.9] x [-6.5, 4.0].
+FLUID_SILK_KEEPOUT_BOX = (-6.5, 11.9, -6.5, 4.0)
+
+
+def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = "F", mirror: Optional[bool] = None) -> str:
     """Generates fluid port markers, flow channels, wafer boundaries, and keepout corridors."""
     lines = []
+    if mirror is None:
+        mirror = (layer == "B")
+    mirror_str = " (justify mirror)" if mirror else ""
+
     # In KiCad board coordinates (Y down):
     # CAD H1 (-FLUID_PORT_X, FLUID_PORT_Y) -> KiCad (-FLUID_PORT_X, -FLUID_PORT_Y) [Cis In]
     # CAD H2 (FLUID_PORT_X, -FLUID_PORT_Y) -> KiCad (FLUID_PORT_X, FLUID_PORT_Y)   [Cis Out]
@@ -584,14 +637,14 @@ def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = 
     cmts_layer = "Cmts.User"
 
     for name, x, y in ports:
+        y_txt = y - 2.2 if y < 0 else y + 2.2
         if fluid_mode == "drills":
             lines.append(
                 f'  (pad "{name}" np_thru_hole circle (at {x:.4f} {y:.4f}) '
                 f'(size {FLUID_DRILL_DIA} {FLUID_DRILL_DIA}) (drill {FLUID_DRILL_DIA}) (layers "*.Cu" "*.Mask") (uuid "{deterministic_uuid(f"fluid_pad_{name}")}"))\n'
             )
-            y_txt = y - 1.8 if y < 0 else y + 1.8
             lines.append(
-                f'  (fp_text user "{name}" (at {x:.4f} {y_txt:.4f} 0) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_txt_{name}")}") (effects (font (size 0.7 0.7) (thickness 0.12))))\n'
+                f'  (fp_text user "{name}" (at {x:.4f} {y_txt:.4f} 0) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_txt_{name}")}") (effects (font (size 0.8 0.8) (thickness 0.12)){mirror_str}))\n'
             )
         else:
             # Silkscreen reference circle and crosshair
@@ -604,9 +657,8 @@ def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = 
             lines.append(
                 f'  (fp_line (start {x:.4f} {y-1.5:.4f}) (end {x:.4f} {y+1.5:.4f}) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_silk_v_{name}")}"))\n'
             )
-            y_txt = y - 1.8 if y < 0 else y + 1.8
             lines.append(
-                f'  (fp_text user "REF_{name}" (at {x:.4f} {y_txt:.4f} 0) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_txt_{name}")}") (effects (font (size 0.7 0.7) (thickness 0.12))))\n'
+                f'  (fp_text user "REF_{name}" (at {x:.4f} {y_txt:.4f} 0) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_txt_{name}")}") (effects (font (size 0.8 0.8) (thickness 0.12)){mirror_str}))\n'
             )
 
         # Port keepout circle on comment layer (D = 5.0mm, r = 2.5mm)
@@ -614,69 +666,69 @@ def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = 
             f'  (fp_circle (center {x:.4f} {y:.4f}) (end {x:.4f} {y+2.5:.4f}) (stroke (width 0.12) (type dash)) (fill none) (layer "{cmts_layer}") (uuid "{deterministic_uuid(f"fluid_port_keepout_circ_{name}")}"))\n'
         )
 
-    # 1. Flow Channel Centerlines (Dashed on Silk):
+    # 1. Flow Channel Centerlines (Clipped outside guard/bare copper keepout on Silk):
     # Cis channel: H1 (-17.3205, -10.0) -> H2 (17.3205, 10.0), slope = +30 deg
+    cis_c_segs = clip_segment_outside_box(-17.3205, -10.0, 17.3205, 10.0, *FLUID_SILK_KEEPOUT_BOX)
+    for idx, ((xa, ya), (xb, yb)) in enumerate(cis_c_segs):
+        lines.append(
+            f'  (fp_line (start {xa:.4f} {ya:.4f}) (end {xb:.4f} {yb:.4f}) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_channel_cis_{idx}")}"))\n'
+        )
     lines.append(
-        f'  (fp_line (start -17.3205 -10.0) (end 17.3205 10.0) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_cis")}"))\n'
-    )
-    lines.append(
-        f'  (fp_text user "CIS FLOW (H1 -> H2)" (at -5.0 -3.5 30) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_cis_label")}") (effects (font (size 0.7 0.7) (thickness 0.11))))\n'
+        f'  (fp_text user "CIS FLOW (H1 -> H2)" (at -5.0 -3.5 30) (layer "{cmts_layer}") (uuid "{deterministic_uuid("fluid_channel_cis_label")}") (effects (font (size 0.8 0.8) (thickness 0.12)){mirror_str}))\n'
     )
 
     # Trans channel: H3 (-17.3205, 10.0) -> H4 (17.3205, -10.0), slope = -30 deg
+    trans_c_segs = clip_segment_outside_box(-17.3205, 10.0, 17.3205, -10.0, *FLUID_SILK_KEEPOUT_BOX)
+    for idx, ((xa, ya), (xb, yb)) in enumerate(trans_c_segs):
+        lines.append(
+            f'  (fp_line (start {xa:.4f} {ya:.4f}) (end {xb:.4f} {yb:.4f}) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"fluid_channel_trans_{idx}")}"))\n'
+        )
     lines.append(
-        f'  (fp_line (start -17.3205 10.0) (end 17.3205 -10.0) (stroke (width 0.15) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_trans")}"))\n'
-    )
-    lines.append(
-        f'  (fp_text user "TRANS FLOW (H3 -> H4)" (at -5.0 3.5 330) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_trans_label")}") (effects (font (size 0.7 0.7) (thickness 0.11))))\n'
+        f'  (fp_text user "TRANS FLOW (H3 -> H4)" (at -5.0 3.5 330) (layer "{cmts_layer}") (uuid "{deterministic_uuid("fluid_channel_trans_label")}") (effects (font (size 0.8 0.8) (thickness 0.12)){mirror_str}))\n'
     )
 
-    # 2. Physical Channel Boundaries (Width = 1.4 mm, half-width = 0.7 mm, Solid on Silk):
+    # 2. Physical Channel Boundaries (Width = 1.4 mm, half-width = 0.7 mm, Clipped on Silk):
     # Cis channel normal = (-1/2, sqrt(3)/2) -> offset = +- (-0.35, 0.6062)
-    lines.append(
-        f'  (fp_line (start -17.6705 -9.3938) (end 16.9705 10.6062) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_cis_wall1")}"))\n'
-    )
-    lines.append(
-        f'  (fp_line (start -16.9705 -10.6062) (end 17.6705 9.3938) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_cis_wall2")}"))\n'
-    )
-
-    # Trans channel normal = (1/2, sqrt(3)/2) -> offset = +- (0.35, 0.6062)
-    lines.append(
-        f'  (fp_line (start -16.9705 10.6062) (end 17.6705 -9.3938) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_trans_wall1")}"))\n'
-    )
-    lines.append(
-        f'  (fp_line (start -17.6705 9.3938) (end 16.9705 -10.6062) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid("fluid_channel_trans_wall2")}"))\n'
-    )
+    walls = [
+        ("fluid_channel_cis_wall1", -17.6705, -9.3938, 16.9705, 10.6062),
+        ("fluid_channel_cis_wall2", -16.9705, -10.6062, 17.6705, 9.3938),
+        ("fluid_channel_trans_wall1", -16.9705, 10.6062, 17.6705, -9.3938),
+        ("fluid_channel_trans_wall2", -17.6705, 9.3938, 16.9705, -10.6062),
+    ]
+    for tag, x1, y1, x2, y2 in walls:
+        for idx, ((xa, ya), (xb, yb)) in enumerate(clip_segment_outside_box(x1, y1, x2, y2, *FLUID_SILK_KEEPOUT_BOX)):
+            lines.append(
+                f'  (fp_line (start {xa:.4f} {ya:.4f}) (end {xb:.4f} {yb:.4f}) (stroke (width 0.12) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"{tag}_{idx}")}"))\n'
+            )
 
     # 3. Fluid Keepout Corridor Boundaries (0.5 mm clearance outside channel, total offset = 1.2 mm):
-    # Drawn on both Cmts.User and F.SilkS (dash) so clearly visible in any layer view
-    # Cis keepout normal offset = +- (-0.60, 1.0392)
-    for ly in (cmts_layer, silk_layer):
-        st = "dash" if ly == silk_layer else "solid"
-        pfx = "cmts" if ly == cmts_layer else "silk"
+    # Drawn full on Cmts.User, clipped on SilkS
+    corridors = [
+        ("fluid_keepout_cis1", -17.9205, -8.9608, 16.7205, 11.0392),
+        ("fluid_keepout_cis2", -16.7205, -11.0392, 17.9205, 8.9608),
+        ("fluid_keepout_trans1", -16.7205, 11.0392, 17.9205, -8.9608),
+        ("fluid_keepout_trans2", -17.9205, 8.9608, 16.7205, -11.0392),
+    ]
+    for tag, x1, y1, x2, y2 in corridors:
         lines.append(
-            f'  (fp_line (start -17.9205 -8.9608) (end 16.7205 11.0392) (stroke (width 0.12) (type {st})) (layer "{ly}") (uuid "{deterministic_uuid(f"fluid_keepout_cis1_{pfx}")}"))\n'
+            f'  (fp_line (start {x1:.4f} {y1:.4f}) (end {x2:.4f} {y2:.4f}) (stroke (width 0.12) (type solid)) (layer "{cmts_layer}") (uuid "{deterministic_uuid(f"{tag}_cmts")}"))\n'
         )
-        lines.append(
-            f'  (fp_line (start -16.7205 -11.0392) (end 17.9205 8.9608) (stroke (width 0.12) (type {st})) (layer "{ly}") (uuid "{deterministic_uuid(f"fluid_keepout_cis2_{pfx}")}"))\n'
-        )
-        lines.append(
-            f'  (fp_line (start -16.7205 11.0392) (end 17.9205 -8.9608) (stroke (width 0.12) (type {st})) (layer "{ly}") (uuid "{deterministic_uuid(f"fluid_keepout_trans1_{pfx}")}"))\n'
-        )
-        lines.append(
-            f'  (fp_line (start -17.9205 8.9608) (end 16.7205 -11.0392) (stroke (width 0.12) (type {st})) (layer "{ly}") (uuid "{deterministic_uuid(f"fluid_keepout_trans2_{pfx}")}"))\n'
-        )
+        for idx, ((xa, ya), (xb, yb)) in enumerate(clip_segment_outside_box(x1, y1, x2, y2, *FLUID_SILK_KEEPOUT_BOX)):
+            lines.append(
+                f'  (fp_line (start {xa:.4f} {ya:.4f}) (end {xb:.4f} {yb:.4f}) (stroke (width 0.12) (type dash)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"{tag}_silk_{idx}")}"))\n'
+            )
 
     # 4. Central Nanopore Wafer Die Boundary (4.0 x 4.0 mm rotated 45 deg, half-diagonal = 2.8284 mm):
+    # Placed on Cmts.User so visible in CAD without printing over bare copper or violating silk keepout
     wafer_pts = [(0.0, -2.8284), (2.8284, 0.0), (0.0, 2.8284), (-2.8284, 0.0)]
     for i in range(4):
         p1 = wafer_pts[i]
         p2 = wafer_pts[(i + 1) % 4]
         lines.append(
-            f'  (fp_line (start {p1[0]:.4f} {p1[1]:.4f}) (end {p2[0]:.4f} {p2[1]:.4f}) (stroke (width 0.15) (type solid)) (layer "{silk_layer}") (uuid "{deterministic_uuid(f"wafer_die_edge_{i}")}"))\n'
+            f'  (fp_line (start {p1[0]:.4f} {p1[1]:.4f}) (end {p2[0]:.4f} {p2[1]:.4f}) (stroke (width 0.15) (type solid)) (layer "{cmts_layer}") (uuid "{deterministic_uuid(f"wafer_die_edge_{i}")}"))\n'
         )
     lines.append(
-        f'  (fp_text user "WAFER 4x4mm" (at 0.0 -0.6 0) (layer "{silk_layer}") (uuid "{deterministic_uuid("wafer_die_label")}") (effects (font (size 0.6 0.6) (thickness 0.10))))\n'
+        f'  (fp_text user "WAFER 4x4mm" (at 0.0 -0.6 0) (layer "{cmts_layer}") (uuid "{deterministic_uuid("wafer_die_label")}") (effects (font (size 0.7 0.7) (thickness 0.11)){mirror_str}))\n'
     )
 
     # 5. Central Gasket / PCB Cutout Keepout Boundary (6.2 x 6.2 mm rotated 45 deg, half-diagonal = 4.3841 mm):
@@ -690,13 +742,13 @@ def generate_fluid_references(fluid_mode: str = "silkscreen_only", layer: str = 
 
     # 6. Comment Annotations for Layout Reference:
     lines.append(
-        f'  (fp_text user "FLUID KEEPOUT (CLEARANCE >= 0.5mm)" (at 0.0 -7.0 0) (layer "{cmts_layer}") (uuid "{deterministic_uuid("fluid_keepout_note")}") (effects (font (size 0.7 0.7) (thickness 0.12))))\n'
+        f'  (fp_text user "FLUID KEEPOUT (CLEARANCE >= 0.5mm)" (at 0.0 -7.0 0) (layer "{cmts_layer}") (uuid "{deterministic_uuid("fluid_keepout_note")}") (effects (font (size 0.7 0.7) (thickness 0.12)){mirror_str}))\n'
     )
     lines.append(
-        f'  (fp_text user "PORT KEEPOUT DIA 5.0mm" (at -17.3205 -13.5 0) (layer "{cmts_layer}") (uuid "{deterministic_uuid("port_keepout_note")}") (effects (font (size 0.6 0.6) (thickness 0.10))))\n'
+        f'  (fp_text user "PORT KEEPOUT DIA 5.0mm" (at -17.3205 -13.5 0) (layer "{cmts_layer}") (uuid "{deterministic_uuid("port_keepout_note")}") (effects (font (size 0.6 0.6) (thickness 0.10)){mirror_str}))\n'
     )
     lines.append(
-        f'  (fp_text user "GASKET SEAL 6.2x6.2mm" (at 0.0 5.0 0) (layer "{cmts_layer}") (uuid "{deterministic_uuid("gasket_keepout_note")}") (effects (font (size 0.6 0.6) (thickness 0.10))))\n'
+        f'  (fp_text user "GASKET SEAL 6.2x6.2mm" (at 0.0 5.0 0) (layer "{cmts_layer}") (uuid "{deterministic_uuid("gasket_keepout_note")}") (effects (font (size 0.6 0.6) (thickness 0.10)){mirror_str}))\n'
     )
 
     return "".join(lines)
@@ -1298,6 +1350,44 @@ def write_library(verbose: bool = True) -> List[Path]:
     return written
 
 
+def update_amplifier_pcb_fluid_overlay(
+    pcb_path: Path = REPO_ROOT / "Amplifier" / "Amplifier.kicad_pcb",
+    verbose: bool = True,
+) -> bool:
+    """Updates embedded SYM1 footprint graphics in Amplifier.kicad_pcb with clipped keepout references."""
+    if not pcb_path.is_file():
+        if verbose:
+            print(f"[WARN] PCB file not found: {pcb_path}")
+        return False
+
+    pcb_text = pcb_path.read_text(encoding="utf-8")
+    sym1_match = re.search(
+        r'(\t\(footprint "footprints:Fluid_Overlay_SILKSCREEN_ONLY"[\s\S]*?'
+        r'\(property "Reference" "SYM1"[\s\S]*?'
+        r'\(attr smd\)[\s\S]*?'
+        r'\(duplicate_pad_numbers_are_jumpers no\)\n)'
+        r'([\s\S]*?)'
+        r'(\n\t\t\(embedded_fonts no\)\n\t\))',
+        pcb_text,
+    )
+    if not sym1_match:
+        if verbose:
+            print("[WARN] SYM1 footprint not found in PCB.")
+        return False
+
+    new_inner = generate_fluid_references(fluid_mode="silkscreen_only", layer="B", mirror=True)
+    new_inner_indented = "\n".join(
+        "\t\t" + line.strip() if line.strip() else "" for line in new_inner.strip().split("\n")
+    )
+    new_pcb = pcb_text[:sym1_match.start(2)] + new_inner_indented + pcb_text[sym1_match.end(2):]
+    if new_pcb != pcb_text:
+        pcb_path.write_text(new_pcb, encoding="utf-8")
+        if verbose:
+            print(f"[OK] Updated SYM1 fluid overlay in {pcb_path.relative_to(REPO_ROOT)}")
+        return True
+    return False
+
+
 def build_footprint_file(
     output_path: Path | str = EXPORT_DIR / f"{FOOTPRINT_NAME}.kicad_mod",
     sync_libraries: bool = False,
@@ -1343,12 +1433,17 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser.add_argument("--dry-run", action="store_true", help="Generate in memory only; write nothing")
     parser.add_argument("--no-sync-libs", action="store_false", dest="sync_libs", default=True,
                         help="Write only the legacy --out file, not the libraries")
+    parser.add_argument("--update-pcb", action="store_true", help="Update SYM1 fluid overlay graphics in Amplifier.kicad_pcb")
     parser.add_argument("--quiet", "-q", action="store_true", help="Suppress stdout verification table")
     return parser.parse_args(argv)
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = parse_args(argv)
+
+    if args.update_pcb:
+        update_amplifier_pcb_fluid_overlay(verbose=not args.quiet)
+        return 0
 
     problems = spec.validate()
     if problems:
