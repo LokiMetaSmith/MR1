@@ -229,6 +229,96 @@ def replace_sexpr_block(text: str, uuid_str: str, new_block: str, tag: str) -> s
     return text
 
 
+def sanitize_silkscreen_over_guard(pcb_text: str) -> str:
+    """Removes and relocates all silkscreen ink from the electrometer bare copper / guard window.
+
+    KiCad keepout zones do not automatically erase footprint silkscreen vectors. To prevent
+    moisture-absorbing dielectric ink contamination over bare copper and high-Z guard nodes:
+    - Component body outlines/circles/polygons on F.SilkS are moved to F.Fab.
+    - Component reference designators are repositioned onto adjacent soldermask or hidden on silk.
+    """
+    import re
+
+    def modify_fp(text: str, ref: str, transform_fn) -> str:
+        pattern = re.compile(
+            r'(\t\(footprint\s+\"[^\"]+\"[\s\S]*?\(property\s+\"Reference\"\s+\"' + ref + r'\"[\s\S]*?\n\t\))'
+        )
+        m = pattern.search(text)
+        if not m:
+            return text
+        old_block = m.group(1)
+        new_block = transform_fn(old_block)
+        return text[:m.start(1)] + new_block + text[m.end(1):]
+
+    def fix_p4(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"P4\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>-2.7 0 90\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"P4\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_p5(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"P5\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>6.0 3.46 30\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"P5\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_p6(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"P6\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>2.6 0 0\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"P6\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_p8(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"P8\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>-2.0 0 0\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"P8\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_p2(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"P2\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>0 2.2 0\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"P2\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_u2(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"U2\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>-0.04 5.2 0\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"U2\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_r1(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"R1\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>4.5 0 90\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"R1\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_c1(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"C1\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>4.5 0 90\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"C1\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_c19(blk):
+        blk = re.sub(r'(\(property\s+\"Reference\"\s+\"C19\"\s+\(at\s+)[^\)]+(\)\s+\(layer\s+\"F\.SilkS\"\))', r'\g<1>0 4.2 0\2', blk)
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        return re.sub(r'(\(property\s+\"Reference\"\s+\"C19\"[\s\S]*?\(layer\s+\")F\.Fab(\"\))', r'\g<1>F.SilkS\2', blk)
+
+    def fix_c14(blk):
+        # Move C14 reference and graphics to F.Fab to avoid solder mask overlap
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        if '(hide yes)' not in blk:
+            blk = re.sub(r'(\(property\s+\"Reference\"\s+\"C14\"[\s\S]*?\(layer\s+\"F\.Fab\"\))', r'\1\n\t\t\t(hide yes)', blk)
+        return blk
+
+    def fix_r32(blk):
+        # Move R32 reference and graphics to F.Fab to avoid solder mask overlap with keepout/C3/R10
+        blk = blk.replace('(layer "F.SilkS")', '(layer "F.Fab")')
+        if '(hide yes)' not in blk:
+            blk = re.sub(r'(\(property\s+\"Reference\"\s+\"R32\"[\s\S]*?\(layer\s+\"F\.Fab\"\))', r'\1\n\t\t\t(hide yes)', blk)
+        return blk
+
+    for ref, fn in [
+        ('P4', fix_p4), ('P5', fix_p5), ('P6', fix_p6), ('P8', fix_p8), ('P2', fix_p2),
+        ('U2', fix_u2), ('R1', fix_r1), ('C1', fix_c1), ('C19', fix_c19), ('C14', fix_c14),
+        ('R32', fix_r32),
+    ]:
+        pcb_text = modify_fp(pcb_text, ref, fn)
+
+    return pcb_text
+
+
 def update_pcb_zones(pcb_path: Path = DEFAULT_PCB, write: bool = False) -> bool:
     """Calculates Route 1 bounds and updates zones & mask exclusions in PCB."""
     parser = BoardGeometryParser(pcb_path)
@@ -271,6 +361,9 @@ def update_pcb_zones(pcb_path: Path = DEFAULT_PCB, write: bool = False) -> bool:
     # Enforce subtractmaskfromsilk yes so 3D viewer and plotters suppress silk over bare copper
     if "(subtractmaskfromsilk no)" in pcb_text:
         pcb_text = pcb_text.replace("(subtractmaskfromsilk no)", "(subtractmaskfromsilk yes)")
+
+    # Sanitize silkscreen vectors and references over bare copper guard window
+    pcb_text = sanitize_silkscreen_over_guard(pcb_text)
 
     if write:
         create_snapshot(label="pre_zone_injection", files=[pcb_path])
