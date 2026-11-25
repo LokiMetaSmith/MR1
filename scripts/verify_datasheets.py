@@ -33,6 +33,12 @@ REPORT_PATH = REPO_ROOT / "docs" / "DATASHEET_VERIFICATION_REPORT.md"
 
 LCSC_DETAIL_URL = "https://wmsc.lcsc.com/ftps/wm/product/detail?productCode={code}"
 
+HONEYWELL_ABP_URL = (
+    "https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/en-us/"
+    "products/sensors/pressure-sensors/board-mount-pressure-sensors/basic-abp-series/"
+    "documents/sps-siot-basic-board-mount-pressure-abp-series-datasheet-32305128-ciid-155789.pdf?download=false"
+)
+
 # Extra non-LCSC / manufacturer fallback URLs for parts not stocked in LCSC
 FALLBACK_PDF_URLS: dict[str, str] = {
     "LMP7721": "https://www.ti.com/lit/ds/symlink/lmp7721.pdf",
@@ -41,6 +47,21 @@ FALLBACK_PDF_URLS: dict[str, str] = {
     "NDS7002A": "https://www.onsemi.com/pdf/datasheet/nds7002a-d.pdf",
     "MMBT3906": "https://www.onsemi.com/pdf/datasheet/mmbt3906lt1-d.pdf",
     "MBR0540": "https://www.onsemi.com/pdf/datasheet/mbr0540t1-d.pdf",
+    "ABPDANN015PG2A3": HONEYWELL_ABP_URL,
+    "ABPDANN005PG3A3": HONEYWELL_ABP_URL,
+}
+
+NON_LCSC_META: dict[str, dict[str, str]] = {
+    "ABPDANN015PG2A3": {
+        "mpn": "ABPDANN015PG2A3",
+        "package": "DIP-6(Honeywell_ABPDAN)",
+        "pdf_file": "datasheets/catalog/NONLCSC_Honeywell_ABP_Series.pdf",
+    },
+    "ABPDANN005PG3A3": {
+        "mpn": "ABPDANN005PG3A3",
+        "package": "DIP-6(Honeywell_ABPDAN)",
+        "pdf_file": "datasheets/catalog/NONLCSC_Honeywell_ABP_Series.pdf",
+    },
 }
 
 
@@ -155,6 +176,8 @@ def check_package_match(footprint: str, pkg: str) -> str:
         return "NO_PKG_META"
     fp_l = footprint.lower()
     pkg_l = pkg.lower()
+    if "honeywell_abpdan" in pkg_l:
+        return "OK" if "honeywell_abpdan" in fp_l else f"MISMATCH({pkg} vs {footprint})"
     # Direct size/package checks
     for token in ("0402", "0603", "0805", "1206", "sod-123", "sot-23-5", "sot-23-6", "sot-23", "soic-8", "msop-8", "msop-10", "lfcsp-16"):
         if token in pkg_l:
@@ -241,6 +264,25 @@ def main() -> int:
 
         INDEX_PATH.write_text(json.dumps(index, indent=2, sort_keys=True), encoding="utf-8")
 
+    # Download/cache fallback PDFs for tracked non-LCSC parts (e.g. Honeywell ABP sensors)
+    fallback_keys = {
+        key
+        for it in bom_items
+        for key in (it["lcsc"], it["comment"])
+        if key in NON_LCSC_META and key in FALLBACK_PDF_URLS
+    }
+    if not args.skip_download and fallback_keys:
+        seen_dests: set[Path] = set()
+        for key in sorted(fallback_keys):
+            dest = REPO_ROOT / NON_LCSC_META[key]["pdf_file"]
+            if dest in seen_dests:
+                continue
+            seen_dests.add(dest)
+            if not is_valid_pdf(dest):
+                ok, msg = download_pdf(FALLBACK_PDF_URLS[key], dest)
+                if not ok:
+                    print(f"  [WARN] {key}: {msg}")
+
     # Extract text summaries for Amplifier active parts (plus any valid PDF in catalog)
     pdf_summaries: dict[str, Any] = {}
     for code in unique_lcsc:
@@ -268,13 +310,26 @@ def main() -> int:
     missing_pdfs = 0
     for it in bom_items:
         code = it["lcsc"]
-        meta = index.get(code, {})
-        mpn = meta.get("mpn", "—")
-        pkg = meta.get("package", "")
-        pkg_chk = check_package_match(it["footprint"], pkg) if code.startswith("C") and code[1:].isdigit() else "NON_LCSC"
+        is_lcsc = bool(re.fullmatch(r"C\d+", code))
+        if is_lcsc:
+            meta = index.get(code, {})
+            mpn = meta.get("mpn", "—")
+            pkg = meta.get("package", "")
+            pkg_chk = check_package_match(it["footprint"], pkg)
+            pf = meta.get("pdf_file", "")
+        else:
+            non_lcsc = NON_LCSC_META.get(code) or (NON_LCSC_META.get(it["comment"]) if not code else None)
+            if non_lcsc:
+                mpn = non_lcsc["mpn"]
+                pkg_chk = check_package_match(it["footprint"], non_lcsc["package"])
+                pf = non_lcsc["pdf_file"]
+            else:
+                meta = index.get(code, {})
+                mpn = meta.get("mpn", "—")
+                pkg_chk = "NON_LCSC"
+                pf = meta.get("pdf_file", "")
         if pkg_chk.startswith("MISMATCH"):
             pkg_mismatches += 1
-        pf = meta.get("pdf_file", "")
         if pf and is_valid_pdf(REPO_ROOT / pf):
             ds_cell = f"`{Path(pf).name}`"
         else:
@@ -298,7 +353,7 @@ def main() -> int:
 
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"[OK] Wrote {REPORT_PATH.relative_to(REPO_ROOT)} | pkg_mismatches={pkg_mismatches} | missing_active_pdfs={missing_pdfs}")
-    return 0
+    return 1 if pkg_mismatches > 0 else 0
 
 
 if __name__ == "__main__":

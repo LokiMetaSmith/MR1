@@ -4565,7 +4565,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C133554"
+		(property "LCSC" "C2867268"
 			(at 78.74 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -4576,7 +4576,7 @@
 				)
 			)
 		)
-		(property "MPN" "OPA197IDGKT"
+		(property "MPN" "OPA2197IDGKR"
 			(at 78.74 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -4709,7 +4709,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C133554"
+		(property "LCSC" "C2867268"
 			(at 129.54 109.22 0)
 			(hide yes)
 			(show_name no)
@@ -4720,7 +4720,7 @@
 				)
 			)
 		)
-		(property "MPN" "OPA197IDGKT"
+		(property "MPN" "OPA2197IDGKR"
 			(at 129.54 109.22 0)
 			(hide yes)
 			(show_name no)
@@ -4851,7 +4851,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C133554"
+		(property "LCSC" "C2867268"
 			(at 116.84 74.93 0)
 			(hide yes)
 			(show_name no)
@@ -4862,7 +4862,7 @@
 				)
 			)
 		)
-		(property "MPN" "OPA197IDGKT"
+		(property "MPN" "OPA2197IDGKR"
 			(at 116.84 74.93 0)
 			(hide yes)
 			(show_name no)

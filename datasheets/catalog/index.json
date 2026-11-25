@@ -122,6 +122,32 @@
     "status": "OK",
     "stock": 7
   },
+  "C12624": {
+    "brand": "Hubei KENTO Elec",
+    "lcsc": "C12624",
+    "mpn": "KT-0603G",
+    "package": "0603",
+    "params": {
+      "Color Temperature": "-",
+      "Diode Configuration": "Discrete Diode",
+      "Forward Current": "5mA",
+      "Illumination Color": "Emerald Green",
+      "Installation method": "-",
+      "Lamp Holder Type": "1.6mm x 0.8mm square LED",
+      "Lens Color": "Water Clear",
+      "Luminous Intensity": "430mcd",
+      "Operating Temperature": "-40\u2103~+85\u2103",
+      "Peak Wavelength": "525nm",
+      "Viewing Angle": "120\u00b0",
+      "Voltage - Forward(Vf)": "3.1V",
+      "Wavelength": "513nm~528nm"
+    },
+    "pdf_file": "datasheets/catalog/C12624_KT-0603G.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/69e84a3abd84e5ab5856c47a2d0334ce.pdf?productCode=C12624",
+    "status": "OK",
+    "stock": 153750
+  },
   "C130085": {
     "brand": "TI",
     "lcsc": "C130085",
@@ -178,6 +204,23 @@
     "status": "OK",
     "stock": 157440
   },
+  "C131394": {
+    "brand": "YAGEO",
+    "lcsc": "C131394",
+    "mpn": "CC0402KRX7R9BB104",
+    "package": "0402",
+    "params": {
+      "Capacitance": "100nF",
+      "Temperature Coefficient": "X7R",
+      "Tolerance": "\u00b110%",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C131394_CC0402KRX7R9BB104.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/23ccee80ee542e7cf156a772bb589942.pdf?productCode=C131394",
+    "status": "OK",
+    "stock": 8224600
+  },
   "C131941": {
     "brand": "TI",
     "lcsc": "C131941",
@@ -198,6 +241,31 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/a6e81dbcd7e3513b1038fbe37550c0c2.pdf?productCode=C131941",
     "status": "OK",
     "stock": 49175
+  },
+  "C131998": {
+    "brand": "TI",
+    "lcsc": "C131998",
+    "mpn": "TS3USB30EDGSR",
+    "package": "VSSOP-10-0.5mm",
+    "params": {
+      "-3dB Bandwidth": "900MHz",
+      "Applications": "USB",
+      "Con": "7.5pF",
+      "Features": "Bidirectional analog channel",
+      "Number of Channels": "2",
+      "Operating Temperature": "-40\u2103~+85\u2103",
+      "Propagation Delay (tpd)": "250ps",
+      "Ron": "6\u03a9",
+      "Switch Circuit": "2:1",
+      "Turn-off time": "25ns",
+      "Turn-on time": "30ns",
+      "Voltage - Supply": "3V~4.3V"
+    },
+    "pdf_file": "datasheets/catalog/C131998_TS3USB30EDGSR.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/d3d61043b3c54e9a923b6f4fe6d59cb0.pdf?productCode=C131998",
+    "status": "OK",
+    "stock": 117
   },
   "C133554": {
     "brand": "TI",
@@ -239,6 +307,25 @@
     "status": "OK",
     "stock": 64
   },
+  "C139183": {
+    "brand": "FH",
+    "lcsc": "C139183",
+    "mpn": "CBW160808U601T",
+    "package": "0603",
+    "params": {
+      "Current Rating": "1A",
+      "DC Resistance(DCR)": "300m\u03a9",
+      "Impedance @ Frequency": "600\u03a9@100MHz",
+      "Number of Lines": "1",
+      "Operating Temperature": "-55\u2103~+125\u2103",
+      "Tolerance": "\u00b125%"
+    },
+    "pdf_file": "datasheets/catalog/C139183_CBW160808U601T.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/291665d275b6a0ba4f069e03b6373f33.pdf?productCode=C139183",
+    "status": "OK",
+    "stock": 381050
+  },
   "C143531": {
     "brand": "MAXIM",
     "lcsc": "C143531",
@@ -263,6 +350,37 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/729491d25c624c97a2ae232fb8d32cd9.pdf?productCode=C143531",
     "status": "OK",
     "stock": 1077
+  },
+  "C144395": {
+    "brand": "JST",
+    "lcsc": "C144395",
+    "mpn": "B4B-XH-A(LF)(SN)",
+    "package": "Through Hole,P=2.5mm",
+    "params": {
+      "Color": "White",
+      "Connector Type": "Through Hole",
+      "Contact Material": "Brass",
+      "Contact Plating": "Tin",
+      "Current Rating": "3A",
+      "Flame Retardant Rating": "UL94V-0",
+      "Number of PINs": "4P",
+      "Number of PINs Per Row": "4",
+      "Number of Rows": "1",
+      "Operating Temperature": "-25\u2103~+85\u2103",
+      "Pin Structure": "1x4P",
+      "Pitch": "2.5mm",
+      "Plastic Material": "PA66",
+      "Reference Series": "XH",
+      "Row Spacing": "-",
+      "Supplementary Features": "Kinked Pin",
+      "Voltage Rating (Max)": "250V",
+      "X-Length of Bottom Edge on Board (Spacing Line)": "12.4mm"
+    },
+    "pdf_file": "datasheets/catalog/C144395_B4B-XH-A_LF_SN.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/51bbcb0476af7caf7f697437212da775.pdf?productCode=C144395",
+    "status": "OK",
+    "stock": 493160
   },
   "C14902": {
     "lcsc": "C14902",
@@ -357,6 +475,23 @@
     "status": "OK",
     "stock": 1274900
   },
+  "C1547": {
+    "brand": "FH",
+    "lcsc": "C1547",
+    "mpn": "0402CG120J500NT",
+    "package": "0402",
+    "params": {
+      "Capacitance": "12pF",
+      "Temperature Coefficient": "C0G",
+      "Tolerance": "\u00b15%",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C1547_0402CG120J500NT.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/09fe2daf22580a99fa7fea93ccb20fb7.pdf?productCode=C1547",
+    "status": "OK",
+    "stock": 778300
+  },
   "C1548": {
     "brand": "FH",
     "lcsc": "C1548",
@@ -389,6 +524,33 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/09fe2daf22580a99fa7fea93ccb20fb7.pdf?productCode=C1550",
     "status": "OK",
     "stock": 501800
+  },
+  "C155244": {
+    "brand": "DIODES",
+    "lcsc": "C155244",
+    "mpn": "DMP3099L-7",
+    "package": "SOT-23",
+    "params": {
+      "Ciss-Input Capacitance": "563pF",
+      "Configuration": "-",
+      "Current - Continuous Drain(Id)": "3.8A",
+      "Drain to Source Voltage": "30V",
+      "Gate Charge(Qg)": "11nC@10V",
+      "Gate Threshold Voltage (Vgs(th))": "2.1V",
+      "Number": "1 P-Channel",
+      "Operating Temperature": "-55\u2103~+150\u2103",
+      "Output Capacitance(Coss)": "48pF",
+      "Pd - Power Dissipation": "1.08W",
+      "RDS(on)": "99m\u03a9@4.5V",
+      "Reverse Transfer Capacitance (Crss)": "41pF",
+      "Type": "P-Channel",
+      "Vgs": "\u00b120V"
+    },
+    "pdf_file": "datasheets/catalog/C155244_DMP3099L-7.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/93cef39e8f1988adf9f35cb3582a277e.pdf?productCode=C155244",
+    "status": "OK",
+    "stock": 88960
   },
   "C15525": {
     "brand": "Samsung Electro-Mechanics",
@@ -455,6 +617,23 @@
     "status": "OK",
     "stock": 1686460
   },
+  "C1591": {
+    "brand": "Samsung Electro-Mechanics",
+    "lcsc": "C1591",
+    "mpn": "CL10B104KB8NNNC",
+    "package": "0603",
+    "params": {
+      "Capacitance": "100nF",
+      "Temperature Coefficient": "X7R",
+      "Tolerance": "\u00b110%",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C1591_CL10B104KB8NNNC.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C1591",
+    "status": "OK",
+    "stock": 2605100
+  },
   "C16040": {
     "brand": "MICROCHIP",
     "lcsc": "C16040",
@@ -515,6 +694,23 @@
     "status": "OK",
     "stock": 429825
   },
+  "C1705": {
+    "brand": "Samsung Electro-Mechanics",
+    "lcsc": "C1705",
+    "mpn": "CL10A475KP8NNNC",
+    "package": "0603",
+    "params": {
+      "Capacitance": "4.7uF",
+      "Temperature Coefficient": "X5R",
+      "Tolerance": "\u00b110%",
+      "Voltage Rating": "10V"
+    },
+    "pdf_file": "datasheets/catalog/C1705_CL10A475KP8NNNC.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C1705",
+    "status": "OK",
+    "stock": 97050
+  },
   "C17168": {
     "brand": "UNI-ROYAL",
     "lcsc": "C17168",
@@ -534,6 +730,23 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C17168",
     "status": "OK",
     "stock": 4926500
+  },
+  "C172351": {
+    "brand": "FH",
+    "lcsc": "C172351",
+    "mpn": "1206X476M160NT",
+    "package": "1206",
+    "params": {
+      "Capacitance": "47uF",
+      "Temperature Coefficient": "X5R",
+      "Tolerance": "\u00b120%",
+      "Voltage Rating": "16V"
+    },
+    "pdf_file": "datasheets/catalog/C172351_1206X476M160NT.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/09fe2daf22580a99fa7fea93ccb20fb7.pdf?productCode=C172351",
+    "status": "OK",
+    "stock": 7777
   },
   "C191000": {
     "brand": "TI",
@@ -924,6 +1137,26 @@
     "status": "OK",
     "stock": 740700
   },
+  "C25768": {
+    "brand": "UNI-ROYAL",
+    "lcsc": "C25768",
+    "mpn": "0402WGF2202TCE",
+    "package": "0402",
+    "params": {
+      "Operating Temperature": "-55\u2103~+155\u2103",
+      "Power(Watts)": "62.5mW",
+      "Resistance": "22k\u03a9",
+      "Temperature Coefficient": "\u00b1100ppm/\u2103",
+      "Tolerance": "\u00b11%",
+      "Type": "Thick Film Resistor",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C25768_0402WGF2202TCE.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25768",
+    "status": "OK",
+    "stock": 589600
+  },
   "C25769": {
     "brand": "UNI-ROYAL",
     "lcsc": "C25769",
@@ -943,6 +1176,26 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25769",
     "status": "OK",
     "stock": 1369800
+  },
+  "C25792": {
+    "brand": "UNI-ROYAL",
+    "lcsc": "C25792",
+    "mpn": "0402WGF4702TCE",
+    "package": "0402",
+    "params": {
+      "Operating Temperature": "-55\u2103~+155\u2103",
+      "Power(Watts)": "62.5mW",
+      "Resistance": "47k\u03a9",
+      "Temperature Coefficient": "\u00b1100ppm/\u2103",
+      "Tolerance": "\u00b11%",
+      "Type": "Thick Film Resistor",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C25792_0402WGF4702TCE.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25792",
+    "status": "OK",
+    "stock": 2900900
   },
   "C25874": {
     "brand": "UNI-ROYAL",
@@ -1107,9 +1360,72 @@
     "status": "OK",
     "stock": 20
   },
+  "C2681320": {
+    "brand": "TI",
+    "lcsc": "C2681320",
+    "mpn": "TPS22917DBVR",
+    "package": "SOT-23-6",
+    "params": {
+      "Control Input Logic": "Active High",
+      "Features": "Soft-start;Output discharge function;Reverse current blocking",
+      "Maximum Continuous Current": "2A",
+      "Operating Temperature": "-40\u2103~+125\u2103",
+      "Operating Voltage": "0V~5.5V",
+      "RDS(on)": "80m\u03a9",
+      "Type": "Load Switch",
+      "number of channels": "1"
+    },
+    "pdf_file": "datasheets/catalog/C2681320_TPS22917DBVR.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/48e7719b8946be3d2f79eeab894c4af9.pdf?productCode=C2681320",
+    "status": "OK",
+    "stock": 8525
+  },
   "C2682333": {
     "lcsc": "C2682333",
     "status": "NOT_IN_LCSC"
+  },
+  "C26833": {
+    "brand": "TI",
+    "lcsc": "C26833",
+    "mpn": "TLV70233DBVR",
+    "package": "SOT-23-5",
+    "params": {
+      "Features": "Enable control;Input under-voltage protection;Over Current Protection;Thermal shutdown;Output discharge",
+      "Number of Outputs": "1",
+      "Operating Temperature": "-40\u2103~+125\u2103@(Tj)",
+      "Operating Voltage": "5.5V",
+      "Output Configuration": "Positive",
+      "Output Current": "300mA",
+      "Output Type": "Fixed",
+      "Output Voltage": "3.3V",
+      "Supply Current (Iq)": "35uA"
+    },
+    "pdf_file": "datasheets/catalog/C26833_TLV70233DBVR.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/828325a4619b404796ed5aed0cc99453.pdf?productCode=C26833",
+    "status": "OK",
+    "stock": 28615
+  },
+  "C2687402": {
+    "brand": "BOURNS",
+    "lcsc": "C2687402",
+    "mpn": "SRP7028A-100M",
+    "package": "SMD,7.3x6.6mm",
+    "params": {
+      "Application Grade": "Automotive Grade",
+      "Current - Saturation(Isat)": "6A",
+      "Current Rating": "3.5A",
+      "DC Resistance(DCR)": "75m\u03a9",
+      "Inductance": "10uH",
+      "Tolerance": "\u00b120%",
+      "Type": "-"
+    },
+    "pdf_file": "datasheets/catalog/C2687402_SRP7028A-100M.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/cbefaf8a1f0751559c4cd82131df7e1d.pdf?productCode=C2687402",
+    "status": "OK",
+    "stock": 2719
   },
   "C26974": {
     "brand": "UNI-ROYAL",
@@ -1130,6 +1446,26 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C26974",
     "status": "OK",
     "stock": 12300
+  },
+  "C274888": {
+    "brand": "YAGEO",
+    "lcsc": "C274888",
+    "mpn": "RC0402FR-0713K7L",
+    "package": "0402",
+    "params": {
+      "Operating Temperature": "-55\u2103~+155\u2103",
+      "Power(Watts)": "62.5mW",
+      "Resistance": "13.7k\u03a9",
+      "Temperature Coefficient": "\u00b1100ppm/\u2103",
+      "Tolerance": "\u00b11%",
+      "Type": "Thick Film Resistor",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C274888_RC0402FR-0713K7L.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/b426be3ce22c6de3e0c3a2248e49159e.pdf?productCode=C274888",
+    "status": "OK",
+    "stock": 109200
   },
   "C2762589": {
     "brand": "Samsung Electro-Mechanics",
@@ -1172,6 +1508,23 @@
     "status": "OK",
     "stock": 15105
   },
+  "C29266": {
+    "brand": "Samsung Electro-Mechanics",
+    "lcsc": "C29266",
+    "mpn": "CL05A105KO5NNNC",
+    "package": "0402",
+    "params": {
+      "Capacitance": "1uF",
+      "Temperature Coefficient": "X5R",
+      "Tolerance": "\u00b110%",
+      "Voltage Rating": "16V"
+    },
+    "pdf_file": "datasheets/catalog/C29266_CL05A105KO5NNNC.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C29266",
+    "status": "OK",
+    "stock": 398000
+  },
   "C2980299": {
     "brand": "ESPRESSIF",
     "lcsc": "C2980299",
@@ -1194,6 +1547,31 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0a7481740d683cf70ad4cfb4d2a4b2d7.pdf?productCode=C2980299",
     "status": "OK",
     "stock": 2328
+  },
+  "C311983": {
+    "brand": "TI",
+    "lcsc": "C311983",
+    "mpn": "TPS54302DDCR",
+    "package": "TSOT-23-6",
+    "params": {
+      "Features": "Cycle-by-cycle current limiting;Hiccup current limiting;EMI optimization (spread spectrum);Light load efficient mode;Overcurrent Protection",
+      "Frequency - Switching": "400kHz",
+      "Function": "Step-down type",
+      "Number of Outputs": "1",
+      "Operating Temperature": "-40\u2103~+125\u2103@(TJ)",
+      "Operating Voltage": "4.5V~28V",
+      "Output Current": "3A",
+      "Output Type": "Adjustable",
+      "Output Voltage": "-",
+      "Quiescent Current": "45uA",
+      "Switch tube (built-in/external)": "Built-in",
+      "Topology": "Buck"
+    },
+    "pdf_file": "datasheets/catalog/C311983_TPS54302DDCR.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/dd7a4984f2d3ca9a2264b937537aa471.pdf?productCode=C311983",
+    "status": "OK",
+    "stock": 72015
   },
   "C318884": {
     "brand": "XKB Connection",
@@ -1336,6 +1714,35 @@
     "status": "OK",
     "stock": 36148
   },
+  "C492404": {
+    "brand": "XFCN",
+    "lcsc": "C492404",
+    "mpn": "PZ254V-11-05P",
+    "package": "Through Hole,P=2.54mm",
+    "params": {
+      "Circluar Pins/Square Pins": "Square pin",
+      "Color": "Black",
+      "Connector Type": "Through Hole",
+      "Contact Material": "Brass",
+      "Contact Plating": "Gold",
+      "Current Rating": "3A",
+      "Insulation Height": "2.5mm",
+      "Length of End Connection Pin": "3mm",
+      "Length of Mating Pin": "6.1mm",
+      "Number of PINs": "5P",
+      "Number of Rows": "1",
+      "Operating Temperature": "-40\u2103~+105\u2103",
+      "Pin Structure": "1x5P",
+      "Pitch": "2.54mm",
+      "Row Spacing": "-",
+      "Voltage Rating (Max)": "250V"
+    },
+    "pdf_file": "datasheets/catalog/C492404_PZ254V-11-05P.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/3b85a1cdf6ed945f2e278f00c1e42442.pdf?productCode=C492404",
+    "status": "OK",
+    "stock": 173520
+  },
   "C514420": {
     "brand": "ADI",
     "lcsc": "C514420",
@@ -1357,6 +1764,23 @@
     "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/9d46bf6db3babcb8c3f12d5d51205ba7.pdf?productCode=C514420",
     "status": "OK",
     "stock": 1153
+  },
+  "C518154": {
+    "brand": "LIMING",
+    "lcsc": "C518154",
+    "mpn": "3225-8.00-10-10-10/A",
+    "package": "SMD3225-4P",
+    "params": {
+      "Frequency": "8MHz",
+      "Load Capacitance": "10pF",
+      "Normal temperature Frequency Tolerance": "\u00b110ppm",
+      "Operating Temperature": "-"
+    },
+    "pdf_file": "datasheets/catalog/C518154_3225-8.00-10-10-10_A.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/cd78ec091e2e678a7a71b65208d2d6f4.pdf?productCode=C518154",
+    "status": "OK",
+    "stock": 4650
   },
   "C5204747": {
     "brand": "TWGMC",
@@ -1632,6 +2056,28 @@
     "status": "OK",
     "stock": 842650
   },
+  "C7519": {
+    "brand": "ST",
+    "lcsc": "C7519",
+    "mpn": "USBLC6-2SC6",
+    "package": "SOT-23-6L",
+    "params": {
+      "Clamping Voltage": "17V",
+      "Number of Channels": "2",
+      "Operating Temperature": "-40\u2103~+125\u2103",
+      "Peak Pulse Current (Ipp)": "5A",
+      "Polarity": "Unidirectional",
+      "Reverse Leakage Current (Ir)": "150nA",
+      "Reverse Stand-Off Voltage (Vrwm)": "5.25V",
+      "Voltage - Breakdown": "6V",
+      "type": "ESD"
+    },
+    "pdf_file": "datasheets/catalog/C7519_USBLC6-2SC6.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0d3a2ab954b34651a0695e7ccf534db0.pdf?productCode=C7519",
+    "status": "OK",
+    "stock": 37360
+  },
   "C76888": {
     "brand": "muRata",
     "lcsc": "C76888",
@@ -1701,6 +2147,23 @@
   "C87642": {
     "lcsc": "C87642",
     "status": "NOT_IN_LCSC"
+  },
+  "C89632": {
+    "brand": "Samsung Electro-Mechanics",
+    "lcsc": "C89632",
+    "mpn": "CL31B106KBHNNNE",
+    "package": "1206",
+    "params": {
+      "Capacitance": "10uF",
+      "Temperature Coefficient": "X7R",
+      "Tolerance": "\u00b110%",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C89632_CL31B106KBHNNNE.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/a1390a51092e4f3c84866ab492516a00.pdf?productCode=C89632",
+    "status": "OK",
+    "stock": 94425
   },
   "C91206": {
     "lcsc": "C91206",

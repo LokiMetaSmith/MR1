@@ -579,54 +579,125 @@
 			)
 			(embedded_fonts no)
 		)
-	)
-	(hierarchical_label "PRESS_ALERT_"
-		(shape output)
-		(at 116.84 96.52 0)
-		(effects
-			(font
-				(size 1.27 1.27)
+		(symbol "power:GND"
+			(power global)
+			(pin_numbers
+				(hide yes)
 			)
-			(justify left)
-		)
-		(uuid "13120d38-e2d7-4131-9323-f0cb4a29bf53")
-	)
-	(hierarchical_label "PRESS_I2C_SCL"
-		(shape input)
-		(at 120.65 62.23 0)
-		(effects
-			(font
-				(size 1.27 1.27)
+			(pin_names
+				(offset 0)
+				(hide yes)
 			)
-			(justify left)
-		)
-		(uuid "79ebf1a9-2803-4b05-bec9-9766b42b743d")
-	)
-	(hierarchical_label "PRESS_I2C_SDA"
-		(shape bidirectional)
-		(at 118.11 81.28 0)
-		(effects
-			(font
-				(size 1.27 1.27)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
 			)
-			(justify left)
-		)
-		(uuid "7ded9c4f-0a31-4aca-88a4-2bfd6b93674f")
-	)
-	(hierarchical_label "+3V3"
-		(shape input)
-		(at 116.84 105.41 0)
-		(effects
-			(font
-				(size 1.27 1.27)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
 			)
-			(justify left)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "GND_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
 		)
-		(uuid "e800e1d5-8a78-4512-ad9d-db2006c7a7f3")
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 76.2 251.46 0)
+		(at 137.16 121.92 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -636,7 +707,7 @@
 		(dnp no)
 		(uuid "8cba6b9d-184e-4d87-b6ae-5b9d23333314")
 		(property "Reference" "R302"
-			(at 78.74 250.19 0)
+			(at 139.7 120.65 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -647,7 +718,7 @@
 			)
 		)
 		(property "Value" "4.7k"
-			(at 78.74 252.73 0)
+			(at 139.7 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -658,7 +729,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 76.2 251.46 0)
+			(at 137.16 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -669,7 +740,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 76.2 251.46 0)
+			(at 137.16 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -680,7 +751,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 76.2 251.46 0)
+			(at 137.16 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -691,7 +762,29 @@
 			)
 		)
 		(property "MR1_Role" "PRESS_I2C_SDA pull-up to +3V3"
-			(at 76.2 251.46 0)
+			(at 137.16 121.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25900"
+			(at 137.16 121.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4701TCE"
+			(at 137.16 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -718,7 +811,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 30.48 251.46 0)
+		(at 73.66 81.28 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -728,7 +821,7 @@
 		(dnp no)
 		(uuid "a7f11ba3-fcd0-4446-ade3-64d4b352146c")
 		(property "Reference" "C301"
-			(at 33.02 250.19 0)
+			(at 76.2 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -739,7 +832,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 33.02 252.73 0)
+			(at 76.2 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -750,7 +843,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 30.48 251.46 0)
+			(at 73.66 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -761,7 +854,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 30.48 251.46 0)
+			(at 73.66 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -772,7 +865,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 30.48 251.46 0)
+			(at 73.66 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -783,7 +876,29 @@
 			)
 		)
 		(property "MR1_Role" "U301 VCC decoupling"
-			(at 30.48 251.46 0)
+			(at 73.66 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 73.66 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL05B104KO5NNNC"
+			(at 73.66 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -810,7 +925,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 45.72 251.46 0)
+		(at 144.78 81.28 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -820,7 +935,7 @@
 		(dnp no)
 		(uuid "b284688c-b859-4e78-8400-0bebb97d7679")
 		(property "Reference" "C302"
-			(at 48.26 250.19 0)
+			(at 147.32 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -831,7 +946,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 48.26 252.73 0)
+			(at 147.32 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -842,7 +957,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 45.72 251.46 0)
+			(at 144.78 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -853,7 +968,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 45.72 251.46 0)
+			(at 144.78 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -864,7 +979,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 45.72 251.46 0)
+			(at 144.78 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -875,7 +990,29 @@
 			)
 		)
 		(property "MR1_Role" "U302 VCC decoupling"
-			(at 45.72 251.46 0)
+			(at 144.78 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 144.78 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL05B104KO5NNNC"
+			(at 144.78 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -902,7 +1039,7 @@
 	)
 	(symbol
 		(lib_id "Sensor_Pressure:ABPxxxxxxxxx0")
-		(at 30.48 228.6 0)
+		(at 91.44 81.28 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -912,7 +1049,7 @@
 		(dnp no)
 		(uuid "dc915ed7-ea9c-4f91-9b84-f1791dd1f172")
 		(property "Reference" "U301"
-			(at 33.02 227.33 0)
+			(at 93.98 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -923,7 +1060,7 @@
 			)
 		)
 		(property "Value" "ABPDANN015PG2A3"
-			(at 33.02 229.87 0)
+			(at 93.98 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -934,7 +1071,7 @@
 			)
 		)
 		(property "Footprint" "Sensor_Pressure:Honeywell_ABPDAN"
-			(at 30.48 228.6 0)
+			(at 91.44 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -945,7 +1082,7 @@
 			)
 		)
 		(property "Datasheet" "https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/en-us/products/sensors/pressure-sensors/board-mount-pressure-sensors/basic-abp-series/documents/sps-siot-basic-board-mount-pressure-abp-series-datasheet-32305128-ciid-155789.pdf?download=false"
-			(at 30.48 228.6 0)
+			(at 91.44 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -956,7 +1093,7 @@
 			)
 		)
 		(property "Description" "Basic Board Mount Absolute Pressure Sensor, 60 mbar to 10 bar, 6 kPa to 1 MPa, 1 psi to 150 psi, I2C digital output, DIP-6 package"
-			(at 30.48 228.6 0)
+			(at 91.44 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -967,7 +1104,29 @@
 			)
 		)
 		(property "MR1_Role" "Cis pressure, I2C addr 0x28 ('2' in P/N). Placeholder footprint Honeywell_ABP_SMD does not exist"
-			(at 30.48 228.6 0)
+			(at 91.44 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "ABPDANN015PG2A3"
+			(at 91.44 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "ABPDANN015PG2A3"
+			(at 91.44 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1006,7 +1165,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 60.96 251.46 0)
+		(at 124.46 121.92 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1016,7 +1175,7 @@
 		(dnp no)
 		(uuid "f598219b-72da-4dba-88b4-45bcb03fb32e")
 		(property "Reference" "R301"
-			(at 63.5 250.19 0)
+			(at 127.0 120.65 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1027,7 +1186,7 @@
 			)
 		)
 		(property "Value" "4.7k"
-			(at 63.5 252.73 0)
+			(at 127.0 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1038,7 +1197,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 60.96 251.46 0)
+			(at 124.46 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1049,7 +1208,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 60.96 251.46 0)
+			(at 124.46 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1060,7 +1219,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 60.96 251.46 0)
+			(at 124.46 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1071,7 +1230,29 @@
 			)
 		)
 		(property "MR1_Role" "PRESS_I2C_SCL pull-up to +3V3"
-			(at 60.96 251.46 0)
+			(at 124.46 121.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25900"
+			(at 124.46 121.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4701TCE"
+			(at 124.46 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1098,7 +1279,7 @@
 	)
 	(symbol
 		(lib_id "Sensor_Pressure:ABPxxxxxxxxx0")
-		(at 76.2 228.6 0)
+		(at 162.56 81.28 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1108,7 +1289,7 @@
 		(dnp no)
 		(uuid "f66e872d-e412-4a73-b2a6-e0864926ebc1")
 		(property "Reference" "U302"
-			(at 78.74 227.33 0)
+			(at 165.1 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1119,7 +1300,7 @@
 			)
 		)
 		(property "Value" "ABPDANN005PG3A3"
-			(at 78.74 229.87 0)
+			(at 165.1 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1130,7 +1311,7 @@
 			)
 		)
 		(property "Footprint" "Sensor_Pressure:Honeywell_ABPDAN"
-			(at 76.2 228.6 0)
+			(at 162.56 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1141,7 +1322,7 @@
 			)
 		)
 		(property "Datasheet" "https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/en-us/products/sensors/pressure-sensors/board-mount-pressure-sensors/basic-abp-series/documents/sps-siot-basic-board-mount-pressure-abp-series-datasheet-32305128-ciid-155789.pdf?download=false"
-			(at 76.2 228.6 0)
+			(at 162.56 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1152,7 +1333,7 @@
 			)
 		)
 		(property "Description" "Basic Board Mount Absolute Pressure Sensor, 60 mbar to 10 bar, 6 kPa to 1 MPa, 1 psi to 150 psi, I2C digital output, DIP-6 package"
-			(at 76.2 228.6 0)
+			(at 162.56 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1163,7 +1344,29 @@
 			)
 		)
 		(property "MR1_Role" "Trans pressure, I2C addr 0x38 ('3' in P/N) so both share one bus"
-			(at 76.2 228.6 0)
+			(at 162.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "ABPDANN005PG3A3"
+			(at 162.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "ABPDANN005PG3A3"
+			(at 162.56 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1199,5 +1402,697 @@
 				)
 			)
 		)
+	)
+	(wire
+		(pts
+			(xy 91.44 88.9) (xy 91.44 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 04b9d464-bd3b-4963-9d0d-79e7be9bf021)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 91.44 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid 77f02a59-9d0f-4d80-8bae-50e6c449d01a)
+		(property "Reference" "#PWR0045"
+			(at 91.44 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 91.44 87.63 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 91.44 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 91.44 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid 0b6567a9-14f6-4a5b-8402-d409e2590584)
+		)
+		(instances
+			(project "Pump"
+				(path "/cc93d521-16a7-4cfb-bf6e-12e26615f249/a3000001-0001-4000-8000-000000000001"
+					(reference "#PWR0045")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 91.44 73.66) (xy 91.44 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 729e5281-4c81-4e00-95f5-c5ad5bef59ca)
+	)
+	(label "+3V3"
+		(at 91.44 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 459fd6d2-cbfc-4320-b575-9d2b4a701622)
+	)
+	(wire
+		(pts
+			(xy 101.6 81.28) (xy 106.68 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 7ad52e81-cfcb-45ad-b867-1b293a7d7f9d)
+	)
+	(label "PRESS_I2C_SDA"
+		(at 106.68 81.28 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid f33dbef1-79c6-47ed-af3b-4ff23444d877)
+	)
+	(wire
+		(pts
+			(xy 101.6 83.82) (xy 106.68 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid e3beb5ac-dac8-49c0-b0f2-9c890b0ab60a)
+	)
+	(label "PRESS_I2C_SCL"
+		(at 106.68 83.82 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid d3ba2559-a495-46f3-be6b-c3bdcd0fd479)
+	)
+	(wire
+		(pts
+			(xy 73.66 77.47) (xy 73.66 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d14bf688-50a9-4cf9-896e-44a2e1a8bd73)
+	)
+	(label "+3V3"
+		(at 73.66 74.93 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 2b693baf-7059-4812-896b-3ccb527a82a1)
+	)
+	(wire
+		(pts
+			(xy 73.66 85.09) (xy 73.66 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 6b6270d7-cad4-484f-987b-2a9bca1ff880)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 73.66 87.63 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid 22151404-0c6b-4f29-99fa-97f3f38c1a00)
+		(property "Reference" "#PWR0046"
+			(at 73.66 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 73.66 83.82 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 73.66 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.66 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid 52aff895-6ba8-4b7a-827c-0de0e1c451d9)
+		)
+		(instances
+			(project "Pump"
+				(path "/cc93d521-16a7-4cfb-bf6e-12e26615f249/a3000001-0001-4000-8000-000000000001"
+					(reference "#PWR0046")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 162.56 88.9) (xy 162.56 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d0cef3f5-acc1-479c-8899-d152d99b4e74)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 162.56 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid 3f509e0b-c2aa-4bcf-880b-7040761b47e6)
+		(property "Reference" "#PWR0047"
+			(at 162.56 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 162.56 87.63 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 162.56 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid c8f7092c-0fba-4c12-8ca1-84ba450be294)
+		)
+		(instances
+			(project "Pump"
+				(path "/cc93d521-16a7-4cfb-bf6e-12e26615f249/a3000001-0001-4000-8000-000000000001"
+					(reference "#PWR0047")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 162.56 73.66) (xy 162.56 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid a64e2930-0bb2-4773-a84f-41f457ea211e)
+	)
+	(label "+3V3"
+		(at 162.56 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid d5efc3d0-bf13-4580-8d47-97ca05031ef3)
+	)
+	(wire
+		(pts
+			(xy 172.72 81.28) (xy 177.8 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid f7171415-95ac-479a-ba81-a26434a10758)
+	)
+	(label "PRESS_I2C_SDA"
+		(at 177.8 81.28 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 017360be-397c-4c88-9fbf-b1f4a4f10166)
+	)
+	(wire
+		(pts
+			(xy 172.72 83.82) (xy 177.8 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid d44ee802-4458-4c33-a56e-e1c0a179ad37)
+	)
+	(label "PRESS_I2C_SCL"
+		(at 177.8 83.82 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid eceafdeb-a6ed-4ecc-9cb9-63268fe9c7ff)
+	)
+	(wire
+		(pts
+			(xy 144.78 77.47) (xy 144.78 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 5daf86fb-e4be-4119-a4a9-e9e9175bfc6e)
+	)
+	(label "+3V3"
+		(at 144.78 74.93 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 80b4b7d0-8230-476e-91c5-1f939c1d93f8)
+	)
+	(wire
+		(pts
+			(xy 144.78 85.09) (xy 144.78 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 3fd509ee-e857-4f4e-a695-6a8c99916848)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 144.78 87.63 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid 321dc6b4-9a4e-422f-8836-4a2ae0010c1a)
+		(property "Reference" "#PWR0048"
+			(at 144.78 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 144.78 83.82 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 144.78 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 144.78 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid 17bb8aaf-dea0-4f06-bb3c-5430063a5a62)
+		)
+		(instances
+			(project "Pump"
+				(path "/cc93d521-16a7-4cfb-bf6e-12e26615f249/a3000001-0001-4000-8000-000000000001"
+					(reference "#PWR0048")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 101.6 78.74) (xy 109.22 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 9ca965a5-93ed-4170-af25-7d48ef023191)
+	)
+	(hierarchical_label "PRESS_ALERT_"
+		(shape output)
+		(at 109.22 78.74 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid 0047f26c-5b32-4f38-b92d-58409d8c057d)
+	)
+	(no_connect
+		(at 172.72 78.74)
+		(uuid c2a113f6-1e83-4265-bb86-e8e75f6ed2df)
+	)
+	(wire
+		(pts
+			(xy 124.46 118.11) (xy 124.46 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 37ca914f-05e2-4ec2-95b2-4b7d64a1552d)
+	)
+	(label "+3V3"
+		(at 124.46 115.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 53546904-6a88-41a9-8822-ec88aa67ddca)
+	)
+	(wire
+		(pts
+			(xy 124.46 125.73) (xy 124.46 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 0e366c87-df07-45cb-8d33-bc28b25993d6)
+	)
+	(label "PRESS_I2C_SCL"
+		(at 124.46 128.27 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid f7580189-8e09-4111-aa29-31a1627b26ef)
+	)
+	(wire
+		(pts
+			(xy 137.16 118.11) (xy 137.16 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 0ad27da0-3195-4787-8bee-66b9ae74cdc7)
+	)
+	(label "+3V3"
+		(at 137.16 115.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 4655a403-5401-4087-ae7c-9b9627a1d7fa)
+	)
+	(wire
+		(pts
+			(xy 137.16 125.73) (xy 137.16 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 5c6f6e5f-c16d-4102-9f3c-f3f50d411d24)
+	)
+	(label "PRESS_I2C_SDA"
+		(at 137.16 128.27 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 24966821-740a-4754-a4bb-615d11c0bc4f)
+	)
+	(wire
+		(pts
+			(xy 50.8 71.12) (xy 45.72 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 106d311c-fb7f-4777-81f9-f3f6ebf0b047)
+	)
+	(hierarchical_label "+3V3"
+		(shape input)
+		(at 45.72 71.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid ac8f835e-a38f-4954-b26d-f40406100262)
+	)
+	(wire
+		(pts
+			(xy 50.8 71.12) (xy 50.8 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid c58c91c5-702f-4479-91e1-6881cfce6003)
+	)
+	(label "+3V3"
+		(at 50.8 76.2 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid cf1d8487-975c-494a-8fea-c7c929b7ee5e)
+	)
+	(wire
+		(pts
+			(xy 50.8 116.84) (xy 45.72 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid bcb4bfb3-21af-4048-abcb-da59c8f07b91)
+	)
+	(hierarchical_label "PRESS_I2C_SCL"
+		(shape input)
+		(at 45.72 116.84 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid fccc413a-b3b9-4208-9ea0-bc3157e7b0a7)
+	)
+	(wire
+		(pts
+			(xy 50.8 116.84) (xy 55.88 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 6030a1fc-28ea-4772-b3b0-f15e3383a4b0)
+	)
+	(label "PRESS_I2C_SCL"
+		(at 55.88 116.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 29a39090-f33a-45fd-b989-587ddaeb08b3)
+	)
+	(wire
+		(pts
+			(xy 50.8 124.46) (xy 45.72 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid 25e8bd18-18f2-46e2-a811-ca88a97b165d)
+	)
+	(hierarchical_label "PRESS_I2C_SDA"
+		(shape bidirectional)
+		(at 45.72 124.46 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid 472fe371-b92d-4dcd-aede-d5bb33e289f9)
+	)
+	(wire
+		(pts
+			(xy 50.8 124.46) (xy 55.88 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid ea6de55f-6e62-4db7-ab9e-00a163c74027)
+	)
+	(label "PRESS_I2C_SDA"
+		(at 55.88 124.46 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid 7338cf11-3898-41a4-8588-9fb0d873d2ae)
 	)
 )

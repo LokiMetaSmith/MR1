@@ -9679,7 +9679,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1550"
+		(property "LCSC" "C26406"
 			(at 46.99 104.14 0)
 			(hide yes)
 			(show_name no)
@@ -10281,7 +10281,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1550"
+		(property "LCSC" "C26406"
 			(at 46.99 116.84 0)
 			(hide yes)
 			(show_name no)
