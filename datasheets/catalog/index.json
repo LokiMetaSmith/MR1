@@ -957,6 +957,26 @@
     "status": "OK",
     "stock": 3500
   },
+  "C25104": {
+    "brand": "UNI-ROYAL",
+    "lcsc": "C25104",
+    "mpn": "0402WGF3300TCE",
+    "package": "0402",
+    "params": {
+      "Operating Temperature": "-55\u2103~+155\u2103",
+      "Power(Watts)": "62.5mW",
+      "Resistance": "330\u03a9",
+      "Temperature Coefficient": "\u00b1100ppm/\u2103",
+      "Tolerance": "\u00b11%",
+      "Type": "Thick Film Resistor",
+      "Voltage Rating": "50V"
+    },
+    "pdf_file": "datasheets/catalog/C25104_0402WGF3300TCE.pdf",
+    "pdf_status": "OK",
+    "pdf_url": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25104",
+    "status": "OK",
+    "stock": 1007400
+  },
   "C25120": {
     "brand": "UNI-ROYAL",
     "lcsc": "C25120",

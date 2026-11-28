@@ -6,10 +6,13 @@
 
 #pragma once
 #include <Arduino.h>
+#include "config.h"
 
 /**
- * TI DRV8837C Low-Voltage H-Bridge Motor Driver
- * Provides PWM speed regulation, direction control, and hardware emergency braking.
+ * TI DRV8837C Low-Voltage H-Bridge Motor Driver (IN1/IN2 + ~SLEEP)
+ * Provides 20 kHz TIM2 PWM speed regulation, IN1/IN2 direction & PWM control
+ * (Fwd: fast-decay/coast, Rev: slow-decay/brake), active braking on emergencyStop(),
+ * and Hi-Z sleep preparation via sleep().
  */
 class DRV8837CMotor {
 public:
@@ -36,10 +39,12 @@ public:
     void flush(Direction dir = DIR_FORWARD);
     void stop();
     void emergencyStop();
+    void sleep();
 
     void update(uint32_t dt_ms);
 
     Mode getMode() const { return current_mode_; }
+    Direction getDirection() const { return current_dir_; }
     float getTargetRate() const { return target_rate_ul_min_; }
     float getDispensedVolumeUl() const { return dispensed_ul_; }
     bool isRunning() const { return current_mode_ != MODE_STOPPED && current_mode_ != MODE_ESTOP; }
@@ -56,5 +61,5 @@ private:
     float current_duty_;
 
     static constexpr float MAX_RPM = 180.0f;
-    static constexpr uint32_t PWM_MAX_COUNT = 4095; // 12-bit
+    static constexpr uint32_t PWM_MAX_COUNT = (1UL << MOTOR_PWM_RESOLUTION) - 1UL; // 4095 for 12-bit
 };
